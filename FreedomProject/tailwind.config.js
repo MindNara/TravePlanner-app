@@ -11,10 +11,7 @@ module.exports = {
       'blue-light': '#B3D7E7',
       'gray-dark': '#2E2E2E',
       'red': '#9A1B29',
-    },
-    fontFamily: {
-      prompt: ['Prompt', 'sans-serif'],
-      kanit: ['Kanit', 'sans-serif'],
+      'black': '#000000',
     },
     extend: {},
   },

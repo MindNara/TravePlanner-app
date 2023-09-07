@@ -17,9 +17,10 @@ export default function TabBars() {
             tabBarActiveTintColor: "#2E2E2E",
             tabBarInactiveTintColor: "#2E2E2E",
             tabBarStyle: {
-                height: 65,
+                height: 60,
                 backgroundColor: 'white',
                 shadowColor: 'white',
+                paddingHorizontal: 12,
             },
             tabBarIconStyle: {
                 marginTop: 10,
@@ -67,7 +68,7 @@ export default function TabBars() {
                 options={{
                     tabBarIcon: (() => {
                         return <ImageBackground source={{ uri: 'https://img.icons8.com/sf-black-filled/128/2E2E2E/filled-circle.png' }}
-                            style={[{ width: 60, height: 60 }, styles.tabBarIconCreate]} >
+                            style={[{ width: 62, height: 60 }, styles.tabBarIconCreate]} >
                             <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/FFFFFF/plus-math.png' }}
                                 style={{ width: 18, height: 18 }} />
                         </ImageBackground>

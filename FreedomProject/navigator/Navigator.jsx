@@ -21,10 +21,5 @@ export default function Navigator() {
 }
 
 const styles = StyleSheet.create({
-    tabBarIconCreate: {
-        marginTop: 5,
-    },
-    tabBarIcon: {
-        marginBottom: 6,
-    }
+
 });
