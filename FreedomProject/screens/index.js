@@ -5,6 +5,7 @@ import ExploreTrip from "./ExploreTrip";
 import CreateTrip from "./CreateTrip";
 import Wishlist from "./Wishlist";
 import Profile from "./Profile";
+import Intro from "./Intro";
 
 export {
     Home,
@@ -12,4 +13,5 @@ export {
     CreateTrip,
     Wishlist,
     Profile,
+    Intro,
 };
