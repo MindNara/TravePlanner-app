@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     imgPopular: {
-        height: 30,
+        height: 36,
         width: 50,
         justifyContent: "center",
         alignItems: 'center',
