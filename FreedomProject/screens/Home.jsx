@@ -20,6 +20,10 @@ export default function Home() {
         promptBold: require("../assets/fonts/Prompt-Bold.ttf"),
     });
 
+    if (!loaded) {
+        return null;
+    }
+
     return (
         <SafeAreaView className="container mx-auto h-full bg-white">
             <ScrollView>
@@ -47,7 +51,7 @@ export default function Home() {
                             <ImageBackground className="h-[210px] w-[166px] justify-end items-center"
                                 source={require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
                                 <View className="relative bg-white opacity-40 w-[145px] h-[76px] mb-2 py-2 px-3 rounded-[20px] items-center" />
-                                <View className="absolute w-[110px] h-[70px] px-2">
+                                <View className="absolute w-[110px] h-[70px] px-1">
                                     <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>Province</Text>
                                     <Text className="text-[16px] my-[-2px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
                                     <View className="flex flex-row mt-[3px] items-center">
@@ -61,7 +65,7 @@ export default function Home() {
                             <ImageBackground className="h-[210px] w-[166px] justify-end items-center"
                                 source={require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
                                 <View className="relative bg-white opacity-40 w-[145px] h-[76px] mb-2 py-2 px-3 rounded-[20px] items-center" />
-                                <View className="absolute w-[110px] h-[70px] px-2">
+                                <View className="absolute w-[110px] h-[70px] px-1">
                                     <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>Province</Text>
                                     <Text className="text-[16px] my-[-2px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
                                     <View className="flex flex-row mt-[3px] items-center">
@@ -82,30 +86,30 @@ export default function Home() {
                         </View>
                         <View className="mt-[20px] flex">
                             {/* Recommended Trip box 1 */}
-                            <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-3 flex flex-row items-center">
-                                <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-1"></View>
-                                <View className="w-[150px] h-full p-2 justify-center">
+                            <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center">
+                                <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-3"></View>
+                                <View className="bg-gray-light w-[212px] h-full p-2 justify-center">
                                     <View className="flex flex-row justify-between items-center">
-                                        <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
+                                        <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
                                         <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                            style={{ width: 16, height: 16 }} />
+                                            style={{ width: 18, height: 18 }} />
                                     </View>
                                     <View className="mt-2 w-[full]">
-                                        <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</Text>
+                                        <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</Text>
                                     </View>
                                 </View>
                             </View>
                             {/* Recommended Trip box 2 */}
-                            <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-3 flex flex-row items-center">
-                                <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-1"></View>
-                                <View className="w-[150px] h-full p-2 justify-center">
+                            <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center">
+                                <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-3"></View>
+                                <View className="bg-gray-light w-[212px] h-full p-2 justify-center">
                                     <View className="flex flex-row justify-between items-center">
-                                        <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
+                                        <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
                                         <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                            style={{ width: 16, height: 16 }} />
+                                            style={{ width: 18, height: 18 }} />
                                     </View>
                                     <View className="mt-2 w-[full]">
-                                        <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</Text>
+                                        <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</Text>
                                     </View>
                                 </View>
                             </View>

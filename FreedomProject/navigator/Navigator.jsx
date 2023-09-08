@@ -19,7 +19,3 @@ export default function Navigator() {
         </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-
-});

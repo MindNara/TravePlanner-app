@@ -8,25 +8,16 @@ import {
     ScrollView,
     ImageBackground
 } from 'react-native';
-
-// import fonts prompt
-import {
-    useFonts,
-    Prompt_300Light,
-    Prompt_400Regular,
-    Prompt_500Medium,
-    Prompt_600SemiBold,
-    Prompt_700Bold,
-} from '@expo-google-fonts/prompt';
+import { useFonts } from '@expo-google-fonts/prompt';
 
 export default function Intro() {
 
-    let [] = useFonts({
-        Prompt_300Light,
-        Prompt_400Regular,
-        Prompt_500Medium,
-        Prompt_600SemiBold,
-        Prompt_700Bold,
+    const [loaded] = useFonts({
+        promptLight: require("../assets/fonts/Prompt-Light.ttf"),
+        promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
+        promptMedium: require("../assets/fonts/Prompt-Medium.ttf"),
+        promptSemiBold: require("../assets/fonts/Prompt-SemiBold.ttf"),
+        promptBold: require("../assets/fonts/Prompt-Bold.ttf"),
     });
 
     return (
