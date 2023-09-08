@@ -28,14 +28,14 @@ export default function Home() {
                     <View className="h-auto w-full flex flex-row justify-between items-center">
                         {/* title */}
                         <View>
-                            <Text className="text-[24px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>Hello</Text>
-                            <Text className="text-[28px] mt-[-8px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Username</Text>
+                            <Text className="text-[26px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>Hello</Text>
+                            <Text className="text-[30px] mt-[-10px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Username</Text>
                         </View>
                         {/* noti & profile */}
                         <View className="flex flex-row justify-between items-center gap-5">
                             <Image source={{ uri: 'https://img.icons8.com/sf-regular/96/2E2E2E/appointment-reminders.png' }}
-                                style={{ width: 22, height: 22 }} />
-                            <Text className="w-[40px] h-[40px] bg-gray-dark rounded-lg"></Text>
+                                style={{ width: 28, height: 28 }} />
+                            <Text className="w-[56px] h-[56px] bg-gray-dark rounded-xl"></Text>
                         </View>
                     </View>
 
