@@ -29,8 +29,8 @@ export default function ExploreTrip() {
                 <View className="h-auto w-full flex flex-row justify-between items-center">
                     {/* title */}
                     <View>
-                        <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'prompt' }}>Explore Places to</Text>
-                        <Text className="text-[24px] mt-[-8px] text-gray-dark" style={{ fontFamily: 'prompt2' }}>Visit in Thailand</Text>
+                        <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>Explore Places to</Text>
+                        <Text className="text-[24px] mt-[-8px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Visit in Thailand</Text>
                     </View>
                     {/* noti & profile */}
                     <View className="flex flex-row justify-between items-center gap-3">
