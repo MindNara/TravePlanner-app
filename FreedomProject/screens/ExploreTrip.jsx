@@ -41,15 +41,15 @@ export default function ExploreTrip() {
                     </View>
                 </View>
                 {/* SearchBar */}
-                <View style={{flexDirection: 'row', marginTop: 10}}>
+                <View style={{ flexDirection: 'row', marginTop: 10 }}>
                     <View style={[styles.SearchContainer]}>
                         <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
-                        style={{ width: 24, height: 24 }} className="ml-3" />
+                            style={{ width: 24, height: 24 }} className="ml-3" />
                         <TextInput placeholder='Search' className="ml-3" style={[styles.input]}></TextInput>
                     </View>
                     <View style={[styles.sortbtn]}>
-                    <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAy0lEQVR4nO3YSw6CMBSF4X8fitHuXAawAXEBdi+ibgJjchMNYSCP2xRyvuROOijcPsgJICIiGxOAGnhZ1Ta2KifgAXS9aoEjK1Lai1+AnVVjY2fvh8eBFZxb+5/5Dw7zx1SNFM6N3FIdrcZ25dPQNdXRWvqytwMreF/bZcc+tRXwtKqsQRERyVJQat5aao4Ooc47NcfcGyn+bMQ9/U5VKjVnKCg1i4j0KZnmpFwimaYQF06mKSrOacT7f243oialXyXTHAUlUxER4esNlJFPhidtdXQAAAAASUVORK5CYII=' }}
-                        style={{ width: 24, height: 24 }}/>
+                        <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAy0lEQVR4nO3YSw6CMBSF4X8fitHuXAawAXEBdi+ibgJjchMNYSCP2xRyvuROOijcPsgJICIiGxOAGnhZ1Ta2KifgAXS9aoEjK1Lai1+AnVVjY2fvh8eBFZxb+5/5Dw7zx1SNFM6N3FIdrcZ25dPQNdXRWvqytwMreF/bZcc+tRXwtKqsQRERyVJQat5aao4Ooc47NcfcGyn+bMQ9/U5VKjVnKCg1i4j0KZnmpFwimaYQF06mKSrOacT7f243oialXyXTHAUlUxER4esNlJFPhidtdXQAAAAASUVORK5CYII=' }}
+                            style={{ width: 24, height: 24 }} />
                     </View>
                 </View>
                 <View className="mt-6">
@@ -59,13 +59,13 @@ export default function ExploreTrip() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                style={{ width: 148, height: 157, borderRadius: 20}} className="bottom-1"/>
+                                    style={{ width: 148, height: 157, borderRadius: 20 }} className="bottom-1" />
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                style={{ width: 24, height: 26}} className="absolute bottom-16 left-16"/>
+                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
                             <View className="top-16 mr-10">
-                            <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                            <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
+                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
+                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
                             </View>
                         </View>
 
@@ -73,13 +73,13 @@ export default function ExploreTrip() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                style={{ width: 148, height: 157, borderRadius: 20}} className="bottom-1"/>
+                                    style={{ width: 148, height: 157, borderRadius: 20 }} className="bottom-1" />
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                style={{ width: 24, height: 26}} className="absolute bottom-16 left-16"/>
+                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
                             <View className="top-16 mr-10">
-                            <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                            <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
+                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
+                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
                             </View>
                         </View>
                     </View>
@@ -94,8 +94,8 @@ export default function ExploreTrip() {
                         <View className="bg-gray-light w-[212px] h-full p-2 justify-center">
                             <View className="flex flex-row justify-between items-center">
                                 <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
-                                    <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                        style={{ width: 18, height: 18 }} />
+                                <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
+                                    style={{ width: 18, height: 18 }} />
                             </View>
                             <View className="mt-2 w-[full]">
                                 <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</Text>
@@ -103,14 +103,14 @@ export default function ExploreTrip() {
                         </View>
                     </View>
 
-                     {/* Recommended trip 2 */}
+                    {/* Recommended trip 2 */}
                     <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center">
                         <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-3"></View>
                         <View className="bg-gray-light w-[212px] h-full p-2 justify-center">
                             <View className="flex flex-row justify-between items-center">
                                 <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
-                                    <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                        style={{ width: 18, height: 18 }} />
+                                <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
+                                    style={{ width: 18, height: 18 }} />
                             </View>
                             <View className="mt-2 w-[full]">
                                 <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</Text>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    input : {
+    input: {
         fontSize: 18,
         fontWeight: "normal",
     },

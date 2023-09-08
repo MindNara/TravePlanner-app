@@ -61,8 +61,8 @@ export default function Home({ navigation }) {
                         <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>View all</Text>
                     </View>
                     <View className="mt-[20px] flex">
-                        <RecommendedTrip />
-                        <RecommendedTrip />
+                        <RecommendedTrip navigation={navigation} />
+                        <RecommendedTrip navigation={navigation} />
                     </View>
                 </View>
             </View>
