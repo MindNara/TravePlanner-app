@@ -1,7 +1,9 @@
 // export all files on the components folder
 
-import TabBar from "./TabBar";
+import MyTrip from "./MyTrip";
+import RecommendedTrip from "./RecommendedTrip";
 
 export {
-    TabBar,
+    MyTrip,
+    RecommendedTrip,
 };
