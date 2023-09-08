@@ -59,7 +59,7 @@ export default function ExploreTrip() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }} className="bottom-1" />
+                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
                                     style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
@@ -73,7 +73,7 @@ export default function ExploreTrip() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }} className="bottom-1" />
+                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
                                     style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
@@ -89,7 +89,7 @@ export default function ExploreTrip() {
                     <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
 
                     {/* Recommended trip 1 */}
-                    <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center">
+                    <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center mt-2">
                         <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-3"></View>
                         <View className="bg-gray-light w-[212px] h-full p-2 justify-center">
                             <View className="flex flex-row justify-between items-center">
@@ -158,11 +158,12 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     imgPopular: {
-        height: 41,
-        width: 40,
+        height: 30,
+        width: 50,
         justifyContent: "center",
         alignItems: 'center',
-        borderRadius: 10
+        borderRadius: 10,
+        marginBottom: 10
     },
     boxPopular: {
         height: 240,
