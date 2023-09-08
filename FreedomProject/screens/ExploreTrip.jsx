@@ -26,16 +26,6 @@ export default function ExploreTrip() {
     return (
         <SafeAreaView className="container mx-auto bg-white">
             <View className="h-full mx-[26px] mt-10 bg-white">
-                {/* <View className="flex flex-row">
-                <View>
-                    <Text className="text-xl">Explore Places to</Text>
-                    <Text className="text-2xl font-bold">Visit in Thailand</Text>
-                </View>
-                <Image source={{ uri: 'https://img.icons8.com/fluency-systems-regular/48/appointment-reminders--v1.png' }} style={{ width: 28, height: 28 }} className="mt-4 ml-8" />
-                <View style={[styles.boxProfile]} className="mt-3 ml-2"></View>
-                </View> */}
-                {/* <Text className="text-2xl font-bold">Popular Place</Text> */}
-
                 <View className="h-auto w-full flex flex-row justify-between items-center">
                     {/* title */}
                     <View>
