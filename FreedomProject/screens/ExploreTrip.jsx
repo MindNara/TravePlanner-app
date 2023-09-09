@@ -54,13 +54,13 @@ export default function ExploreTrip({ navigation }) {
                             style={{ width: 24, height: 24 }} />
                     </View>
                 </View>
-                <View className="mt-6">
+                <View className="mt-4">
                     <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Popular Places</Text>
-                    <View className="flex flex-row gap-3 mt-[20px] justify-between">
+                    <View className="flex flex-row mt-[20px] justify-between">
                         {/* Popular places box1 */}
-                        <PlaceTrip />
+                        <PlaceTrip navigation={navigation}/>
                         {/* Popular places box2 */}
-                        <PlaceTrip />
+                        <PlaceTrip navigation={navigation}/>
                     </View>
                 </View>
 

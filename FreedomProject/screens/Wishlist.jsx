@@ -10,8 +10,9 @@ import {
     ScrollView,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
+import { PlaceTrip, RecommendedTrip } from '../components/index';
 
-export default function Wishlist() {
+export default function Wishlist({ navigation }) {
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -52,99 +53,27 @@ export default function Wishlist() {
                             style={{ width: 24, height: 24 }} />
                     </View>
                 </View>
-                <View className="mt-4">
-                    <View className="flex flex-row gap-3 mt-1">
+                <View className="mt-2">
+                    <View className="flex flex-row mt-[20px] justify-between">
                         {/* Popular places box1 */}
-                        <View style={[styles.boxPopular]}>
-                            <View style={[styles.imgPopular]}>
-                                <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
-                            </View>
-                            <View className="top-16 mr-10">
-                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                            </View>
-                        </View>
-
+                        <PlaceTrip navigation={navigation}/>
                         {/* Popular places box2 */}
-                        <View style={[styles.boxPopular]}>
-                            <View style={[styles.imgPopular]}>
-                                <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
-                            </View>
-                            <View className="top-16 mr-10">
-                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                            </View>
-                        </View>
+                        <PlaceTrip navigation={navigation}/>
                     </View>
-
-                    <View className="flex flex-row gap-3 mt-1">
+                    <View className="flex flex-row mt-[20px] justify-between">
                         {/* Popular places box1 */}
-                        <View style={[styles.boxPopular]}>
-                            <View style={[styles.imgPopular]}>
-                                <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
-                            </View>
-                            <View className="top-16 mr-10">
-                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                            </View>
-                        </View>
-
+                        <PlaceTrip navigation={navigation}/>
                         {/* Popular places box2 */}
-                        <View style={[styles.boxPopular]}>
-                            <View style={[styles.imgPopular]}>
-                                <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
-                            </View>
-                            <View className="top-16 mr-10">
-                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                            </View>
-                        </View>
+                        <PlaceTrip navigation={navigation}/>
                     </View>
-
-                    <View className="flex flex-row gap-3 mt-1">
+                    <View className="flex flex-row mt-[20px] justify-between">
                         {/* Popular places box1 */}
-                        <View style={[styles.boxPopular]}>
-                            <View style={[styles.imgPopular]}>
-                                <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
-                            </View>
-                            <View className="top-16 mr-10">
-                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                            </View>
-                        </View>
-
+                        <PlaceTrip navigation={navigation}/>
                         {/* Popular places box2 */}
-                        <View style={[styles.boxPopular]}>
-                            <View style={[styles.imgPopular]}>
-                                <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
-                            </View>
-                            <View className="top-16 mr-10">
-                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                            </View>
-                        </View>
+                        <PlaceTrip navigation={navigation}/>
                     </View>
-                </View>
+                </View>      
             </View>
-
         </SafeAreaView>
     );
 }
