@@ -55,7 +55,7 @@ export default function Profile() {
                                     <Text style={{color: 'white', fontFamily: 'promptRegular'}}>SAVE</Text>
                                 </Pressable>
                             </View>
-                            <View className="mt-2">
+                            <View className="mt-3">
                                 <Pressable style={styles.button2} className="border-2 border-red">
                                     <Text style={{color: '#9A1B29', fontFamily: 'promptRegular'}}>LOG OUT</Text>
                                 </Pressable>
