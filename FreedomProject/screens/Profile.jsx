@@ -42,22 +42,22 @@ export default function Profile() {
                                 style={{ width: 24, height: 24 }} className="ml-2 mt-1" />
                         </View>
                         <View>
-                            <Text className="text-[20px] p-2" style={{fontFamily: 'promptRegular'}}>Firstname</Text>
+                            <Text className="text-[20px] p-1" style={{fontFamily: 'promptRegular'}}>Firstname</Text>
                             <TextInput style={[styles.input]}></TextInput>
-                            <Text className="text-[20px] p-2" style={{fontFamily: 'promptRegular'}}>Lastname</Text>
+                            <Text className="text-[20px] p-1" style={{fontFamily: 'promptRegular'}}>Lastname</Text>
                             <TextInput style={[styles.input]}></TextInput>
-                            <Text className="text-[20px] p-2" style={{fontFamily: 'promptRegular'}}>Email</Text>
+                            <Text className="text-[20px] p-1" style={{fontFamily: 'promptRegular'}}>Email</Text>
                             <TextInput style={[styles.input]}></TextInput>
-                            <Text className="text-[20px] p-2" style={{fontFamily: 'promptRegular'}}>Password</Text>
+                            <Text className="text-[20px] p-1" style={{fontFamily: 'promptRegular'}}>Password</Text>
                             <TextInput style={[styles.input]}></TextInput>
                             <View className="mt-5">
                                 <Pressable style={styles.button}>
-                                    <Text style={{color: 'white'}}>SAVE</Text>
+                                    <Text style={{color: 'white', fontFamily: 'promptRegular'}}>SAVE</Text>
                                 </Pressable>
                             </View>
                             <View className="mt-2">
                                 <Pressable style={styles.button2} className="border-2 border-red">
-                                    <Text style={{color: '#9A1B29'}}>LOG OUT</Text>
+                                    <Text style={{color: '#9A1B29', fontFamily: 'promptRegular'}}>LOG OUT</Text>
                                 </Pressable>
                             </View>
                             
