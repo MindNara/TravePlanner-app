@@ -49,8 +49,8 @@ export default function Home({ navigation }) {
                 <View className="bg-white h-auto w-full mt-[12px] mb-[20px]">
                     <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>My Trips</Text>
                     <View className="mt-[20px] flex flex-row justify-between">
-                        <MyTrip />
-                        <MyTrip />
+                        <MyTrip navigation={navigation} />
+                        <MyTrip navigation={navigation} />
                     </View>
                 </View>
 
