@@ -7,6 +7,7 @@ import Wishlist from "./Wishlist";
 import Profile from "./Profile";
 import Intro from "./Intro";
 import PlaceDetail from "./PlaceDetail";
+import TripPlan from "./TripPlan";
 
 export {
     Home,
@@ -16,4 +17,5 @@ export {
     Profile,
     Intro,
     PlaceDetail,
+    TripPlan
 };
