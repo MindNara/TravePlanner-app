@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     boxPopular: {
-        height: 240,
+        height: 220,
         width: 170,
         backgroundColor: "#F8F8F8",
         justifyContent: "center",
