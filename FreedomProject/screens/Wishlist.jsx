@@ -6,7 +6,8 @@ import {
     View,
     Image,
     StyleSheet,
-    TextInput
+    TextInput,
+    ScrollView,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
@@ -33,7 +34,7 @@ export default function Wishlist() {
                         <Text className="text-[29px] mt-[-10px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Wishlist</Text>
                     </View>
                     {/* noti & profile */}
-                    <View className="flex flex-row justify-between items-center gap-3">
+                    <View className="flex flex-row justify-between items-center gap-5">
                         <Image source={{ uri: 'https://img.icons8.com/sf-regular/96/2E2E2E/appointment-reminders.png' }}
                             style={{ width: 28, height: 28 }} />
                         <Text className="w-[56px] h-[56px] bg-gray-dark rounded-xl"></Text>
@@ -57,7 +58,7 @@ export default function Wishlist() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
+                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
                                     style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
@@ -71,7 +72,7 @@ export default function Wishlist() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
+                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
                                     style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
@@ -87,7 +88,7 @@ export default function Wishlist() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
+                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
                                     style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
@@ -101,7 +102,7 @@ export default function Wishlist() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
+                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
                                     style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
@@ -117,7 +118,7 @@ export default function Wishlist() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
+                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
                                     style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>
@@ -131,7 +132,7 @@ export default function Wishlist() {
                         <View style={[styles.boxPopular]}>
                             <View style={[styles.imgPopular]}>
                                 <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
+                                    style={{ width: 148, height: 157, borderRadius: 20 }} />
                                 <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
                                     style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
                             </View>

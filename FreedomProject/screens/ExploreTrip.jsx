@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function ExploreTrip() {
+import { PlaceTrip, RecommendedTrip } from '../components/index';
+
+export default function ExploreTrip({ navigation }) {
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -54,68 +56,22 @@ export default function ExploreTrip() {
                 </View>
                 <View className="mt-6">
                     <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Popular Places</Text>
-                    <View className="flex flex-row gap-3 mt-1">
+                    <View className="flex flex-row gap-3 mt-[20px] justify-between">
                         {/* Popular places box1 */}
-                        <View style={[styles.boxPopular]}>
-                            <View style={[styles.imgPopular]}>
-                                <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
-                            </View>
-                            <View className="top-16 mr-10">
-                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                            </View>
-                        </View>
-
+                        <PlaceTrip />
                         {/* Popular places box2 */}
-                        <View style={[styles.boxPopular]}>
-                            <View style={[styles.imgPopular]}>
-                                <Image source={require('../assets/TripImage.png')}
-                                    style={{ width: 148, height: 157, borderRadius: 20 }}/>
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABsklEQVR4nO2XTStEURjHf2LhNcOGrcJCERuS7JWlBWVNCkX5Jj4BxkvTbEhM+QI+ASMpWQxF3l8XHJ16pqSYueeeO/fI+dW/ptvMc35Pc+99zgGPx+PxeP4RNcAYsArsAydAFtgEpoHGImro78zIb7JSQ9dKAqNAdRTiZcAkcA6oX3InjfyEFr8vUCMHTMiaVqgC1gss+j0bQO2XGvpzKmCNVaAyrHyZgXw+u0AFUA5sGdZIh/0n5g0XzmdREqbGrKl8A3AdcnEbuQISJg1MOyCvJFMmDWQcEFeSHZMGzhwQV5JTkwZeHRBXEu0SmAcHxNWXARmYIwfEleTQpIENB8SVZM2kgXEHxJVEbyADUwc8OyD/Ii5GpB1oIEUIuoD3GOXfgR5CEufDnMQC7cBbTMOrFUssxNDAHBbRh4rtEspnbB4p8zQXcSa2kRzQRER0RnzIubXx1ilEP/AYgfwzMEiJGLY8pZ+AIUpML3BhQf4SGCAmWoCDEPLHQBsxk5CJGVR+GajHIUbkdigkfiNbdSfRs2Llhw2gvrYU5TveJh2yDf4Q+T2gmz9In8Tj8Xg8OMkn7FcpedVOGikAAAAASUVORK5CYII=' }}
-                                    style={{ width: 24, height: 26 }} className="absolute bottom-16 left-16" />
-                            </View>
-                            <View className="top-16 mr-10">
-                                <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                                <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                            </View>
-                        </View>
+                        <PlaceTrip />
                     </View>
                 </View>
 
-                <View className="mt-6">
+                <View className="mt-[30px]">
                     <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
 
-                    {/* Recommended trip 1 */}
-                    <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center mt-2">
-                        <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-3"></View>
-                        <View className="bg-gray-light w-[212px] h-full p-2 justify-center">
-                            <View className="flex flex-row justify-between items-center">
-                                <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
-                                <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                    style={{ width: 18, height: 18 }} />
-                            </View>
-                            <View className="mt-2 w-[full]">
-                                <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</Text>
-                            </View>
-                        </View>
-                    </View>
-
-                    {/* Recommended trip 2 */}
-                    <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center">
-                        <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-3"></View>
-                        <View className="bg-gray-light w-[212px] h-full p-2 justify-center">
-                            <View className="flex flex-row justify-between items-center">
-                                <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
-                                <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                    style={{ width: 18, height: 18 }} />
-                            </View>
-                            <View className="mt-2 w-[full]">
-                                <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</Text>
-                            </View>
-                        </View>
+                    <View className="mt-[20px] flex">
+                        {/* Recommended trip 1 */}
+                        <RecommendedTrip navigation={navigation} />
+                        {/* Recommended trip 2 */}
+                        <RecommendedTrip navigation={navigation} />
                     </View>
                 </View>
             </View>

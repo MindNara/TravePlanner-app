@@ -2,8 +2,10 @@
 
 import MyTrip from "./MyTrip";
 import RecommendedTrip from "./RecommendedTrip";
+import PlaceTrip from "./PlaceTrip";
 
 export {
     MyTrip,
     RecommendedTrip,
+    PlaceTrip,
 };
