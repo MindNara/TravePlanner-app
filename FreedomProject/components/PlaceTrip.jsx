@@ -27,6 +27,9 @@ export default function PlaceTrip({ navigation }) {
 
     return (
         <SafeAreaView>
+            <Pressable onPress={() => {
+                navigation.navigate("PlaceDetail");
+            }}>
             <View style={[styles.boxPopular]}>
                 <View style={[styles.imgPopular]}>
                     <Image source={require('../assets/TripImage.png')}
@@ -39,6 +42,7 @@ export default function PlaceTrip({ navigation }) {
                     <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
                 </View>
             </View>
+            </Pressable>
         </SafeAreaView>
     );
 
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     },
     boxPopular: {
         height: 240,
-        width: 170,
+        width: 165,
         backgroundColor: "#F8F8F8",
         justifyContent: "center",
         alignItems: 'center',
