@@ -46,7 +46,7 @@ export default function CreateTrip({ navigation }) {
 
                 {/* Content */}
                 <View className="mx-[32px] pt-8">
-                    <View className="relative bg-white w-full h-auto rounded-[20px] shadow-xl">
+                    <View className="relative bg-white w-full h-auto rounded-[20px] shadow-lg shadow-black">
                         <View className="bg-white m-[30px]">
                             {/* Title */}
                             <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-5 px-6 justify-center">
@@ -80,9 +80,9 @@ export default function CreateTrip({ navigation }) {
                         </View>
 
                         {/* Background: Spot */}
-                        <View className="absolute bg-gray-light w-[20px] h-[20px] rounded-xl bottom-[100px] left-[-10]"></View>
-                        <View className="absolute w-[327px] h-[1px] left-[10px] bottom-[110px] border-dashed border-[0.8px] border-gray-dark opacity-50"></View>
-                        <View className="absolute bg-gray-light w-[20px] h-[20px] rounded-xl bottom-[100px] right-[-10]"></View>
+                        {/* <View className="absolute bg-gray-light w-[20px] h-[20px] rounded-xl bottom-[100px] left-[-10]"></View> */}
+                        <View className="absolute w-[327px] h-[1px] left-[10px] bottom-[110px] border-dashed border-[0.8px] border-gray-dark opacity-30"></View>
+                        {/* <View className="absolute bg-gray-light w-[20px] h-[20px] rounded-xl bottom-[100px] right-[-10]"></View> */}
 
                         {/* Btn Start Planning */}
                         <Pressable onPress={() => {
@@ -90,6 +90,14 @@ export default function CreateTrip({ navigation }) {
                         }} className="bg-gray-dark h-[50px] m-[30px] rounded-[10px] justify-center items-center">
                             <Text className="text-[12px] text-gray-light tracking-[2px]" style={{ fontFamily: 'promptMedium' }}>START PLANNING</Text>
                         </Pressable>
+
+                        {/* Background: Spot */}
+                        {/* <View className="absolute bg-gray-light w-[30px] h-[30px] rounded-2xl bottom-[-15px] left-[35px]"></View>
+                        <View className="absolute bg-gray-light w-[30px] h-[30px] rounded-2xl bottom-[-15px] left-[85px]"></View>
+                        <View className="absolute bg-gray-light w-[30px] h-[30px] rounded-2xl bottom-[-15px] left-[135px]"></View>
+                        <View className="absolute bg-gray-light w-[30px] h-[30px] rounded-2xl bottom-[-15px] left-[185px]"></View>
+                        <View className="absolute bg-gray-light w-[30px] h-[30px] rounded-2xl bottom-[-15px] left-[235px]"></View>
+                        <View className="absolute bg-gray-light w-[30px] h-[30px] rounded-2xl bottom-[-15px] left-[285px]"></View> */}
                     </View>
                 </View>
             </View>
