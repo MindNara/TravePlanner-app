@@ -30,7 +30,7 @@ export default function TripPlan({ navigation }) {
         <SafeAreaView className="relative container mx-auto h-full bg-white" >
             {/* Btn Create Trip */}
             <Pressable className="absolute z-10 bottom-10 right-10" onPress={() => {
-                navigation.navigate("Home");
+                navigation.navigate("TripPlanBottomSheet");
             }}>
                 <View className="w-[46px] h-[46px] bg-gray-dark rounded-3xl fixed z-20 right-0 bottom-0 justify-center items-center shadow-lg shadow-gray-dark">
                     <Image className="" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/96/F8F8F8/passenger-with-baggage.png' }}

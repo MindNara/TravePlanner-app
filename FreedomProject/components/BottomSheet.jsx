@@ -26,8 +26,8 @@ export default function BottomSheet({ navigation }) {
     }
 
     return (
-        <SafeAreaView>
-
+        <SafeAreaView className="flex-1 container justify-center items-center">
+            <Text>Trip Plan Bottom Sheet</Text>
         </SafeAreaView>
     );
 
