@@ -41,7 +41,7 @@ export default function Intro({ navigation }) {
                     </View>
                     <Pressable className="mx-[32px] items-center flex flex-row justify-end gap-x-2 mt-5"
                         onPress={() => {
-                            navigation.navigate("Content");
+                            navigation.navigate("SignUp");
                         }}>
                         <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Get Start</Text>
                         <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/long-arrow-right.png' }}

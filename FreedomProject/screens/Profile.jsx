@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function Profile() {
+export default function Profile({ navigation}) {
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -56,7 +56,9 @@ export default function Profile() {
                                 </Pressable>
                             </View>
                             <View className="mt-3">
-                                <Pressable style={styles.button2} className="border-2 border-red">
+                                <Pressable style={styles.button2} className="border-2 border-red" onPress={() => {
+                                navigation.navigate("Intro");
+                                }}>
                                     <Text style={{color: '#9A1B29', fontFamily: 'promptRegular'}}>LOG OUT</Text>
                                 </Pressable>
                             </View>

@@ -8,6 +8,8 @@ import Profile from "./Profile";
 import Intro from "./Intro";
 import PlaceDetail from "./PlaceDetail";
 import TripPlan from "./TripPlan";
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 
 export {
     Home,
@@ -17,5 +19,7 @@ export {
     Profile,
     Intro,
     PlaceDetail,
-    TripPlan
+    TripPlan,
+    SignUp,
+    SignIn
 };
