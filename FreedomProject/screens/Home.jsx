@@ -47,7 +47,14 @@ export default function Home({ navigation }) {
 
                 {/* My Trip */}
                 <View className="bg-white h-auto w-full mt-[12px] mb-[20px]">
-                    <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>My Trips</Text>
+                    <View className="flex flex-row justify-between items-center">
+                        <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>My Trips</Text>
+                        <Pressable onPress={() => {
+                            // navigation.navigate("");
+                        }}>
+                            <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>All Trips</Text>
+                        </Pressable>
+                    </View>
                     <View className="mt-[20px] flex flex-row justify-between">
                         <MyTrip navigation={navigation} />
                         <MyTrip navigation={navigation} />
@@ -58,7 +65,11 @@ export default function Home({ navigation }) {
                 <View className="bg-white h-auto w-full mb-5">
                     <View className="flex flex-row justify-between items-center">
                         <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
-                        <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>View all</Text>
+                        <Pressable onPress={() => {
+                            navigation.navigate("ExploreTrip");
+                        }}>
+                            <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>View All</Text>
+                        </Pressable>
                     </View>
                     <View className="mt-[20px] flex">
                         <RecommendedTrip navigation={navigation} />
