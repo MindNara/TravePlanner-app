@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Intro, PlaceDetail, TripPlan, SignUp, SignIn } from "../screens/index";
 import { BottomSheet } from "../components/index";
 import { TabBar } from "../navigator/index";
+import MyDreamTrip from "../screens/MyDreamTrip";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -21,6 +22,7 @@ function MainNavigator() {
             <Stack.Screen name="Content" component={TabBar} />
             <Stack.Screen name="PlaceDetail" component={PlaceDetailNavigator} />
             <Stack.Screen name="TripPlan" component={CreateTripNavigator} />
+            <Stack.Screen name="MyDreamTrip" component={MyDreamTrip}/>
         </Stack.Navigator>
     );
 }

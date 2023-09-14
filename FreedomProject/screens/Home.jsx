@@ -50,7 +50,7 @@ export default function Home({ navigation }) {
                     <View className="flex flex-row justify-between items-center">
                         <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>My Trips</Text>
                         <Pressable onPress={() => {
-                            // navigation.navigate("");
+                            navigation.navigate("MyDreamTrip");
                         }}>
                             <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>All Trips</Text>
                         </Pressable>
