@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { Intro, PlaceDetail, TripPlan, SignUp, SignIn, TripDetail } from "../screens/index";
-import { BottomSheet } from "../components/index";
 import { TabBar } from "../navigator/index";
 import MyDreamTrip from "../screens/MyDreamTrip";
 
@@ -54,7 +53,6 @@ function CreateTripNavigator() {
             headerShown: false,
         }}>
             <Stack.Screen name="MainTripPlan" component={TripPlan} />
-            <Stack.Screen name="TripPlanBottomSheet" component={BottomSheet} />
         </Stack.Navigator>
     );
 }

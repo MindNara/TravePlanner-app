@@ -4,7 +4,6 @@ import MyTrip from "./MyTrip";
 import RecommendedTrip from "./RecommendedTrip";
 import PlaceTrip from "./PlaceTrip";
 import TripEventBox from "./TripEventBox";
-import BottomSheet from "./BottomSheet";
 import MyAllTrip from "./MyAllTrip";
 import TripOnDay from "./TripOnDay";
 
@@ -13,7 +12,6 @@ export {
     RecommendedTrip,
     PlaceTrip,
     TripEventBox,
-    BottomSheet,
     MyAllTrip,
     TripOnDay
     

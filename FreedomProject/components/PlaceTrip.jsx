@@ -32,7 +32,7 @@ export default function PlaceTrip({ navigation }) {
             }}>
             <View style={[styles.boxPopular]}>
                 <View style={[styles.imgPopular]}>
-                    <Image source={require('../assets/TripImage.png')}
+                    <Image source={require('../assets/ExploreTripImage.png')}
                         style={{ width: 148, height: 157, borderRadius: 20 }} />
                     <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
                         style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16" />
