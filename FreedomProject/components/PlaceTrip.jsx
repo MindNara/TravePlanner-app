@@ -35,7 +35,7 @@ export default function PlaceTrip({ navigation }) {
                     <Image source={require('../assets/TripImage.png')}
                         style={{ width: 148, height: 157, borderRadius: 20 }} />
                     <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
-                        style={{ width: 25, height: 25 }} className="absolute bottom-16 left-16" />
+                        style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16" />
                 </View>
                 <View className="top-16 mr-10">
                     <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
