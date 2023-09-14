@@ -6,7 +6,8 @@ import {
     StyleSheet,
     Image,
     Pressable,
-    ImageBackground
+    ImageBackground,
+    ScrollView
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import {TripOnDay} from '../components/index';
@@ -47,6 +48,7 @@ export default function TripDetail({ navigation }) {
             </View>
             {/* Content */}
             <View className="absolute bottom-0 bg-white w-full h-[720px] rounded-t-[50px]">
+            <ScrollView>
                 <View className="mx-[32px] pt-10">
                     <View className="flex flex-row">
                         <View style={[styles.textbox, {alignItems:'center', justifyContent: 'center'}]}>
@@ -55,25 +57,48 @@ export default function TripDetail({ navigation }) {
                         <Text className="text-[32px] top-2 left-3 text-gray-dark mt-[-6px]" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
                     </View>
                     <View className="pt-4">
+                        {/* box day1 */}
                         <View className="flex flex-row">
                             <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
                                 <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
                             </View>
                             <Text className="text-[20px] top-[-2.5]" style={{ fontFamily: 'promptBold'}}>DAY 1</Text>
                         </View>
-                        
-                        
-                            <View className=" w-[100%] h-[100%] rounded-b-lg  border-dashed border-l-2 border-black">
-                                <View style={{alignItems: "center", justifyContent: "center"}}>
-                                    <TripOnDay></TripOnDay>
-                                </View>
+                        <View className=" w-[100%] h-[220] border-dashed border-l-2 border-black">
+                            <View style={{alignItems: "center", justifyContent: "center"}}>
+                                <TripOnDay navigation={navigation}></TripOnDay>
                             </View>
-                       
-                        
-                    
+                        </View>
 
+                        {/* box day2 */}
+                        <View className="flex flex-row">
+                            <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
+                                <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
+                            </View>
+                            <Text className="text-[20px] top-[-2.5]" style={{ fontFamily: 'promptBold'}}>DAY 2</Text>
+                        </View>
+                        <View className=" w-[100%] h-[220] border-dashed border-l-2 border-black">
+                            <View style={{alignItems: "center", justifyContent: "center"}}>
+                                <TripOnDay navigation={navigation}></TripOnDay>
+                            </View>
+                        </View>
+
+                        {/* box day3 */}
+                        <View className="flex flex-row">
+                            <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
+                                <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
+                            </View>
+                            <Text className="text-[20px] top-[-2.5]" style={{ fontFamily: 'promptBold'}}>DAY 3</Text>
+                        </View>
+                        <View className=" w-[100%] h-[220] border-dashed border-l-2 border-black">
+                            <View style={{alignItems: "center", justifyContent: "center"}}>
+                                <TripOnDay navigation={navigation}></TripOnDay>
+                            </View>
+                        </View>
+                    
                     </View>
                 </View>
+            </ScrollView>  
             </View>
         </SafeAreaView>
     );
