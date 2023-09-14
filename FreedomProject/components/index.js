@@ -6,6 +6,7 @@ import PlaceTrip from "./PlaceTrip";
 import TripEventBox from "./TripEventBox";
 import BottomSheet from "./BottomSheet";
 import MyAllTrip from "./MyAllTrip";
+import TripOnDay from "./TripOnDay";
 
 export {
     MyTrip,
@@ -13,6 +14,7 @@ export {
     PlaceTrip,
     TripEventBox,
     BottomSheet,
-    MyAllTrip
+    MyAllTrip,
+    TripOnDay
     
 };

@@ -28,18 +28,18 @@ export default function RecommendedTrip({ navigation }) {
     return (
         <SafeAreaView>
             <Pressable onPress={() => {
-                navigation.navigate("TripDetail");
+                // navigation.navigate("TripDetail");
             }}>
-                <View className="bg-gray-light w-full h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center">
-                    <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-3"></View>
-                    <View className="bg-gray-light w-[212px] h-full p-2 justify-center">
-                        <View className="flex flex-row justify-between items-center">
-                            <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
+                <View className="bg-gray-light w-[320] h-[220px] p-2 rounded-[20px] mb-4">
+                    <View className="flex flex-row ">
+                        <Image source={require('../assets/TripImage.png')}
+                        style={{ width: 145, height: 200, borderRadius: 20 }} />
+                        <View className="pt-2">
                             <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                style={{ width: 18, height: 18 }} />
-                        </View>
-                        <View className="mt-2 w-[full]">
-                            <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</Text>
+                                style={{ width: 20, height: 20 }} className="left-32"/>
+                            <Text className="text-[16px] pl-3 top-[-2]" style={{ fontFamily: 'promptRegular'}}>PLACE</Text>
+                            <Text className="text-[22px] pl-3 top-[-2]" style={{ fontFamily: 'promptSemiBold'}}>Place Name</Text>
+                            <Text className="text-[12px] w-[160] pl-4 mt-2" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consecoert adipisciot eit sed do.Lorem ipsum dolor sit amet.</Text>
                         </View>
                     </View>
                 </View>

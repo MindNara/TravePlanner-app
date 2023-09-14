@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { Intro, PlaceDetail, TripPlan, SignUp, SignIn } from "../screens/index";
+import { Intro, PlaceDetail, TripPlan, SignUp, SignIn, TripDetail } from "../screens/index";
 import { BottomSheet } from "../components/index";
 import { TabBar } from "../navigator/index";
 import MyDreamTrip from "../screens/MyDreamTrip";
@@ -23,6 +23,7 @@ function MainNavigator() {
             <Stack.Screen name="PlaceDetail" component={PlaceDetailNavigator} />
             <Stack.Screen name="TripPlan" component={CreateTripNavigator} />
             <Stack.Screen name="MyDreamTrip" component={MyDreamTrip}/>
+            <Stack.Screen name="TripDetail" component={TripDetail}/>
         </Stack.Navigator>
     );
 }
@@ -33,6 +34,16 @@ function PlaceDetailNavigator() {
             headerShown: false,
         }}>
             <Stack.Screen name="RecommandTripDetail" component={PlaceDetail} />
+        </Stack.Navigator>
+    );
+}
+
+function TripDetailNavigator() {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerShown: false,
+        }}>
+            <Stack.Screen name="TripDetailNavigator" component={TripDetail} />
         </Stack.Navigator>
     );
 }
