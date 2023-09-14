@@ -19,7 +19,7 @@ export default function TripPlan({ navigation }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const bottomSheetModelRef = useRef(null);
-    const snapPoints = ["25%", "48%", "75%"];
+    const snapPoints = ["56%"];
 
     function handlePresentModel() {
         bottomSheetModelRef.current?.present();
@@ -45,28 +45,23 @@ export default function TripPlan({ navigation }) {
                 {/* Bottom Sheet */}
                 <BottomSheetModal
                     ref={bottomSheetModelRef}
-                    index={1}
+                    index={0}
                     snapPoints={snapPoints}
                     backgroundStyle={{ borderRadius: 50 }}
                     onDismiss={() => setIsOpen(false)}
-                    style={{ zIndex: 20 }}
                 >
-                    <Text>Bottom Sheet</Text>
+                    <View className="bg-red h-full mx-[32px] my-[30px]">
+                        <Text>Test</Text>
+                    </View>
                 </BottomSheetModal>
 
-                {/* Background */}
-                {isOpen && (
-                    <View className="absolute z-10 h-full w-full bg-gray-dark opacity-50" />
-                )}
-
                 {/* Btn Create Trip */}
-                <Pressable
-                    className="absolute z-30 bottom-10 right-10"
+                <Pressable style={{ zIndex: isOpen ? 0 : 2 }}
+                    className="absolute bottom-10 right-10"
                     onPress={handlePresentModel}
                 >
-                    <View className="w-[46px] h-[46px] bg-gray-dark rounded-3xl fixed z-30 right-0 bottom-0 justify-center items-center shadow-lg shadow-gray-dark">
+                    <View className="w-[46px] h-[46px] bg-gray-dark rounded-3xl fixed right-0 bottom-0 justify-center items-center shadow-lg shadow-gray-dark">
                         <Image
-                            className=""
                             source={{
                                 uri: "https://img.icons8.com/fluency-systems-regular/96/F8F8F8/passenger-with-baggage.png",
                             }}
@@ -76,6 +71,11 @@ export default function TripPlan({ navigation }) {
                 </Pressable>
 
                 <ScrollView>
+                    {/* Background */}
+                    {isOpen && (
+                        <View style={{ zIndex: 3 }} className="absolute h-full w-full bg-gray-dark opacity-30" />
+                    )}
+
                     {/* Header & Image */}
                     <View className="w-full h-auto pb-[40px] bg-blue-light rounded-b-[50px]">
                         <View className="mx-[32px] pt-16 flex flex-row justify-between">
