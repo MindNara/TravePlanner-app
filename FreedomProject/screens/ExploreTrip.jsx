@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-import { PlaceTrip, RecommendedTrip } from '../components/index';
+import { PlaceTrip, RecommendedTrip, Header } from '../components/index';
 
 export default function ExploreTrip({ navigation }) {
 
@@ -31,19 +31,11 @@ export default function ExploreTrip({ navigation }) {
         <ScrollView>
             <SafeAreaView className="container mx-auto bg-white">
                 <View className="h-full mx-[32px] pt-14 bg-white">
-                    <View className="h-auto w-full flex flex-row justify-between items-center">
-                        {/* title */}
-                        <View>
-                            <Text className="text-[25px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>Explore Places to</Text>
-                            <Text className="text-[29px] mt-[-10px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Visit in Thailand</Text>
-                        </View>
-                        {/* noti & profile */}
-                        <View className="flex flex-row justify-between items-center gap-3">
-                            <Image source={{ uri: 'https://img.icons8.com/sf-regular/96/2E2E2E/appointment-reminders.png' }}
-                                style={{ width: 28, height: 28 }} />
-                            <Text className="w-[56px] h-[56px] bg-gray-dark rounded-xl"></Text>
-                        </View>
+                    {/* Header */}
+                    <View>
+                        <Header title={"Explore Places to"} subtitle={"Visit in Thailand"} />
                     </View>
+
                     {/* SearchBar */}
                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
                         <View style={[styles.SearchContainer]}>
