@@ -32,7 +32,7 @@ export default function Home({ navigation }) {
             <View className="mx-[32px] pt-14 bg-white gap-y-[24px]">
                 {/* Header */}
                 <View>
-                    <Header title={"Hello"} subtitle={"Username"} />
+                    <Header screen={"Home"} title={"Hello"} subtitle={"Username"} />
                 </View>
 
                 {/* My Trip */}

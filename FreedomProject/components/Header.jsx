@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -11,7 +11,9 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function Header({ title, subtitle }) {
+export default function Header({ screen, title, subtitle }) {
+
+    const [Noti, setNoti] = useState(false);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -28,15 +30,22 @@ export default function Header({ title, subtitle }) {
     return (
         <SafeAreaView>
             <View className="h-auto w-full flex flex-row justify-between items-center">
-                {/* title */}
+                {/* Title */}
                 <View>
                     <Text className="text-[26px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{title}</Text>
                     <Text className="text-[30px] mt-[-10px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>{subtitle}</Text>
                 </View>
-                {/* noti & profile */}
-                <View style={{ gap: title == "Explore Places to" ? 10 : 20 }} className="flex flex-row justify-between items-center">
-                    <Image source={{ uri: 'https://img.icons8.com/sf-regular/96/2E2E2E/appointment-reminders.png' }}
-                        style={{ width: 28, height: 28 }} />
+
+                {/* Noti & Profile */}
+                <View style={{ gap: screen == "ExploreTrip" ? 10 : 20 }} className="flex flex-row justify-between items-center">
+
+                    {/* Notifiaction */}
+                    <Pressable>
+                        <Image source={{ uri: 'https://img.icons8.com/sf-regular/96/2E2E2E/appointment-reminders.png' }}
+                            style={{ width: 28, height: 28 }} />
+                    </Pressable>
+
+                    {/* Profile */}
                     <Text className="w-[56px] h-[56px] bg-gray-dark rounded-xl"></Text>
                 </View>
             </View>

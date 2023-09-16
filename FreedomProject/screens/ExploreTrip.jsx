@@ -33,7 +33,7 @@ export default function ExploreTrip({ navigation }) {
                 <View className="h-full mx-[32px] pt-14 bg-white">
                     {/* Header */}
                     <View>
-                        <Header title={"Explore Places to"} subtitle={"Visit in Thailand"} />
+                        <Header screen={"ExploreTrip"} title={"Explore Places to"} subtitle={"Visit in Thailand"} />
                     </View>
 
                     {/* SearchBar */}

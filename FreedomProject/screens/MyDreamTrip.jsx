@@ -10,7 +10,7 @@ import {
     ScrollView,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
-import { MyAllTrip } from '../components/index';
+import { MyAllTrip, Header } from '../components/index';
 
 export default function MyDreamTrip({ navigation }) {
     const [loaded] = useFonts({
@@ -28,19 +28,11 @@ export default function MyDreamTrip({ navigation }) {
     return (
         <SafeAreaView className="container mx-auto bg-white">
             <View className="h-full mx-[32px] pt-14 bg-white">
-                <View className="h-auto w-full flex flex-row justify-between items-center">
-                    {/* title */}
-                    <View>
-                        <Text className="text-[25px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>My Perfect</Text>
-                        <Text className="text-[29px] mt-[-10px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Dream Trip</Text>
-                    </View>
-                    {/* noti & profile */}
-                    <View className="flex flex-row justify-between items-center gap-5">
-                        <Image source={{ uri: 'https://img.icons8.com/sf-regular/96/2E2E2E/appointment-reminders.png' }}
-                            style={{ width: 28, height: 28 }} />
-                        <Text className="w-[56px] h-[56px] bg-gray-dark rounded-xl"></Text>
-                    </View>
+                {/* Header */}
+                <View>
+                    <Header screen={"MyDreamTrip"} title={"My Perfect"} subtitle={"Dream Trip"} />
                 </View>
+
                 {/* SearchBar */}
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                     <View style={[styles.SearchContainer]}>
@@ -55,18 +47,18 @@ export default function MyDreamTrip({ navigation }) {
                 </View>
                 <View className="mt-2">
                     <View className="flex flex-row mt-[20px] justify-between">
-                        <MyAllTrip navigation={navigation}/>
-                        <MyAllTrip navigation={navigation}/>
+                        <MyAllTrip navigation={navigation} />
+                        <MyAllTrip navigation={navigation} />
                     </View>
                     <View className="flex flex-row mt-[20px] justify-between">
-                        <MyAllTrip navigation={navigation}/>
-                        <MyAllTrip navigation={navigation}/>
+                        <MyAllTrip navigation={navigation} />
+                        <MyAllTrip navigation={navigation} />
                     </View>
                     <View className="flex flex-row mt-[20px] justify-between">
-                        <MyAllTrip navigation={navigation}/>
-                        <MyAllTrip navigation={navigation}/>
+                        <MyAllTrip navigation={navigation} />
+                        <MyAllTrip navigation={navigation} />
                     </View>
-                </View>      
+                </View>
             </View>
         </SafeAreaView>
     );

@@ -31,7 +31,7 @@ export default function Wishlist({ navigation }) {
                 <View className="h-full mx-[32px] pt-14 bg-white">
                     {/* Header */}
                     <View>
-                        <Header title={"My Travel"} subtitle={"Wishlist"} />
+                        <Header screen={"Wishlist"} title={"My Travel"} subtitle={"Wishlist"} />
                     </View>
 
                     {/* SearchBar */}
