@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function Profile({ navigation}) {
+export default function Profile({ navigation }) {
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -26,43 +26,51 @@ export default function Profile({ navigation}) {
 
     return (
         <SafeAreaView className="container mx-auto h-full bg-blue-light " >
-            <View className="absolute w-full h-[600px] bottom-0 bg-white rounded-t-[50px]">
+            <View className="absolute w-full h-[620px] bottom-0 bg-white rounded-t-[50px]">
                 <View>
-                    <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[120]" style={{backgroundColor: "#F8F8F8"}}></View>
+                    <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[120]" style={{ backgroundColor: "#F8F8F8" }}></View>
                     <View className="ml-[250] mt-2">
                         <View style={[styles.picbtn]} className="rounded-full">
                             <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/30/FFFFFF/edit-image.png' }}
-                            style={{ width: 24, height: 24 }} />
+                                style={{ width: 24, height: 24 }} />
                         </View>
-                    </View>    
-                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                        <View className="mt-10 ml-6 flex flex-row">
-                            <Text className="text-[24px]" style={{fontFamily: 'promptSemiBold'}}>USERNAME</Text>
+                    </View>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <View className="mt-8 ml-6 flex flex-row">
+                            <Text className="text-[24px]" style={{ fontFamily: 'promptSemiBold' }}>USERNAME</Text>
                             <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
                                 style={{ width: 24, height: 24 }} className="ml-2 mt-1" />
                         </View>
-                        <View>
-                            <Text className="text-[20px] p-1" style={{fontFamily: 'promptRegular'}}>Firstname</Text>
-                            <TextInput style={[styles.input]}></TextInput>
-                            <Text className="text-[20px] p-1" style={{fontFamily: 'promptRegular'}}>Lastname</Text>
-                            <TextInput style={[styles.input]}></TextInput>
-                            <Text className="text-[20px] p-1" style={{fontFamily: 'promptRegular'}}>Email</Text>
-                            <TextInput style={[styles.input]}></TextInput>
-                            <Text className="text-[20px] p-1" style={{fontFamily: 'promptRegular'}}>Password</Text>
-                            <TextInput style={[styles.input]}></TextInput>
-                            <View className="mt-5">
+                        <View className="mt-8">
+                            <View>
+                                <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                                <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
+                            </View>
+                            <View className="mt-6">
+                                <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                                <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
+                            </View>
+                            <View className="mt-6">
+                                <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                                <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
+                            </View>
+                            <View className="mt-6">
+                                <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                                <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
+                            </View>
+                            <View className="mt-[30px]">
                                 <Pressable style={styles.button}>
-                                    <Text style={{color: 'white', fontFamily: 'promptRegular'}}>SAVE</Text>
+                                    <Text className="text-[14px] tracking-[1px]" style={{ color: 'white', fontFamily: 'promptSemiBold' }}>SAVE</Text>
                                 </Pressable>
                             </View>
-                            <View className="mt-3">
-                                <Pressable style={styles.button2} className="border-2 border-red" onPress={() => {
-                                navigation.navigate("Intro");
+                            <View className="mt-[16px]">
+                                <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
+                                    navigation.navigate("Intro");
                                 }}>
-                                    <Text style={{color: '#9A1B29', fontFamily: 'promptRegular'}}>LOG OUT</Text>
+                                    <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
                                 </Pressable>
                             </View>
-                            
+
                         </View>
                     </View>
                 </View>
@@ -74,10 +82,10 @@ export default function Profile({ navigation}) {
 
 const styles = StyleSheet.create({
     picbtn: {
-        marginTop: 10,
-        marginLeft: 5,
-        height: 45,
-        width: 45,
+        marginTop: 30,
+        marginLeft: 8,
+        height: 40,
+        width: 40,
         backgroundColor: "black",
         justifyContent: "center",
         alignItems: 'center',
@@ -86,10 +94,11 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 18,
         fontWeight: "normal",
-        borderWidth: 1,
+        borderWidth: 0.6,
         width: 320,
-        height: 40,
-        borderRadius: 10
+        height: 48,
+        borderRadius: 10,
+        borderColor: "#2E2E2E"
     },
     button: {
         alignItems: 'center',
@@ -106,6 +115,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 10,
         backgroundColor: 'white',
-        
+
     },
 });
