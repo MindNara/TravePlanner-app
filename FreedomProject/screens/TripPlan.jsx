@@ -243,6 +243,7 @@ export default function TripPlan({ navigation }) {
                                 </View>
                             </View>
                         </View>
+                        
                         {/* Title */}
                         <View className="mx-[32px] mt-[20px]">
                             <View className="flex flex-row items-center">

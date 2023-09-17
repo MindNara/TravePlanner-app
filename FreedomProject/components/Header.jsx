@@ -141,14 +141,20 @@ export default function Header({ screen, title, subtitle, navigation }) {
                         <View className="bg-white h-3 w-3 rotate-45 absolute top-[-6] right-5 z-10"></View>
 
                         {/* Btn My Trips */}
-                        <Pressable className="flex flex-row items-center" onPress={() => { navigation.navigate("MyDreamTrip") }}>
+                        <Pressable className="flex flex-row items-center" onPress={() => {
+                            navigation.navigate("MyDreamTrip");
+                            setProfileModel(false);
+                        }}>
                             <Image className="mr-2" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/96/2E2E2E/passenger-with-baggage.png' }}
                                 style={{ width: 16, height: 16 }} />
                             <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>My Trips</Text>
                         </Pressable>
 
                         {/* Btn Log Out */}
-                        <Pressable className="flex flex-row items-center mt-[6px]" onPress={() => { navigation.navigate("Intro") }}>
+                        <Pressable className="flex flex-row items-center mt-[6px]" onPress={() => {
+                            navigation.navigate("Intro");
+                            setProfileModel(false);
+                        }}>
                             <Image className="mr-2" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/96/2E2E2E/exit--v1.png' }}
                                 style={{ width: 16, height: 16 }} />
                             <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Log out</Text>

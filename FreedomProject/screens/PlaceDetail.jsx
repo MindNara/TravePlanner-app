@@ -31,7 +31,7 @@ export default function PlaceDetail({ navigation }) {
                 {/* <Image className="absolute w-full h-full" source={require('../assets/IntroImage.png')} /> */}
                 <View className="mx-[32px] pt-16 flex flex-row justify-between">
                     <Pressable onPress={() => {
-                        navigation.navigate("Content");
+                        navigation.goBack();
                     }}>
                         <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
                         <Image className="absolute top-[6.5px] left-[5px]" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/back.png' }}
