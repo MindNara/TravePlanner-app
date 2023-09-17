@@ -165,8 +165,6 @@ export default function TripPlan({ navigation }) {
                             </View>
                         )
                         }
-
-
                     </View>
                 </BottomSheetModal>
 

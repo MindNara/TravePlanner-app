@@ -30,7 +30,7 @@ export default function MyDreamTrip({ navigation }) {
             <View className="h-full mx-[32px] pt-14 bg-white">
                 {/* Header */}
                 <View>
-                    <Header screen={"MyDreamTrip"} title={"My Perfect"} subtitle={"Dream Trip"} />
+                    <Header screen={"MyDreamTrip"} title={"My Perfect"} subtitle={"Dream Trip"} navigation={navigation} />
                 </View>
 
                 {/* SearchBar */}
