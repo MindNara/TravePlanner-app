@@ -129,13 +129,13 @@ export default function Header({ screen, title, subtitle, navigation }) {
                 {isNotiModel && (
                     <Pressable onPress={() => {
                         setNotiModel(false)
-                    }} className="absolute h-[900px] w-[500px] bg-gray-dark opacity-30 z-10 left-[-40px] top-[-150px]" />
+                    }} className="absolute h-[2000px] w-[500px] bg-gray-dark opacity-30 z-10 left-[-40px] top-[-150px]" />
                 )}
             </View>
 
 
             {/* Profile Model Content */}
-            <View className="relative">
+            <View className="relative h-auto">
                 {isProfileModel && (
                     <View className="bg-white h-[70px] w-[120px] px-[20px] justify-center absolute z-20 rounded-[5px] right-0 top-3">
                         <View className="bg-white h-3 w-3 rotate-45 absolute top-[-6] right-5 z-10"></View>
@@ -166,7 +166,7 @@ export default function Header({ screen, title, subtitle, navigation }) {
                 {isProfileModel && (
                     <Pressable onPress={() => {
                         setProfileModel(false)
-                    }} className="absolute h-[900px] w-[500px] bg-gray-dark opacity-30 z-10 left-[-40px] top-[-150px]" />
+                    }} className="absolute h-[2000px] w-[500px] bg-gray-dark opacity-30 z-10 left-[-40px] top-[-150px]" />
                 )}
             </View>
 

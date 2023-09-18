@@ -22,7 +22,7 @@ export default function TripPlan({ navigation }) {
     const [isFav, setIsFav] = useState(true);
 
     const bottomSheetModelRef = useRef(null);
-    const snapPoints = ["58%", "86%"];
+    const snapPoints = ["70%", "93%"];
 
     function handlePresentModel() {
         bottomSheetModelRef.current?.present();
@@ -101,6 +101,12 @@ export default function TripPlan({ navigation }) {
                                             {/* Descriptions */}
                                             <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
                                                 <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DESCRIPTIONS</Text>
+                                                <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
+                                            </View>
+
+                                            {/* Address */}
+                                            <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
+                                                <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>ADDRESS</Text>
                                                 <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
                                             </View>
 
@@ -243,7 +249,7 @@ export default function TripPlan({ navigation }) {
                                 </View>
                             </View>
                         </View>
-                        
+
                         {/* Title */}
                         <View className="mx-[32px] mt-[20px]">
                             <View className="flex flex-row items-center">
@@ -339,16 +345,19 @@ export default function TripPlan({ navigation }) {
                                 <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View>
                                 <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
                                 <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View>
-                                <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
+                                {/* <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View> */}
                             </View>
 
                             {/* Plan */}
                             <View className="bg-white w-[295px] h-auto ml-3">
                                 {/* Place */}
-                                <TripEventBox />
+                                <Pressable onPress={() => { navigation.navigate("PlaceDetail") }}>
+                                    <TripEventBox />
+                                </Pressable>
 
                                 {/* Restaurant */}
-                                <View className="bg-gray-light h-auto rounded-[30px] p-6 mb-3">
+                                <Pressable className="bg-gray-light h-auto rounded-[30px] p-6 mb-3"
+                                    onPress={() => { navigation.navigate("PlaceDetail") }}>
                                     <View className="flex flex-row items-center justify-between">
                                         <View className="flex flex-row items-center">
                                             <View className="w-[20px] h-[20px] bg-gray-dark rounded-[3px] justify-center items-center mr-3">
@@ -395,10 +404,11 @@ export default function TripPlan({ navigation }) {
                                     >
                                         Lorem ipsum dolor sit amet, consecoert adipisciot eit sed do.
                                     </Text>
-                                </View>
+                                </Pressable>
 
                                 {/* Hotel */}
-                                <View className="bg-gray-light h-auto rounded-[30px] p-6 mb-3">
+                                <Pressable className="bg-gray-light h-auto rounded-[30px] p-6 mb-3"
+                                    onPress={() => { navigation.navigate("PlaceDetail") }}>
                                     <View className="flex flex-row items-center justify-between">
                                         <View className="flex flex-row items-center">
                                             <View className="w-[20px] h-[20px] bg-gray-dark rounded-[3px] justify-center items-center mr-3">
@@ -445,57 +455,8 @@ export default function TripPlan({ navigation }) {
                                     >
                                         Lorem ipsum dolor sit amet, consecoert adipisciot eit sed do.
                                     </Text>
-                                </View>
+                                </Pressable>
 
-                                {/* Hotel */}
-                                <View className="bg-gray-light h-auto rounded-[30px] p-6 mb-3">
-                                    <View className="flex flex-row items-center justify-between">
-                                        <View className="flex flex-row items-center">
-                                            <View className="w-[20px] h-[20px] bg-gray-dark rounded-[3px] justify-center items-center mr-3">
-                                                <Image
-                                                    className=""
-                                                    source={{
-                                                        uri: "https://img.icons8.com/sf-regular-filled/48/F8F8F8/3-star-hotel.png",
-                                                    }}
-                                                    style={{ width: 14, height: 14 }}
-                                                />
-                                            </View>
-                                            <Text
-                                                className="text-[12px] text-gray-dark"
-                                                style={{ fontFamily: "promptMedium" }}
-                                            >
-                                                HOTEL
-                                            </Text>
-                                        </View>
-                                        <Image
-                                            className=""
-                                            source={{
-                                                uri: "https://img.icons8.com/ios-glyphs/90/2E2E2E/menu-2.png",
-                                            }}
-                                            style={{ width: 20, height: 20 }}
-                                        />
-                                    </View>
-                                    <View className="flex flex-row justify-between items-center mt-3">
-                                        <Text
-                                            className="text-[16px] text-gray-dark"
-                                            style={{ fontFamily: "promptSemiBold" }}
-                                        >
-                                            Hotel Name
-                                        </Text>
-                                        <Text
-                                            className="text-[12px] text-gray-dark"
-                                            style={{ fontFamily: "promptRegular" }}
-                                        >
-                                            12:00 PM
-                                        </Text>
-                                    </View>
-                                    <Text
-                                        className="text-[10px] text-gray-dark mt-2"
-                                        style={{ fontFamily: "promptLight" }}
-                                    >
-                                        Lorem ipsum dolor sit amet, consecoert adipisciot eit sed do.
-                                    </Text>
-                                </View>
                             </View>
                         </View>
                     </View>
