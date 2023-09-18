@@ -8,6 +8,7 @@ import {
     StyleSheet,
     TextInput,
     ScrollView,
+    Pressable
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { MyAllTrip, Header } from '../components/index';
@@ -26,11 +27,24 @@ export default function MyDreamTrip({ navigation }) {
     }
 
     return (
+        <ScrollView>
         <SafeAreaView className="container mx-auto bg-white">
             <View className="h-full mx-[32px] pt-14 bg-white">
                 {/* Header */}
-                <View>
-                    <Header screen={"MyDreamTrip"} title={"My Perfect"} subtitle={"Dream Trip"} navigation={navigation} />
+                <View className="flex flex-row justify-between items-center">
+                    {/* Btn Back */}
+                    <Pressable onPress={() => {
+                        navigation.navigate("Home");
+                    }}>
+                        <View className="relative justify-center items-center h-[36px] w-[36px] rounded-3xl opacity-50" style={{backgroundColor:"#F8F8F8"}}></View>
+                        <Image className="absolute top-[6.5px] left-[5px]" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/back.png' }}
+                            style={{ width: 22, height: 22 }} />
+                    </Pressable>
+                    {/* Title */}
+                    <View className="items-end">
+                        <Text className="text-[24px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>My Prefect</Text>
+                        <Text className="text-[32px] text-gray-dark mt-[-12px]" style={{ fontFamily: 'promptSemiBold' }}>Dream Trip</Text>
+                    </View>
                 </View>
 
                 {/* SearchBar */}
@@ -61,6 +75,7 @@ export default function MyDreamTrip({ navigation }) {
                 </View>
             </View>
         </SafeAreaView>
+        </ScrollView>
     );
 }
 
