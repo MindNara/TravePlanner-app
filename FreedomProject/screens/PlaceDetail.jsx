@@ -61,10 +61,10 @@ export default function PlaceDetail({ navigation }) {
                     </View>
                     <View className="flex flex-row mt-[10px] items-center gap-x-[16px]">
                         <View className="justify-center items-center h-[45px] w-[45px] bg-gray-light rounded-3xl">
-                            <Image className="" source={{ uri: 'https://img.icons8.com/material-rounded/96/2E2E2E/retro-alarm-clock.png' }}
-                                style={{ width: 20, height: 20 }} />
+                            <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/map-marker.png' }}
+                                style={{ width: 22, height: 22 }} />
                         </View>
-                        <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>OFFICE HOURS</Text>
+                        <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>VIEW LOCATION</Text>
                     </View>
                 </View>
             </View>
