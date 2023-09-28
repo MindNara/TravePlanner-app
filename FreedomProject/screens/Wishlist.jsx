@@ -50,21 +50,21 @@ export default function Wishlist({ navigation }) {
                     <View className="my-2">
                         <View className="flex flex-row mt-[20px] justify-between">
                             {/* Popular places box1 */}
-                            <PlaceTrip navigation={navigation} />
+                            {/* <PlaceTrip navigation={navigation} /> */}
                             {/* Popular places box2 */}
-                            <PlaceTrip navigation={navigation} />
+                            {/* <PlaceTrip navigation={navigation} /> */}
                         </View>
                         <View className="flex flex-row mt-[20px] justify-between">
                             {/* Popular places box1 */}
-                            <PlaceTrip navigation={navigation} />
+                            {/* <PlaceTrip navigation={navigation} /> */}
                             {/* Popular places box2 */}
-                            <PlaceTrip navigation={navigation} />
+                            {/* <PlaceTrip navigation={navigation} /> */}
                         </View>
                         <View className="flex flex-row mt-[20px] justify-between">
                             {/* Popular places box1 */}
-                            <PlaceTrip navigation={navigation} />
+                            {/* <PlaceTrip navigation={navigation} /> */}
                             {/* Popular places box2 */}
-                            <PlaceTrip navigation={navigation} />
+                            {/* <PlaceTrip navigation={navigation} /> */}
                         </View>
                     </View>
                 </View>

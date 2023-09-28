@@ -8,13 +8,13 @@ import {
     ScrollView,
     ImageBackground,
     Pressable,
-    F
+    FlatList,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
 export default function PlaceTrip({ navigation, item }) {
 
-    console.log(item);
+    console.log("item " + item.result[2].place_id);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -31,18 +31,18 @@ export default function PlaceTrip({ navigation, item }) {
     return (
         <SafeAreaView>
             <Pressable onPress={() => {
-                navigation.navigate("PlaceDetail", { item: item });
+                navigation.navigate("PlaceDetail");
             }}>
                 <View style={[styles.boxPopular]}>
                     <View style={[styles.imgPopular]}>
-                        <Image source={{ uri: item.mobile_picture_urls[0] }}
+                        <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
                             style={{ width: 148, height: 157, borderRadius: 20 }} />
                         <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
                             style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16" />
                     </View>
                     <View className="top-16 mr-10">
-                        <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>{item.location.province}</Text>
-                        <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
+                        <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}></Text>
+                        <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}></Text>
                     </View>
                 </View>
             </Pressable>

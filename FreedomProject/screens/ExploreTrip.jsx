@@ -18,13 +18,12 @@ export default function ExploreTrip({ navigation }) {
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    // console.log(data);
+    console.log(data);
 
     const apiKey = 'GBlAR1kAdZLNcsEPOzvbb6chWCSSoyX2qORdP5ifIdceDVTo2crn)n0yJHoUqvj4V=2';
-    // https://tatapi.tourismthailand.org/tatapi/v5/places/search?categorycodes=ALL
 
     useEffect(() => {
-        fetch('https://tatapi.tourismthailand.org/tatapi/v5/attraction/P03000001', {
+        fetch('https://tatapi.tourismthailand.org/tatapi/v5/places/search?categorycodes=ALL', {
             headers: {
                 Authorization: `Bearer ${apiKey}`,
                 "Accept-Language": "TH"
@@ -78,7 +77,7 @@ export default function ExploreTrip({ navigation }) {
 
                         {loading ? (<Text>Loading...</Text>) : (
                             <View>
-                                <PlaceTrip item={data.result} navigation={navigation} />
+                                <PlaceTrip item={data} navigation={navigation} />
                             </View>
                         )}
 
