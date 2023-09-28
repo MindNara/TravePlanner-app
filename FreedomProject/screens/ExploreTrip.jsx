@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import {
     Button,
     SafeAreaView,
@@ -7,13 +7,36 @@ import {
     Image,
     StyleSheet,
     TextInput,
-    ScrollView
+    ScrollView,
+    FlatList
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
 import { PlaceTrip, RecommendedTrip, Header } from '../components/index';
 
 export default function ExploreTrip({ navigation }) {
+
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+    // console.log(data);
+
+    const apiKey = 'GBlAR1kAdZLNcsEPOzvbb6chWCSSoyX2qORdP5ifIdceDVTo2crn)n0yJHoUqvj4V=2';
+    // https://tatapi.tourismthailand.org/tatapi/v5/places/search?categorycodes=ALL
+
+    useEffect(() => {
+        fetch('https://tatapi.tourismthailand.org/tatapi/v5/attraction/P03000001', {
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+                "Accept-Language": "TH"
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                setData(json);
+                setLoading(false);
+            })
+            .catch((error) => console.error(error));
+    }, []);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -28,51 +51,54 @@ export default function ExploreTrip({ navigation }) {
     }
 
     return (
-        <ScrollView>
-            <SafeAreaView className="container mx-auto bg-white">
-                <View className="h-full mx-[32px] pt-14 bg-white">
-                    {/* Header */}
-                    <View>
-                        <Header screen={"ExploreTrip"} title={"Explore Places to"} subtitle={"Visit in Thailand"} navigation={navigation} />
+        // <ScrollView>
+        <SafeAreaView className="container mx-auto bg-white">
+            <View className="h-full mx-[32px] pt-14 bg-white">
+                {/* Header */}
+                <View>
+                    <Header screen={"ExploreTrip"} title={"Explore Places to"} subtitle={"Visit in Thailand"} navigation={navigation} />
+                </View>
+
+                {/* SearchBar */}
+                <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <View style={[styles.SearchContainer]}>
+                        <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
+                            style={{ width: 20, height: 20 }} className="ml-3 opacity-80" />
+                        <TextInput placeholder='Search location' className="ml-3 w-full text-[14px]" style={[styles.input, { fontFamily: 'promptRegular', fontSize: 12 }]}></TextInput>
                     </View>
-
-                    {/* SearchBar */}
-                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <View style={[styles.SearchContainer]}>
-                            <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
-                                style={{ width: 20, height: 20 }} className="ml-3 opacity-80" />
-                            <TextInput placeholder='Search location' className="ml-3 w-full text-[14px]" style={[styles.input, { fontFamily: 'promptRegular', fontSize: 12 }]}></TextInput>
-                        </View>
-                        <View style={[styles.sortbtn]}>
-                            <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAy0lEQVR4nO3YSw6CMBSF4X8fitHuXAawAXEBdi+ibgJjchMNYSCP2xRyvuROOijcPsgJICIiGxOAGnhZ1Ta2KifgAXS9aoEjK1Lai1+AnVVjY2fvh8eBFZxb+5/5Dw7zx1SNFM6N3FIdrcZ25dPQNdXRWvqytwMreF/bZcc+tRXwtKqsQRERyVJQat5aao4Ooc47NcfcGyn+bMQ9/U5VKjVnKCg1i4j0KZnmpFwimaYQF06mKSrOacT7f243oialXyXTHAUlUxER4esNlJFPhidtdXQAAAAASUVORK5CYII=' }}
-                                style={{ width: 20, height: 20 }} />
-                        </View>
-                    </View>
-
-                    <View className="my-[20px]">
-                        <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Popular Places</Text>
-                        <View className="flex flex-row mt-[20px] justify-between">
-                            {/* Popular places box1 */}
-                            <PlaceTrip navigation={navigation} />
-                            {/* Popular places box2 */}
-                            <PlaceTrip navigation={navigation} />
-                        </View>
-                    </View>
-
-                    <View>
-                        <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
-
-                        <View className="mt-[20px] flex">
-                            {/* Recommended trip 1 */}
-                            <RecommendedTrip navigation={navigation} />
-                            {/* Recommended trip 2 */}
-                            <RecommendedTrip navigation={navigation} />
-                        </View>
+                    <View style={[styles.sortbtn]}>
+                        <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAy0lEQVR4nO3YSw6CMBSF4X8fitHuXAawAXEBdi+ibgJjchMNYSCP2xRyvuROOijcPsgJICIiGxOAGnhZ1Ta2KifgAXS9aoEjK1Lai1+AnVVjY2fvh8eBFZxb+5/5Dw7zx1SNFM6N3FIdrcZ25dPQNdXRWvqytwMreF/bZcc+tRXwtKqsQRERyVJQat5aao4Ooc47NcfcGyn+bMQ9/U5VKjVnKCg1i4j0KZnmpFwimaYQF06mKSrOacT7f243oialXyXTHAUlUxER4esNlJFPhidtdXQAAAAASUVORK5CYII=' }}
+                            style={{ width: 20, height: 20 }} />
                     </View>
                 </View>
 
-            </SafeAreaView>
-        </ScrollView>
+                <View className="my-[20px]">
+                    <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Popular Places</Text>
+                    <View className="flex flex-row mt-[20px] justify-between">
+
+                        {loading ? (<Text>Loading...</Text>) : (
+                            <View>
+                                <PlaceTrip item={data.result} navigation={navigation} />
+                            </View>
+                        )}
+
+                    </View>
+                </View>
+
+                <View>
+                    <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
+
+                    <View className="mt-[20px] flex">
+                        {/* Recommended trip 1 */}
+                        <RecommendedTrip navigation={navigation} />
+                        {/* Recommended trip 2 */}
+                        <RecommendedTrip navigation={navigation} />
+                    </View>
+                </View>
+            </View>
+
+        </SafeAreaView>
+        // </ScrollView>
     );
 }
 

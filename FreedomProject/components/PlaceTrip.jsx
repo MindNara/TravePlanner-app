@@ -7,11 +7,14 @@ import {
     Image,
     ScrollView,
     ImageBackground,
-    Pressable
+    Pressable,
+    F
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function PlaceTrip({ navigation }) {
+export default function PlaceTrip({ navigation, item }) {
+
+    console.log(item);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -28,20 +31,20 @@ export default function PlaceTrip({ navigation }) {
     return (
         <SafeAreaView>
             <Pressable onPress={() => {
-                navigation.navigate("PlaceDetail");
+                navigation.navigate("PlaceDetail", { item: item });
             }}>
-            <View style={[styles.boxPopular]}>
-                <View style={[styles.imgPopular]}>
-                    <Image source={require('../assets/ExploreTripImage.png')}
-                        style={{ width: 148, height: 157, borderRadius: 20 }} />
-                    <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
-                        style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16" />
+                <View style={[styles.boxPopular]}>
+                    <View style={[styles.imgPopular]}>
+                        <Image source={{ uri: item.mobile_picture_urls[0] }}
+                            style={{ width: 148, height: 157, borderRadius: 20 }} />
+                        <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
+                            style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16" />
+                    </View>
+                    <View className="top-16 mr-10">
+                        <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>{item.location.province}</Text>
+                        <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
+                    </View>
                 </View>
-                <View className="top-16 mr-10">
-                    <Text className="text-[16px]" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                    <Text className="text-[18px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                </View>
-            </View>
             </Pressable>
         </SafeAreaView>
     );
