@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { useFonts } from "@expo-google-fonts/prompt";
 import { TripEventBox } from "../components/index";
-import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PlaceTrip } from '../components/index';
 
@@ -22,7 +22,7 @@ export default function TripPlan({ navigation }) {
     const [isFav, setIsFav] = useState(true);
 
     const bottomSheetModelRef = useRef(null);
-    const snapPoints = ["70%", "93%"];
+    const snapPoints = ["70%"];
 
     function handlePresentModel() {
         bottomSheetModelRef.current?.present();
@@ -48,7 +48,7 @@ export default function TripPlan({ navigation }) {
                 {/* Bottom Sheet */}
                 <BottomSheetModal
                     ref={bottomSheetModelRef}
-                    index={isFav ? 0 : 1}
+                    index={0}
                     snapPoints={snapPoints}
                     backgroundStyle={{ borderRadius: 50 }}
                     onDismiss={() => {
@@ -60,68 +60,69 @@ export default function TripPlan({ navigation }) {
                         {/* SearchBar */}
                         {isFav ? (
                             <View className="bg-white h-full mx-[32px] my-[24px]">
-                                <View className="flex flex-row justify-between">
-                                    {/* Search bar */}
-                                    <View className="flex flex-row h-[40px] w-[296px] bg-gray-light items-center rounded-[10px]">
-                                        <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
-                                            style={{ width: 20, height: 20 }} className="ml-3 opacity-60" />
-                                        <TextInput className="text-[12px] text-gray-dark ml-3 w-full opacity-80" style={{ fontFamily: 'promptRegular' }} placeholder='Search location'></TextInput>
+                                <BottomSheetScrollView>
+                                    <View className="flex flex-row justify-between">
+                                        {/* Search bar */}
+                                        <View className="flex flex-row h-[40px] w-[296px] bg-gray-light items-center rounded-[10px]">
+                                            <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
+                                                style={{ width: 20, height: 20 }} className="ml-3 opacity-60" />
+                                            <TextInput className="text-[12px] text-gray-dark ml-3 w-full opacity-80" style={{ fontFamily: 'promptRegular' }} placeholder='Search location'></TextInput>
+                                        </View>
+                                        {/* Btn Fav */}
+                                        <Pressable className="flex flex-row h-[40px] w-[45px] bg-gray-light items-center justify-center rounded-[10px]"
+                                            onPress={() => { setIsFav(false) }}>
+                                            <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
+                                                style={{ width: 20, height: 20 }} className="opacity-80" />
+                                        </Pressable>
                                     </View>
-                                    {/* Btn Fav */}
-                                    <Pressable className="flex flex-row h-[40px] w-[45px] bg-gray-light items-center justify-center rounded-[10px]"
-                                        onPress={() => { setIsFav(false) }}>
-                                        <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                            style={{ width: 20, height: 20 }} className="opacity-80" />
-                                    </Pressable>
-                                </View>
 
-                                {/* Add Trip */}
-                                <View className="w-full bg-gray-light h-auto mt-[20px] rounded-[10px]">
-                                    <View className="bg-gray-light w-full h-auto rounded-[10px]">
-                                        <View className="m-[20px]">
-
-                                            {/* Title */}
-                                            <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center">
-                                                <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
-                                                <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name">ExampleTitle</TextInput>
-                                            </View>
-
-                                            {/* Time & Category */}
-                                            <View className="flex flex-row justify-between mt-[15px]">
-                                                <View className="w-[148px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
-                                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TIME</Text>
-                                                    <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Time">08:00 AM</TextInput>
+                                    {/* Add Trip */}
+                                    <View className="w-full bg-gray-light h-auto mt-[20px] rounded-[10px]">
+                                        <View className="bg-gray-light w-full h-auto rounded-[10px]">
+                                            <View className="m-[20px]">
+                                                {/* Title */}
+                                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center">
+                                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
+                                                    <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name">ExampleTitle</TextInput>
                                                 </View>
-                                                <View className="w-[148px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
-                                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>CATEGORY</Text>
-                                                    <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Category">Place</TextInput>
+
+                                                {/* Time & Category */}
+                                                <View className="flex flex-row justify-between mt-[15px]">
+                                                    <View className="w-[148px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
+                                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TIME</Text>
+                                                        <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Time">08:00 AM</TextInput>
+                                                    </View>
+                                                    <View className="w-[148px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
+                                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>CATEGORY</Text>
+                                                        <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Category">Place</TextInput>
+                                                    </View>
                                                 </View>
-                                            </View>
 
-                                            {/* Descriptions */}
-                                            <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
-                                                <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DESCRIPTIONS</Text>
-                                                <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
-                                            </View>
+                                                {/* Descriptions */}
+                                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
+                                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DESCRIPTIONS</Text>
+                                                    <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
+                                                </View>
 
-                                            {/* Address */}
-                                            <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
-                                                <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>ADDRESS</Text>
-                                                <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
-                                            </View>
+                                                {/* Address */}
+                                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
+                                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>ADDRESS</Text>
+                                                    <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
+                                                </View>
 
-                                            {/* Btn */}
-                                            <View className="flex flex-row justify-between items-center mt-[15px]">
-                                                <Pressable className="bg-gray-dark h-[36px] w-[148px] rounded-[10px] justify-center items-center">
-                                                    <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CONFIRM</Text>
-                                                </Pressable>
-                                                <Pressable className="h-[36px] w-[148px] rounded-[10px] justify-center items-center border-[0.6px]">
-                                                    <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
-                                                </Pressable>
+                                                {/* Btn */}
+                                                <View className="flex flex-row justify-between items-center mt-[15px]">
+                                                    <Pressable className="bg-gray-dark h-[36px] w-[148px] rounded-[10px] justify-center items-center">
+                                                        <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CONFIRM</Text>
+                                                    </Pressable>
+                                                    <Pressable className="h-[36px] w-[148px] rounded-[10px] justify-center items-center border-[0.6px]">
+                                                        <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
+                                                    </Pressable>
+                                                </View>
                                             </View>
                                         </View>
                                     </View>
-                                </View>
+                                </BottomSheetScrollView>
                             </View>
                         ) : (
                             <View className="h-auto w-full">
@@ -154,16 +155,16 @@ export default function TripPlan({ navigation }) {
 
                                         <View className="mt-[20px]">
                                             <View className="flex flex-row justify-between">
-                                                <PlaceTrip navigation={navigation} />
-                                                <PlaceTrip navigation={navigation} />
+                                                {/* <PlaceTrip navigation={navigation} />
+                                                <PlaceTrip navigation={navigation} /> */}
                                             </View>
                                             <View className="flex flex-row justify-between mt-[20px]">
-                                                <PlaceTrip navigation={navigation} />
-                                                <PlaceTrip navigation={navigation} />
+                                                {/* <PlaceTrip navigation={navigation} />
+                                                <PlaceTrip navigation={navigation} /> */}
                                             </View>
                                             <View className="flex flex-row justify-between mt-[20px]">
-                                                <PlaceTrip navigation={navigation} />
-                                                <PlaceTrip navigation={navigation} />
+                                                {/* <PlaceTrip navigation={navigation} />
+                                                <PlaceTrip navigation={navigation} /> */}
                                             </View>
                                         </View>
                                     </View>
