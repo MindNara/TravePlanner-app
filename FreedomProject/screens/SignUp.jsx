@@ -32,10 +32,10 @@ export default function Intro({ navigation }) {
                 <Text className="text-[32px] mt-[-12px]" style={{ fontFamily: "promptBold" }}>with me !</Text>
             </View>
 
-            <View className="absolute w-full h-[620px] bottom-0 bg-black rounded-t-[50px] items-center">
-                <Text className="text-[16px] mx-[110px] py-3 tracking-[1px]" style={{ color: "white", fontFamily: "promptSemiBold" }}>Create New Account</Text>
+            <View className="absolute w-full h-[600px] bottom-0 bg-black rounded-t-[50px] items-center">
+                <Text className="text-[18px] py-3 tracking-[1px]" style={{ color: "white", fontFamily: "promptSemiBold" }}>Create New Account</Text>
             </View>
-            <View className="absolute w-full h-[570px] bottom-0 bg-white rounded-t-[50px]">
+            <View className="absolute w-full h-[550px] bottom-0 bg-white rounded-t-[50px]">
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <View className="mt-16">
                         <View>

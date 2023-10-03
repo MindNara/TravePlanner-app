@@ -39,7 +39,7 @@ export default function Intro({ navigation }) {
                         <Image className="bg-cover rounded-[100px]" source={require('../assets/IntroImage.png')}
                             style={{ height: 420, width: 420 }} />
                     </View>
-                    <Pressable className="mx-[32px] items-center flex flex-row justify-end gap-x-2 mt-5"
+                    <Pressable className="mx-[32px] items-center flex flex-row justify-end gap-x-2"
                         onPress={() => {
                             navigation.navigate("SignUp");
                         }}>
