@@ -28,8 +28,8 @@ export default function Profile({ navigation }) {
         <SafeAreaView className="container mx-auto h-full bg-blue-light " >
             <View className="absolute w-full h-[620px] bottom-0 bg-white rounded-t-[50px]">
                 <View>
-                    <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[120]" style={{ backgroundColor: "#F8F8F8" }}></View>
-                    <View className="ml-[250] mt-2">
+                    <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
+                    <View className="ml-[230] mt-2">
                         <View style={[styles.picbtn]} className="rounded-full">
                             <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/30/FFFFFF/edit-image.png' }}
                                 style={{ width: 24, height: 24 }} />

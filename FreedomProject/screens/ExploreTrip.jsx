@@ -47,7 +47,7 @@ export default function ExploreTrip({ navigation }) {
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                     <View style={[styles.SearchContainer]}>
                         <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
-                            style={{ width: 20, height: 20 }} className="ml-3 opacity-80" />
+                            style={{ width: 18, height: 20 }} className="ml-3 opacity-80" />
                         <TextInput placeholder='Search location' className="ml-3 w-full text-[14px]" style={[styles.input, { fontFamily: 'promptRegular', fontSize: 12 }]}></TextInput>
                     </View>
                     <View style={[styles.sortbtn]}>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     SearchContainer: {
         marginTop: 10,
         height: 40,
-        width: 300,
+        width: 280,
         backgroundColor: "#F8F8F8",
         borderRadius: 10,
         flexDirection: 'row',

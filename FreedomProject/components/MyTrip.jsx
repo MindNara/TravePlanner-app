@@ -30,7 +30,7 @@ export default function MyTrip({ navigation }) {
             <Pressable onPress={() => {
                 navigation.navigate("TripPlan");
             }}>
-                <ImageBackground className="relative h-[210px] w-[166px] justify-end items-center"
+                <ImageBackground className="relative h-[210px] w-[156px] justify-end items-center"
                     source={require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
                     <Image className="absolute top-4 right-4" source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
                         style={{ width: 20, height: 20 }} />
