@@ -13,29 +13,14 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 
 import { PlaceTrip, RecommendedTrip, Header } from '../components/index';
+import { TATapi } from '../data/TATapi';
 
 export default function ExploreTrip({ navigation }) {
 
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
-    console.log(data);
+    const { data, loading } = TATapi();
 
-    const apiKey = 'GBlAR1kAdZLNcsEPOzvbb6chWCSSoyX2qORdP5ifIdceDVTo2crn)n0yJHoUqvj4V=2';
-
-    useEffect(() => {
-        fetch('https://tatapi.tourismthailand.org/tatapi/v5/places/search?categorycodes=ALL', {
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
-                "Accept-Language": "TH"
-            },
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                setData(json);
-                setLoading(false);
-            })
-            .catch((error) => console.error(error));
-    }, []);
+    const placeItems = data.result ? data.result.filter((item, index) => index < 5) : [];
+    // console.log(items);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -76,9 +61,14 @@ export default function ExploreTrip({ navigation }) {
                     <View className="flex flex-row mt-[20px] justify-between">
 
                         {loading ? (<Text>Loading...</Text>) : (
-                            <View>
-                                <PlaceTrip item={data} navigation={navigation} />
-                            </View>
+                            <FlatList
+                                data={placeItems}
+                                keyExtractor={item => item.place_id}
+                                renderItem={({ item }) => (
+                                    <PlaceTrip item={item} navigation={navigation} />
+                                )}
+                                horizontal={true}
+                            />
                         )}
 
                     </View>
