@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     SearchContainer: {
         marginTop: 10,
         height: 40,
-        width: 300,
+        width: 280,
         backgroundColor: "#F8F8F8",
         borderRadius: 10,
         flexDirection: 'row',

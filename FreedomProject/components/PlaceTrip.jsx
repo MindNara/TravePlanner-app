@@ -34,7 +34,7 @@ export default function PlaceTrip({ navigation, item }) {
                 <View style={[styles.boxPopular]}>
                     <View style={[styles.imgPopular]}>
                         <Image source={{ uri: item.thumbnail_url }}
-                            style={{ width: 148, height: 157, borderRadius: 20 }} />
+                            style={{ width: 142, height: 160, borderRadius: 20 }} />
                         <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
                             style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16" />
                     </View>
