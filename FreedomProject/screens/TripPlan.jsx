@@ -63,7 +63,7 @@ export default function TripPlan({ navigation }) {
                                 <BottomSheetScrollView>
                                     <View className="flex flex-row justify-between">
                                         {/* Search bar */}
-                                        <View className="flex flex-row h-[40px] w-[296px] bg-gray-light items-center rounded-[10px]">
+                                        <View className="flex flex-row h-[40px] w-[280px] bg-gray-light items-center rounded-[10px]">
                                             <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
                                                 style={{ width: 20, height: 20 }} className="ml-3 opacity-60" />
                                             <TextInput className="text-[12px] text-gray-dark ml-3 w-full opacity-80" style={{ fontFamily: 'promptRegular' }} placeholder='Search location'></TextInput>
