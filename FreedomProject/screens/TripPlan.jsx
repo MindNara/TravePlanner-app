@@ -88,11 +88,11 @@ export default function TripPlan({ navigation }) {
 
                                                 {/* Time & Category */}
                                                 <View className="flex flex-row justify-between mt-[15px]">
-                                                    <View className="w-[148px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
+                                                    <View className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
                                                         <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TIME</Text>
                                                         <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Time">08:00 AM</TextInput>
                                                     </View>
-                                                    <View className="w-[148px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
+                                                    <View className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
                                                         <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>CATEGORY</Text>
                                                         <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Category">Place</TextInput>
                                                     </View>
@@ -112,10 +112,10 @@ export default function TripPlan({ navigation }) {
 
                                                 {/* Btn */}
                                                 <View className="flex flex-row justify-between items-center mt-[15px]">
-                                                    <Pressable className="bg-gray-dark h-[36px] w-[148px] rounded-[10px] justify-center items-center">
+                                                    <Pressable className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
                                                         <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CONFIRM</Text>
                                                     </Pressable>
-                                                    <Pressable className="h-[36px] w-[148px] rounded-[10px] justify-center items-center border-[0.6px]">
+                                                    <Pressable className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
                                                         <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
                                                     </Pressable>
                                                 </View>
