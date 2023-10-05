@@ -24,7 +24,7 @@ export default function Intro({ navigation }) {
     }
 
     return (
-        <SafeAreaView className="container mx-auto h-full bg-white">
+        <View className="container mx-auto h-full bg-white">
             <View className="h-[300px] w-full bg-black rounded-br-[100px]">
                 <View className="mx-[32px] mt-14 h-full">
                     <Text className="text-[16px] text-white" style={{ fontFamily: 'promptLight' }}>freedom.</Text>
@@ -49,7 +49,7 @@ export default function Intro({ navigation }) {
                     </Pressable>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

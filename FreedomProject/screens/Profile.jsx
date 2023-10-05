@@ -25,7 +25,7 @@ export default function Profile({ navigation }) {
     }
 
     return (
-        <SafeAreaView className="container mx-auto h-full bg-blue-light " >
+        <View className="container mx-auto h-full bg-blue-light " >
             <View className="absolute w-full h-[620px] bottom-0 bg-white rounded-t-[50px]">
                 <View>
                     <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
@@ -76,7 +76,7 @@ export default function Profile({ navigation }) {
                 </View>
             </View>
             {/* <Text >My Profile</Text> */}
-        </SafeAreaView>
+        </View>
     );
 }
 

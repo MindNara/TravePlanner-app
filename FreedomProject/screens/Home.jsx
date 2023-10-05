@@ -28,10 +28,10 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <SafeAreaView className="container mx-auto h-full bg-white">
+        <View className="container mx-auto h-full bg-white">
             <View className="mx-[32px] pt-14 bg-white gap-y-[24px]">
                 {/* Header */}
-                <View>
+                <View className="relative">
                     <Header screen={"Home"} title={"Hello"} subtitle={"Username"} navigation={navigation} />
                 </View>
 
@@ -67,7 +67,7 @@ export default function Home({ navigation }) {
                     </View>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

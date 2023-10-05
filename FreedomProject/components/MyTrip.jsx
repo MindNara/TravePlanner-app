@@ -26,7 +26,7 @@ export default function MyTrip({ navigation }) {
     }
 
     return (
-        <SafeAreaView>
+        <View>
             <Pressable onPress={() => {
                 navigation.navigate("TripPlan");
             }}>
@@ -46,7 +46,7 @@ export default function MyTrip({ navigation }) {
                     </View>
                 </ImageBackground>
             </Pressable>
-        </SafeAreaView>
+        </View>
     );
 
 }

@@ -27,7 +27,7 @@ export default function PlaceTrip({ navigation, item }) {
     }
 
     return (
-        <SafeAreaView>
+        <View>
             <Pressable onPress={() => {
                 navigation.navigate("PlaceDetail");
             }}>
@@ -45,7 +45,7 @@ export default function PlaceTrip({ navigation, item }) {
                     </View>
                 </View>
             </Pressable>
-        </SafeAreaView>
+        </View>
     );
 
 }

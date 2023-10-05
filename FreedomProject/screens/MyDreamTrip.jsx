@@ -28,7 +28,7 @@ export default function MyDreamTrip({ navigation }) {
 
     return (
         <ScrollView>
-            <SafeAreaView className="container mx-auto bg-white">
+            <View className="container mx-auto bg-white">
                 <View className="h-full mx-[32px] pt-14 bg-white">
                     {/* Header */}
                     <View className="flex flex-row justify-between items-center">
@@ -75,7 +75,7 @@ export default function MyDreamTrip({ navigation }) {
                         </View>
                     </View>
                 </View>
-            </SafeAreaView>
+            </View>
         </ScrollView>
     );
 }

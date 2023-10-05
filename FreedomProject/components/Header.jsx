@@ -30,7 +30,7 @@ export default function Header({ screen, title, subtitle, navigation }) {
     }
 
     return (
-        <SafeAreaView>
+        <View>
             <View className="h-auto w-full flex flex-row justify-between items-center">
                 {/* Title */}
                 <View>
@@ -55,9 +55,9 @@ export default function Header({ screen, title, subtitle, navigation }) {
             </View>
 
             {/* Notification Content */}
-            <View className="relative">
+            <View>
                 {isNotiModel && (
-                    <View className="bg-white h-[410px] w-[347px] p-8 justify-center absolute z-20 rounded-[20px] top-16">
+                    <View className="bg-white h-[410px] w-full p-8 justify-center absolute z-50 rounded-[20px] top-16">
 
                         {/* Header */}
                         <View className="flex flex-row justify-between items-center">
@@ -70,7 +70,8 @@ export default function Header({ screen, title, subtitle, navigation }) {
 
                         {/* Content */}
                         <View className="bg-white w-full h-[250px] my-[20px]">
-                            <ScrollView>
+                            <ScrollView 
+                            showsVerticalScrollIndicator={false}>
                                 <View className="relative px-6 mt-1" style={[styles.input]}>
                                     <View className="absolute z-20 left-6 bottom-2 flex flex-row items-center w-full justify-between">
                                         <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Place Name</Text>
@@ -170,7 +171,7 @@ export default function Header({ screen, title, subtitle, navigation }) {
                 )}
             </View>
 
-        </SafeAreaView>
+        </View>
     );
 
 }

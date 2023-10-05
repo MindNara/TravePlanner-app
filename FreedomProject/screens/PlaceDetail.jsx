@@ -27,7 +27,7 @@ export default function PlaceDetail({ navigation }) {
     }
 
     return (
-        <SafeAreaView className="container mx-auto h-full bg-white">
+        <View className="container mx-auto h-full bg-white">
             <ScrollView>
                 {/* Header & Image */}
                 <View className="w-full h-full bg-blue-light">
@@ -73,7 +73,7 @@ export default function PlaceDetail({ navigation }) {
                     </View>
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

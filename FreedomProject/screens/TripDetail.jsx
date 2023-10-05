@@ -27,7 +27,7 @@ export default function TripDetail({ navigation }) {
     }
 
     return (
-        <SafeAreaView className="container mx-auto h-full bg-white">
+        <View className="container mx-auto h-full bg-white">
             <ScrollView>
                 {/* Header & Image */}
                 <View className="w-full h-full bg-blue-light">
@@ -106,7 +106,7 @@ export default function TripDetail({ navigation }) {
                     </View>
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

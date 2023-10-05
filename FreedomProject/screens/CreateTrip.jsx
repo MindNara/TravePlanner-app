@@ -25,7 +25,7 @@ export default function CreateTrip({ navigation }) {
     }
 
     return (
-        <SafeAreaView className="container mx-auto h-full bg-gray-light" >
+        <View className="container mx-auto h-full bg-gray-light" >
             <View className="w-full h-[250px] bg-blue-light">
                 {/* Header */}
                 <View className="mx-[32px] pt-16 flex flex-row justify-between items-center">
@@ -101,7 +101,7 @@ export default function CreateTrip({ navigation }) {
                     </View>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

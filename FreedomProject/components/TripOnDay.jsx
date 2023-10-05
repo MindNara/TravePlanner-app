@@ -26,7 +26,7 @@ export default function RecommendedTrip({ navigation }) {
     }
 
     return (
-        <SafeAreaView>
+        <View>
             <Pressable onPress={() => {
                 navigation.navigate("PlaceDetail");
             }}>
@@ -49,7 +49,7 @@ export default function RecommendedTrip({ navigation }) {
                     </View>
                 </View>
             </Pressable>
-        </SafeAreaView>
+        </View>
     );
 
 }

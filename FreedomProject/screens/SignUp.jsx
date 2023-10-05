@@ -25,7 +25,7 @@ export default function Intro({ navigation }) {
     }
 
     return (
-        <SafeAreaView className="container mx-auto h-full bg-blue-light " >
+        <View className="container mx-auto h-full bg-blue-light " >
             <View className="h-full mx-[32px] pt-14">
                 <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>freedom.</Text>
                 <Text className="text-[32px] mt-[30px]" style={{ fontFamily: "promptBold" }}>Enjoy the trip</Text>
@@ -76,7 +76,7 @@ export default function Intro({ navigation }) {
                     </View>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

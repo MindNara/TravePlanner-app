@@ -26,7 +26,7 @@ export default function TripEventBox({ navigation }) {
     }
 
     return (
-        <SafeAreaView>
+        <View>
             <View className="bg-gray-dark h-auto rounded-[30px] p-6 mb-3">
                 <View className="flex flex-row items-center justify-between">
                     <View className="flex flex-row items-center">
@@ -45,7 +45,7 @@ export default function TripEventBox({ navigation }) {
                 </View>
                 <Text className="text-[10px] text-gray-light mt-2" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consecoert adipisciot eit sed do.</Text>
             </View>
-        </SafeAreaView>
+        </View>
     );
 
 }
