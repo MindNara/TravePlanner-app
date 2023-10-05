@@ -22,7 +22,7 @@ export default function TripPlan({ navigation }) {
     const [isFav, setIsFav] = useState(true);
 
     const bottomSheetModelRef = useRef(null);
-    const snapPoints = ["70%"];
+    const snapPoints = ["72%", "94%"];
 
     function handlePresentModel() {
         bottomSheetModelRef.current?.present();
@@ -48,7 +48,7 @@ export default function TripPlan({ navigation }) {
                 {/* Bottom Sheet */}
                 <BottomSheetModal
                     ref={bottomSheetModelRef}
-                    index={0}
+                    index={isFav ? 0 : 1}
                     snapPoints={snapPoints}
                     backgroundStyle={{ borderRadius: 50 }}
                     onDismiss={() => {
@@ -60,24 +60,25 @@ export default function TripPlan({ navigation }) {
                         {/* SearchBar */}
                         {isFav ? (
                             <View className="bg-white h-full mx-[32px] my-[24px]">
-                                <BottomSheetScrollView>
-                                    <View className="flex flex-row justify-between">
-                                        {/* Search bar */}
-                                        <View className="flex flex-row h-[40px] w-[280px] bg-gray-light items-center rounded-[10px]">
-                                            <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
-                                                style={{ width: 20, height: 20 }} className="ml-3 opacity-60" />
-                                            <TextInput className="text-[12px] text-gray-dark ml-3 w-full opacity-80" style={{ fontFamily: 'promptRegular' }} placeholder='Search location'></TextInput>
-                                        </View>
-                                        {/* Btn Fav */}
-                                        <Pressable className="flex flex-row h-[40px] w-[45px] bg-gray-light items-center justify-center rounded-[10px]"
-                                            onPress={() => { setIsFav(false) }}>
-                                            <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                                style={{ width: 20, height: 20 }} className="opacity-80" />
-                                        </Pressable>
-                                    </View>
 
+                                <View className="flex flex-row justify-between mb-5">
+                                    {/* Search bar */}
+                                    <View className="flex flex-row h-[40px] w-[280px] bg-gray-light items-center rounded-[10px]">
+                                        <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
+                                            style={{ width: 20, height: 20 }} className="ml-3 opacity-60" />
+                                        <TextInput className="text-[12px] text-gray-dark ml-3 w-full opacity-80" style={{ fontFamily: 'promptRegular' }} placeholder='Search location'></TextInput>
+                                    </View>
+                                    {/* Btn Fav */}
+                                    <Pressable className="flex flex-row h-[40px] w-[45px] bg-gray-light items-center justify-center rounded-[10px]"
+                                        onPress={() => { setIsFav(false) }}>
+                                        <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
+                                            style={{ width: 20, height: 20 }} className="opacity-80" />
+                                    </Pressable>
+                                </View>
+
+                                <BottomSheetScrollView>
                                     {/* Add Trip */}
-                                    <View className="w-full bg-gray-light h-auto mt-[20px] rounded-[10px]">
+                                    <View className="w-full bg-gray-light mb-5 rounded-[10px]">
                                         <View className="bg-gray-light w-full h-auto rounded-[10px]">
                                             <View className="m-[20px]">
                                                 {/* Title */}
@@ -193,7 +194,9 @@ export default function TripPlan({ navigation }) {
                 <ScrollView>
                     {/* Background */}
                     {isOpen && (
-                        <View style={{ zIndex: 3 }} className="absolute h-full w-full bg-gray-dark opacity-30" />
+                        <Pressable onPress={() => {
+                            bottomSheetModelRef.current?.close()
+                        }} style={{ zIndex: 3 }} className="absolute h-full w-full bg-gray-dark opacity-30" />
                     )}
 
                     {/* Header & Image */}

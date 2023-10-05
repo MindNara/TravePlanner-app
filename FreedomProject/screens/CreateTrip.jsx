@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -9,8 +9,18 @@ import {
     TextInput,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
+import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
 
 export default function CreateTrip({ navigation }) {
+
+    const dateToday = getToday();
+    const [isOpen, setIsOpen] = useState(false);
+    const [openDep, setOpenDap] = useState(false);
+    const [openRet, setOpenRet] = useState(false);
+
+    const [title, setTiltle] = useState('');
+    const [selectedDateDep, setSelectedDateDep] = useState(dateToday);
+    const [selectedDateRet, setSelectedDateRet] = useState(dateToday);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -47,7 +57,7 @@ export default function CreateTrip({ navigation }) {
                 {/* Content */}
                 <View className="mx-[32px] pt-8">
                     <View className="relative bg-white w-full h-auto rounded-[20px] shadow-lg shadow-black">
-                        <View className="bg-white m-[30px]">
+                        <View className="bg-white m-[20px]">
                             {/* Title */}
                             <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-5 px-6 justify-center">
                                 <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
@@ -57,19 +67,27 @@ export default function CreateTrip({ navigation }) {
                             <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark mt-[24px] py-6 px-6 flex flex-row justify-between items-center">
                                 <View>
                                     <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DEPARTURE</Text>
-                                    <View className="flex flex-row items-center">
-                                        <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>14/08/2023</Text>
+                                    <Pressable className="flex flex-row items-center"
+                                        onPress={() => {
+                                            setIsOpen(true);
+                                            setOpenDap(true);
+                                        }}>
+                                        <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>{selectedDateDep}</Text>
                                         <Image source={{ uri: 'https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png' }}
                                             style={{ width: 14, height: 14 }} />
-                                    </View>
+                                    </Pressable>
                                 </View>
                                 <View>
                                     <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>RETURN</Text>
-                                    <View className="flex flex-row items-center">
-                                        <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>20/08/2023</Text>
+                                    <Pressable className="flex flex-row items-center"
+                                        onPress={() => {
+                                            setIsOpen(true);
+                                            setOpenRet(true);
+                                        }}>
+                                        <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>{selectedDateRet}</Text>
                                         <Image source={{ uri: 'https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png' }}
                                             style={{ width: 14, height: 14 }} />
-                                    </View>
+                                    </Pressable>
                                 </View>
                             </View>
                             {/* Descriptions */}
@@ -81,13 +99,13 @@ export default function CreateTrip({ navigation }) {
 
                         {/* Background: Spot */}
                         {/* <View className="absolute bg-gray-light w-[20px] h-[20px] rounded-xl bottom-[100px] left-[-10]"></View> */}
-                        <View className="absolute w-[327px] h-[1px] left-[10px] bottom-[110px] border-dashed border-[0.8px] border-gray-dark opacity-30"></View>
+                        <View className="absolute w-[310px] h-[1px] left-[10px] bottom-[90px] border-dashed border-[0.8px] border-gray-dark opacity-30"></View>
                         {/* <View className="absolute bg-gray-light w-[20px] h-[20px] rounded-xl bottom-[100px] right-[-10]"></View> */}
 
                         {/* Btn Start Planning */}
                         <Pressable onPress={() => {
-                            navigation.navigate("TripPlan");
-                        }} className="bg-gray-dark h-[50px] m-[30px] rounded-[10px] justify-center items-center">
+                            navigation.navigate("TripPlan", { dateDep: selectedDateDep, dateRut: selectedDateRet });
+                        }} className="bg-gray-dark h-[50px] m-[20px] rounded-[10px] justify-center items-center">
                             <Text className="text-[12px] text-gray-light tracking-[2px]" style={{ fontFamily: 'promptMedium' }}>START PLANNING</Text>
                         </Pressable>
 
@@ -101,6 +119,51 @@ export default function CreateTrip({ navigation }) {
                     </View>
                 </View>
             </View>
+
+            {/* Date Picker */}
+            {isOpen && (
+                <View className="relative w-full h-full bottom-[250px]">
+                    <Pressable
+                        onPress={() => {
+                            setIsOpen(false)
+                            setOpenDap(false)
+                            setOpenRet(false)
+                        }}
+                        style={{ zIndex: 1 }} className="absolute h-full w-full bg-gray-dark opacity-30" />
+
+                    {openDep && (
+                        <View className="absolute z-10 w-[83%] h-auto">
+                            <View className="mx-[32px] left-[10%] top-[68%]">
+                                <DatePicker
+                                    onSelectedChange={(date) => {
+                                        setSelectedDateDep(date);
+                                    }}
+                                    style={{ borderRadius: 10 }}
+                                    current="2023-10-05"
+                                    selected="2023-10-05"
+                                    mode="calendar"
+                                />
+                            </View>
+                        </View>
+                    )}
+
+                    {openRet && (
+                        <View className="absolute z-10 w-[83%] h-auto">
+                            <View className="mx-[32px] left-[10%] top-[68%]">
+                                <DatePicker
+                                    onSelectedChange={(date) => {
+                                        setSelectedDateRet(date);
+                                    }}
+                                    style={{ borderRadius: 10 }}
+                                    current="2023-10-05"
+                                    selected="2023-10-05"
+                                    mode="calendar"
+                                />
+                            </View>
+                        </View>
+                    )}
+                </View>
+            )}
         </View>
     );
 }
