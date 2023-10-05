@@ -60,9 +60,8 @@ export default function TripDetail({ navigation }) {
                             </View>
 
                             <View className="pt-[30px] ml-[30px] mr-[10px]">
-
                                 {/* box day1 */}
-                                <View className="flex flex-row items-center mb-[15px]">
+                                {/* <View className="flex flex-row items-center mb-[15px]">
                                     <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
                                         <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
                                     </View>
@@ -72,10 +71,10 @@ export default function TripDetail({ navigation }) {
                                     <View style={{ alignItems: "center", justifyContent: "center" }}>
                                         <TripOnDay navigation={navigation}></TripOnDay>
                                     </View>
-                                </View>
+                                </View> */}
 
                                 {/* box day2 */}
-                                <View className="flex flex-row items-center my-[15px]">
+                                {/* <View className="flex flex-row items-center my-[15px]">
                                     <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
                                         <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
                                     </View>
@@ -85,10 +84,10 @@ export default function TripDetail({ navigation }) {
                                     <View style={{ alignItems: "center", justifyContent: "center" }}>
                                         <TripOnDay navigation={navigation}></TripOnDay>
                                     </View>
-                                </View>
+                                </View> */}
 
                                 {/* box day3 */}
-                                <View className="flex flex-row items-center my-[15px]">
+                                {/* <View className="flex flex-row items-center my-[15px]">
                                     <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
                                         <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
                                     </View>
@@ -98,7 +97,7 @@ export default function TripDetail({ navigation }) {
                                     <View style={{ alignItems: "center", justifyContent: "center" }}>
                                         <TripOnDay navigation={navigation}></TripOnDay>
                                     </View>
-                                </View>
+                                </View> */}
                                 
 
                             </View>

@@ -12,8 +12,13 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 
 import { MyTrip, RecommendedTrip, Header } from '../components/index';
+import {TripApi} from "../data/PlaceApi";
 
 export default function Home({ navigation }) {
+
+    const {dataTrip, loadedTrip} = TripApi();
+
+    const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -28,6 +33,7 @@ export default function Home({ navigation }) {
     }
 
     return (
+        <ScrollView>
         <View className="container mx-auto h-full bg-white">
             <View className="mx-[32px] pt-14 bg-white gap-y-[24px]">
                 {/* Header */}
@@ -62,12 +68,19 @@ export default function Home({ navigation }) {
                         </Pressable>
                     </View>
                     <View className="mt-[20px] flex">
-                        {/* <RecommendedTrip navigation={navigation} />
-                        <RecommendedTrip navigation={navigation} /> */}
+                        {loadedTrip ? (<Text>Loading...</Text>) : (
+                            TripItems.map((item, index) => {
+                                return(
+                                    <RecommendedTrip item = {item} key = {index} navigation={navigation} />
+                                )
+                               
+                            })
+                        )}
                     </View>
                 </View>
             </View>
         </View>
+        </ScrollView>
     );
 }
 
