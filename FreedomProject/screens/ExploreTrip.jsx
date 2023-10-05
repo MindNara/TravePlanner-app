@@ -21,7 +21,7 @@ export default function ExploreTrip({ navigation }) {
 
     const {dataTrip, loadedTrip} = TripApi();
 
-    console.log(dataTrip.result);
+    // console.log(dataTrip.result);
 
     const placeItems = data.result ? data.result.filter((item, index) => index < 5) : [];
     // console.log(placeItems);
@@ -91,16 +91,10 @@ export default function ExploreTrip({ navigation }) {
                         {loading ? (<Text>Loading...</Text>) : (
                             TripItems.map((item, index) => {
                                 return(
-                                    <RecommendedTrip item = {item} index = {index} navigation={navigation} />
+                                    <RecommendedTrip item = {item} key = {index} navigation={navigation} />
                                 )
                                
                             })
-                                // data={TripItems}
-                                // keyExtractor={item => item.route_id}
-                                // renderItem={({ item }) => (
-                                //     // console.log(item.route_name)
-                                //     <RecommendedTrip item = {item} navigation={navigation} />
-                                // )}
                         )}
                     </View>
                 </View>

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function RecommendedTrip({ navigation, item, index }) {
+export default function RecommendedTrip({ navigation, item }) {
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
