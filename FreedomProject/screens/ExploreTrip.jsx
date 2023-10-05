@@ -13,7 +13,7 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 
 import { PlaceTrip, RecommendedTrip, Header } from '../components/index';
-import { TATapi } from '../data/PlaceApi';
+import { TATapi, TripApi } from '../data/PlaceApi';
 
 export default function ExploreTrip({ navigation }) {
 

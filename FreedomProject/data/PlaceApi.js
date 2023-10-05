@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-export const TATapi = () => {
+const TripApi = () => {
+
+}
+
+const PlaceApi = () => {
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
@@ -28,3 +32,8 @@ export const TATapi = () => {
         loading,
     };
 };
+
+export {
+    PlaceApi,
+    TripApi
+}
