@@ -45,7 +45,7 @@ export default function ExploreTrip({ navigation }) {
 
     return (
         <ScrollView>
-        <SafeAreaView className="container mx-auto bg-white">
+        <View className="container mx-auto bg-white">
             <View className="h-full mx-[32px] pt-14 bg-white">
                 {/* Header */}
                 <View>
@@ -106,7 +106,7 @@ export default function ExploreTrip({ navigation }) {
                 </View>
             </View>
 
-        </SafeAreaView>
+        </View>
     </ScrollView>
     );
 }
