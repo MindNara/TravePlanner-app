@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 const TripApi = () => {
-    const [loading, setLoading] = useState(true);
-    const [TripData, setTripData] = useState([]);
+    const [loadingTrip, setLoadingTrip] = useState(true);
+    const [dataTrip, setDataTrip] = useState([]);
     
     const apiKey = 'GBlAR1kAdZLNcsEPOzvbb6chWCSSoyX2qORdP5ifIdceDVTo2crn)n0yJHoUqvj4V=2';
 
@@ -15,15 +15,15 @@ const TripApi = () => {
         })
             .then((response) => response.json())
             .then((json) => {
-                setData(json);
-                setLoading(false);
+                setDataTrip(json);
+                setLoadingTrip(false);
             })
             .catch((error) => console.error(error));
     }, []);
 
     return {
-        TripData,
-        loading,
+        dataTrip,
+        loadingTrip,
     };
 
 }

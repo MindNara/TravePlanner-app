@@ -62,8 +62,8 @@ export default function Home({ navigation }) {
                         </Pressable>
                     </View>
                     <View className="mt-[20px] flex">
-                        <RecommendedTrip navigation={navigation} />
-                        <RecommendedTrip navigation={navigation} />
+                        {/* <RecommendedTrip navigation={navigation} />
+                        <RecommendedTrip navigation={navigation} /> */}
                     </View>
                 </View>
             </View>

@@ -19,9 +19,17 @@ export default function ExploreTrip({ navigation }) {
 
     const { data, loading } = PlaceApi();
 
+    const {dataTrip, loadedTrip} = TripApi();
+
+    console.log(dataTrip.result);
 
     const placeItems = data.result ? data.result.filter((item, index) => index < 5) : [];
     // console.log(placeItems);
+    
+    const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
+    // console.log("eiei");
+    // console.log(TripItems);
+    
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -36,7 +44,7 @@ export default function ExploreTrip({ navigation }) {
     }
 
     return (
-        // <ScrollView>
+        <ScrollView>
         <SafeAreaView className="container mx-auto bg-white">
             <View className="h-full mx-[32px] pt-14 bg-white">
                 {/* Header */}
@@ -80,16 +88,26 @@ export default function ExploreTrip({ navigation }) {
                     <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
 
                     <View className="mt-[20px] flex">
-                        {/* Recommended trip 1 */}
-                        <RecommendedTrip navigation={navigation} />
-                        {/* Recommended trip 2 */}
-                        <RecommendedTrip navigation={navigation} />
+                        {loading ? (<Text>Loading...</Text>) : (
+                            TripItems.map((item, index) => {
+                                return(
+                                    <RecommendedTrip item = {item} index = {index} navigation={navigation} />
+                                )
+                               
+                            })
+                                // data={TripItems}
+                                // keyExtractor={item => item.route_id}
+                                // renderItem={({ item }) => (
+                                //     // console.log(item.route_name)
+                                //     <RecommendedTrip item = {item} navigation={navigation} />
+                                // )}
+                        )}
                     </View>
                 </View>
             </View>
 
         </SafeAreaView>
-        // </ScrollView>
+    </ScrollView>
     );
 }
 

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function RecommendedTrip({ navigation }) {
+export default function RecommendedTrip({ navigation, item, index }) {
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -31,15 +31,15 @@ export default function RecommendedTrip({ navigation }) {
                 navigation.navigate("TripDetail");
             }}>
                 <View className="bg-gray-light w-[full] h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center">
-                    <View className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-3"></View>
-                    <View className="bg-gray-light w-[200px] h-full p-2 justify-center">
+                    <Image source={{ uri: item.thumbnail_url }} className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-1"></Image>
+                    <View className="bg-gray-light w-[200px] h-full pl-3 justify-center">
                         <View className="flex flex-row justify-between items-center">
-                            <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
+                            <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>{item.route_name}</Text>
                             <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                style={{ width: 18, height: 18 }} />
+                                style={{ width: 18, height: 18 }} className="ml-[-14] mt-[-60px]" />
                         </View>
                         <View className="mt-2 w-[full]">
-                            <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</Text>
+                            <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>{item.route_introduction}</Text>
                         </View>
                     </View>
                 </View>
