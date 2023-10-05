@@ -13,11 +13,12 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 
 import { PlaceTrip, RecommendedTrip, Header } from '../components/index';
-import { TATapi, TripApi } from '../data/PlaceApi';
+import {PlaceApi, TripApi} from '../data/PlaceApi';
 
 export default function ExploreTrip({ navigation }) {
 
-    const { data, loading } = TATapi();
+    const { data, loading } = PlaceApi();
+
 
     const placeItems = data.result ? data.result.filter((item, index) => index < 5) : [];
     // console.log(placeItems);
