@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export const TATapi = ({ textSerach }) => {
+export const TATapi = () => {
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState([]);
