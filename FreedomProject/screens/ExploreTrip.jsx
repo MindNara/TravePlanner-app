@@ -20,7 +20,7 @@ export default function ExploreTrip({ navigation }) {
     const { data, loading } = TATapi();
 
     const placeItems = data.result ? data.result.filter((item, index) => index < 5) : [];
-    // console.log(items);
+    // console.log(placeItems);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -68,6 +68,7 @@ export default function ExploreTrip({ navigation }) {
                                     <PlaceTrip item={item} navigation={navigation} />
                                 )}
                                 horizontal={true}
+                                showsHorizontalScrollIndicator={false}
                             />
                         )}
 
