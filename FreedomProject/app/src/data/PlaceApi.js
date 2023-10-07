@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 const TripApi = () => {
+
     const [loadingTrip, setLoadingTrip] = useState(true);
     const [dataTrip, setDataTrip] = useState([]);
-    
+
     const apiKey = 'GBlAR1kAdZLNcsEPOzvbb6chWCSSoyX2qORdP5ifIdceDVTo2crn)n0yJHoUqvj4V=2';
 
     useEffect(() => {

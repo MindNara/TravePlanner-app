@@ -21,8 +21,8 @@ function MainNavigator() {
             <Stack.Screen name="Content" component={TabBar} />
             <Stack.Screen name="PlaceDetail" component={PlaceDetailNavigator} />
             <Stack.Screen name="TripPlan" component={CreateTripNavigator} />
-            <Stack.Screen name="MyDreamTrip" component={MyDreamTrip}/>
-            <Stack.Screen name="TripDetail" component={TripDetail}/>
+            <Stack.Screen name="MyDreamTrip" component={MyDreamTrip} />
+            <Stack.Screen name="TripDetail" component={TripDetail} />
         </Stack.Navigator>
     );
 }
