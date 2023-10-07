@@ -35,9 +35,9 @@ export default function PlaceTrip({ navigation, item }) {
                     <View style={[styles.imgPopular]}>
                         <Image source={{ uri: item.thumbnail_url }}
                             style={{ width: 142, height: 160, borderRadius: 20 }} />
+                        <View className="bg-gray-dark w-[142px] h-[160px] rounded-[20px] opacity-10 absolute z-20"></View>
                         <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
-                            style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16" />
-                        {/* <View className="absolute h-[142px] w-[160px] bg-red" /> */}
+                            style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16 z-30" />
                     </View>
                     <View className="top-16 right-1">
                         <Text className="text-[12px]" style={{ fontFamily: 'promptLight' }}>{item.location.province}</Text>

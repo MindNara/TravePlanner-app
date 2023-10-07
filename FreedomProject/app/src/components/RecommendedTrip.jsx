@@ -31,7 +31,8 @@ export default function RecommendedTrip({ navigation, item }) {
                 navigation.navigate("TripDetail");
             }}>
                 <View className="bg-gray-light w-[full] h-[120px] p-2 rounded-[20px] mb-4 flex flex-row items-center">
-                    <Image source={{ uri: item.thumbnail_url }} className="bg-blue-light w-[100px] h-[100px] rounded-[20px] mr-1"></Image>
+                    <Image source={{ uri: item.thumbnail_url }} className="bg-blue-light w-[100px] h-[100px] rounded-[20px] relative z-10"></Image>
+                    <View className="bg-gray-dark w-[100px] h-[100px] rounded-[20px] opacity-10 absolute z-20 left-2"></View>
                     <View className="bg-gray-light w-[200px] h-full pl-3 justify-center">
                         <View className="flex flex-row justify-between items-center">
                             <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>{item.route_name}</Text>
