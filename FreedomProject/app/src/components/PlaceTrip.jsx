@@ -36,8 +36,11 @@ export default function PlaceTrip({ navigation, item }) {
                         <Image source={{ uri: item.thumbnail_url }}
                             style={{ width: 142, height: 160, borderRadius: 20 }} />
                         <View className="bg-gray-dark w-[142px] h-[160px] rounded-[20px] opacity-10 absolute z-20"></View>
-                        <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/like--v1.png' }}
-                            style={{ width: 22, height: 22 }} className="absolute bottom-16 left-16 z-30" />
+                        <View style={[styles.btn]} className="absolute bg-white bottom-14 left-14">
+                            <Image source={{ uri: 'https://img.icons8.com/ios-filled/50/9a1b29/like--v1.png' }}
+                                style={{ width: 20, height: 20 }} />
+                        </View>
+
                     </View>
                     <View className="top-16 right-1">
                         <Text className="text-[12px]" style={{ fontFamily: 'promptLight' }}>{item.location.province}</Text>
@@ -67,5 +70,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 20,
         marginRight: 18,
-    }
+    },
+    btn: {
+        height: 32,
+        width: 32,
+        justifyContent: "center",
+        alignItems: 'center',
+        borderRadius: 50,
+    },
 });

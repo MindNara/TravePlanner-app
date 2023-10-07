@@ -36,8 +36,8 @@ export default function RecommendedTrip({ navigation, item }) {
                     <View className="bg-gray-light w-[200px] h-full pl-3 justify-center">
                         <View className="flex flex-row justify-between items-center">
                             <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>{item.route_name}</Text>
-                            <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                style={{ width: 18, height: 18 }} className="ml-[-14] mt-[-60px]" />
+                            <Image source={{ uri: 'https://img.icons8.com/material-outlined/24/9a1b29/like--v1.png' }}
+                                style={{ width: 20, height: 20 }} className="mt-[-40]" />
                         </View>
                         <View className="mt-2 w-[full]">
                             <Text className="text-[10px] leading-3 text-gray-dark" style={{ fontFamily: 'promptLight' }}>{item.route_introduction}</Text>

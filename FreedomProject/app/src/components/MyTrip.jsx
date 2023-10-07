@@ -32,8 +32,10 @@ export default function MyTrip({ navigation }) {
             }}>
                 <ImageBackground className="relative h-[210px] w-[156px] justify-end items-center"
                     source={require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
-                    <Image className="absolute top-4 right-4" source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
+                    <View style={[styles.btn]} className="absolute bg-white top-[10] left-[110]">
+                        <Image source={{ uri: 'https://img.icons8.com/material-outlined/24/9a1b29/like--v1.png' }}
                         style={{ width: 20, height: 20 }} />
+                    </View>
                     <View className="relative bg-white opacity-40 w-[145px] h-[76px] mb-2 py-2 px-3 rounded-[20px] items-center" />
                     <View className="absolute w-[110px] h-[70px] px-1">
                         <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>Province</Text>
@@ -50,3 +52,13 @@ export default function MyTrip({ navigation }) {
     );
 
 }
+
+const styles = StyleSheet.create({
+    btn: {
+        height: 32,
+        width: 32,
+        justifyContent: "center",
+        alignItems: 'center',
+        borderRadius: 50,
+    },
+});
