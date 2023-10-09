@@ -19,7 +19,7 @@ function MainNavigator() {
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="SingIn" component={SignIn} />
             <Stack.Screen name="Content" component={TabBar} />
-            <Stack.Screen name="PlaceDetail" component={PlaceDetailNavigator} />
+            <Stack.Screen name="PlaceDetail" component={PlaceDetail} />
             <Stack.Screen name="TripPlan" component={CreateTripNavigator} />
             <Stack.Screen name="MyDreamTrip" component={MyDreamTrip} />
             <Stack.Screen name="TripDetail" component={TripDetail} />

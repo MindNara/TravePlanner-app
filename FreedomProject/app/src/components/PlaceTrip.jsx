@@ -14,6 +14,8 @@ import { useFonts } from '@expo-google-fonts/prompt';
 
 export default function PlaceTrip({ navigation, item }) {
 
+    // console.log(item);
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -29,7 +31,7 @@ export default function PlaceTrip({ navigation, item }) {
     return (
         <View>
             <Pressable onPress={() => {
-                navigation.navigate("PlaceDetail");
+                navigation.navigate("PlaceDetail", { item: item });
             }}>
                 <View className="h-[223px] w-[156px] bg-gray-light mr-[15px] rounded-[20px]">
                     {/* Image */}

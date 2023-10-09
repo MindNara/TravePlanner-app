@@ -12,7 +12,10 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 // import { ScrollView } from 'react-native-gesture-handler';
 
-export default function PlaceDetail({ navigation }) {
+export default function PlaceDetail({ route, navigation }) {
+
+    const item = route.params.item;
+    // console.log(item);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -31,7 +34,8 @@ export default function PlaceDetail({ navigation }) {
             <ScrollView>
                 {/* Header & Image */}
                 <View className="w-full h-full bg-blue-light">
-                    {/* <Image className="absolute w-full h-full" source={require('../assets/IntroImage.png')} /> */}
+                    <Image className="absolute w-[400px] h-[300px]" source={{ uri: item.thumbnail_url }} />
+                    <View className="w-[400px] h-[300px] bg-black absolute opacity-30"></View>
                     <View className="mx-[32px] pt-16 flex flex-row justify-between">
                         <Pressable onPress={() => {
                             navigation.goBack();
@@ -39,6 +43,7 @@ export default function PlaceDetail({ navigation }) {
                             <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
                             <Image className="absolute top-[6.5px] left-[5px]" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/back.png' }}
                                 style={{ width: 22, height: 22 }} />
+
                         </Pressable>
                         <View>
                             <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
@@ -51,9 +56,9 @@ export default function PlaceDetail({ navigation }) {
                     <View className="bottom-0 mt-40 bg-white w-full h-full rounded-t-[50px]">
                         <View className="mx-[32px] pt-16">
                             <View>
-                                <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>PROVINCE</Text>
-                                <Text className="text-[32px] text-gray-dark mt-[-6px]" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
-                                <Text className="text-[13px] text-gray-dark mt-[20px] leading-4" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consectetur adipiscing eli, sed do eiusmod tempor incididunt ut labore et dolore magna elit, sed do eiusmod tempor incididunt ut labor et dolore magna eiusmod tempor eopo.</Text>
+                                <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{item.location.province}</Text>
+                                <Text className="text-[28px] text-gray-dark mt-[-6px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
+                                <Text className="text-[13px] text-gray-dark mt-[20px] leading-4" style={{ fontFamily: 'promptLight' }}>{item.sha.sha_type_description}</Text>
                             </View>
                             <View className="flex flex-row mt-[30px] items-center gap-x-[16px]">
                                 <View className="justify-center items-center h-[45px] w-[45px] bg-gray-light rounded-3xl">
