@@ -31,22 +31,39 @@ export default function PlaceTrip({ navigation, item }) {
             <Pressable onPress={() => {
                 navigation.navigate("PlaceDetail");
             }}>
-                <View style={[styles.boxPopular]}>
+                <View className="h-[223px] w-[156px] bg-gray-light mr-[15px] rounded-[20px]">
+                    {/* Image */}
+                    <View className="relative w-full h-[160]">
+                        <Image className="w-full h-full rounded-[20px]"
+                            source={{ uri: item.thumbnail_url }} />
+                        <View className="bg-gray-dark w-full h-full rounded-[20px] opacity-10 absolute z-20"></View>
+                        <View style={[styles.btn]} className="absolute bg-white right-2 top-2 opacity-60"></View>
+                        <Image className="absolute right-[15px] top-[15px]" source={{ uri: 'https://img.icons8.com/ios-filled/50/9a1b29/like--v1.png' }}
+                            style={{ width: 16, height: 16 }} />
+                    </View>
+
+                    {/* Title */}
+                    <View className="pt-[10px] pl-[12px]">
+                        <Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>{item.location.province}</Text>
+                        <Text className="text-[18px] h-7 w-[130px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
+                    </View>
+                </View>
+
+                {/* Old version */}
+                {/* <View className="shadow-xl" style={[styles.boxPopular]}>
                     <View style={[styles.imgPopular]}>
                         <Image source={{ uri: item.thumbnail_url }}
                             style={{ width: 142, height: 160, borderRadius: 20 }} />
                         <View className="bg-gray-dark w-[142px] h-[160px] rounded-[20px] opacity-10 absolute z-20"></View>
-                        <View style={[styles.btn]} className="absolute bg-white bottom-14 left-14">
-                            <Image source={{ uri: 'https://img.icons8.com/ios-filled/50/9a1b29/like--v1.png' }}
-                                style={{ width: 20, height: 20 }} />
-                        </View>
-
+                        <View style={[styles.btn]} className="absolute bg-white bottom-14 left-14 opacity-60"></View>
+                        <Image className="absolute bottom-[62] left-[62]" source={{ uri: 'https://img.icons8.com/ios-filled/50/9a1b29/like--v1.png' }}
+                            style={{ width: 20, height: 20 }} />
                     </View>
                     <View className="top-16 right-1">
                         <Text className="text-[12px]" style={{ fontFamily: 'promptLight' }}>{item.location.province}</Text>
                         <Text className="text-[18px] h-7 w-[130px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
                     </View>
-                </View>
+                </View> */}
             </Pressable>
         </View>
     );
@@ -54,6 +71,15 @@ export default function PlaceTrip({ navigation, item }) {
 }
 
 const styles = StyleSheet.create({
+    boxPopular: {
+        height: 240,
+        width: 165,
+        backgroundColor: "#F8F8F8",
+        justifyContent: "center",
+        alignItems: 'center',
+        borderRadius: 20,
+        marginRight: 15,
+    },
     imgPopular: {
         height: 36,
         width: 50,
@@ -62,18 +88,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 10
     },
-    boxPopular: {
-        height: 240,
-        width: 165,
-        backgroundColor: "#F8F8F8",
-        justifyContent: "center",
-        alignItems: 'center',
-        borderRadius: 20,
-        marginRight: 18,
-    },
     btn: {
-        height: 32,
-        width: 32,
+        height: 30,
+        width: 30,
         justifyContent: "center",
         alignItems: 'center',
         borderRadius: 50,

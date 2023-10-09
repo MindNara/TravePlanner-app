@@ -11,12 +11,11 @@ import {
     TextInput,
 } from "react-native";
 import { useFonts } from "@expo-google-fonts/prompt";
-import { TripEventBox } from "../components/index";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { PlaceTrip } from '../components/index';
+import { TripEventBox, PlaceTrip } from '../components/index';
 
-export default function TripPlan({ navigation }) {
+export default function TripPlan({ route, navigation }) {
 
     const [isOpen, setIsOpen] = useState(false);
     const [isFav, setIsFav] = useState(true);
@@ -124,6 +123,7 @@ export default function TripPlan({ navigation }) {
                                         </View>
                                     </View>
                                 </BottomSheetScrollView>
+
                             </View>
                         ) : (
                             <View className="h-auto w-full">
@@ -352,115 +352,12 @@ export default function TripPlan({ navigation }) {
                                 {/* <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View> */}
                             </View>
 
-                            {/* Plan */}
+                            {/* Plan event */}
                             <View className="bg-white w-[295px] h-auto ml-3">
                                 {/* Place */}
-                                <Pressable onPress={() => { navigation.navigate("PlaceDetail") }}>
-                                    <TripEventBox />
-                                </Pressable>
-
-                                {/* Restaurant */}
-                                <Pressable className="bg-gray-light h-auto rounded-[30px] p-6 mb-3"
-                                    onPress={() => { navigation.navigate("PlaceDetail") }}>
-                                    <View className="flex flex-row items-center justify-between">
-                                        <View className="flex flex-row items-center">
-                                            <View className="w-[20px] h-[20px] bg-gray-dark rounded-[3px] justify-center items-center mr-3">
-                                                <Image
-                                                    className=""
-                                                    source={{
-                                                        uri: "https://img.icons8.com/fluency-systems-filled/96/F8F8F8/restaurant.png",
-                                                    }}
-                                                    style={{ width: 14, height: 14 }}
-                                                />
-                                            </View>
-                                            <Text
-                                                className="text-[12px] text-gray-dark"
-                                                style={{ fontFamily: "promptMedium" }}
-                                            >
-                                                RESTAURANT
-                                            </Text>
-                                        </View>
-                                        <Image
-                                            className=""
-                                            source={{
-                                                uri: "https://img.icons8.com/ios-glyphs/90/2E2E2E/menu-2.png",
-                                            }}
-                                            style={{ width: 20, height: 20 }}
-                                        />
-                                    </View>
-                                    <View className="flex flex-row justify-between items-center mt-3">
-                                        <Text
-                                            className="text-[16px] text-gray-dark"
-                                            style={{ fontFamily: "promptSemiBold" }}
-                                        >
-                                            Restaurant Name
-                                        </Text>
-                                        <Text
-                                            className="text-[12px] text-gray-dark"
-                                            style={{ fontFamily: "promptRegular" }}
-                                        >
-                                            10:00 AM
-                                        </Text>
-                                    </View>
-                                    <Text
-                                        className="text-[10px] text-gray-dark mt-2"
-                                        style={{ fontFamily: "promptLight" }}
-                                    >
-                                        Lorem ipsum dolor sit amet, consecoert adipisciot eit sed do.
-                                    </Text>
-                                </Pressable>
-
-                                {/* Hotel */}
-                                <Pressable className="bg-gray-light h-auto rounded-[30px] p-6 mb-3"
-                                    onPress={() => { navigation.navigate("PlaceDetail") }}>
-                                    <View className="flex flex-row items-center justify-between">
-                                        <View className="flex flex-row items-center">
-                                            <View className="w-[20px] h-[20px] bg-gray-dark rounded-[3px] justify-center items-center mr-3">
-                                                <Image
-                                                    className=""
-                                                    source={{
-                                                        uri: "https://img.icons8.com/sf-regular-filled/48/F8F8F8/3-star-hotel.png",
-                                                    }}
-                                                    style={{ width: 14, height: 14 }}
-                                                />
-                                            </View>
-                                            <Text
-                                                className="text-[12px] text-gray-dark"
-                                                style={{ fontFamily: "promptMedium" }}
-                                            >
-                                                HOTEL
-                                            </Text>
-                                        </View>
-                                        <Image
-                                            className=""
-                                            source={{
-                                                uri: "https://img.icons8.com/ios-glyphs/90/2E2E2E/menu-2.png",
-                                            }}
-                                            style={{ width: 20, height: 20 }}
-                                        />
-                                    </View>
-                                    <View className="flex flex-row justify-between items-center mt-3">
-                                        <Text
-                                            className="text-[16px] text-gray-dark"
-                                            style={{ fontFamily: "promptSemiBold" }}
-                                        >
-                                            Hotel Name
-                                        </Text>
-                                        <Text
-                                            className="text-[12px] text-gray-dark"
-                                            style={{ fontFamily: "promptRegular" }}
-                                        >
-                                            12:00 PM
-                                        </Text>
-                                    </View>
-                                    <Text
-                                        className="text-[10px] text-gray-dark mt-2"
-                                        style={{ fontFamily: "promptLight" }}
-                                    >
-                                        Lorem ipsum dolor sit amet, consecoert adipisciot eit sed do.
-                                    </Text>
-                                </Pressable>
-
+                                {/* <Pressable onPress={() => { navigation.navigate("PlaceDetail") }}> */}
+                                <TripEventBox navigation={navigation} />
+                                {/* </Pressable> */}
                             </View>
                         </View>
                     </View>

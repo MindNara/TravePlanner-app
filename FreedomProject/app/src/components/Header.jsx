@@ -32,6 +32,7 @@ export default function Header({ screen, title, subtitle, navigation }) {
     return (
         <View>
             <View className="h-auto w-full flex flex-row justify-between items-center">
+
                 {/* Title */}
                 <View>
                     <Text className="text-[24px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{title}</Text>
@@ -49,7 +50,7 @@ export default function Header({ screen, title, subtitle, navigation }) {
 
                     {/* Profile */}
                     <Pressable onPress={() => { setProfileModel(true) }}>
-                        <Text className="w-[56px] h-[56px] bg-gray-dark rounded-xl"></Text>
+                        <View className="w-[56px] h-[56px] bg-gray-dark rounded-[10px]"></View>
                     </Pressable>
                 </View>
             </View>
@@ -70,8 +71,8 @@ export default function Header({ screen, title, subtitle, navigation }) {
 
                         {/* Content */}
                         <View className="bg-white w-full h-[250px] my-[20px]">
-                            <ScrollView 
-                            showsVerticalScrollIndicator={false}>
+                            <ScrollView
+                                showsVerticalScrollIndicator={false}>
                                 <View className="relative px-6 mt-1" style={[styles.input]}>
                                     <View className="absolute z-20 left-6 bottom-2 flex flex-row items-center w-full justify-between">
                                         <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Place Name</Text>
