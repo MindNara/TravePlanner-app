@@ -55,17 +55,17 @@ export default function PlaceDetail({ route, navigation }) {
                     {/* content */}
                     <View className="bottom-0 mt-40 bg-white w-full h-full rounded-t-[50px]">
                         <View className="mx-[32px] pt-16">
-                            <View>
-                                <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{item.location.province}</Text>
-                                <Text className="text-[28px] text-gray-dark mt-[-6px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
-                                <Text className="text-[13px] text-gray-dark mt-[20px] leading-4" style={{ fontFamily: 'promptLight' }}>{item.sha.sha_type_description}</Text>
-                            </View>
-                            <View className="flex flex-row mt-[30px] items-center gap-x-[16px]">
+                            <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{item.location.province}</Text>
+                            <Text className="text-[28px] text-gray-dark mt-[-6px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
+                            {item.sha.sha_type_description != null && (
+                                <Text className="text-[13px] text-gray-dark mt-[20px]" style={{ fontFamily: 'promptLight' }}>{item.sha.sha_type_description}</Text>
+                            )}
+                            <View className="flex flex-row items-center mt-[30px] gap-x-[16px]">
                                 <View className="justify-center items-center h-[45px] w-[45px] bg-gray-light rounded-3xl">
                                     <Image className="" source={{ uri: 'https://img.icons8.com/pastel-glyph/64/2E2E2E/shipping-location--v1.png' }}
                                         style={{ width: 20, height: 20 }} />
                                 </View>
-                                <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>LOCATION TYPE</Text>
+                                <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>{item.category_code} ({item.category_description})</Text>
                             </View>
                             <View className="flex flex-row mt-[10px] items-center gap-x-[16px]">
                                 <View className="justify-center items-center h-[45px] w-[45px] bg-gray-light rounded-3xl">

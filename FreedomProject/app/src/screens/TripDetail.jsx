@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -12,7 +12,32 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 import { TripOnDay } from '../components/index';
 
-export default function TripDetail({ navigation }) {
+export default function TripDetail({ route, navigation }) {
+
+    const item = route.params.item;
+    console.log(item.route_id);
+
+    const [loadingTrip, setLoadingTrip] = useState(true);
+    const [dataTrip, setDataTrip] = useState([]);
+
+    const apiKey = 'GBlAR1kAdZLNcsEPOzvbb6chWCSSoyX2qORdP5ifIdceDVTo2crn)n0yJHoUqvj4V=2';
+
+    useEffect(() => {
+        fetch('https://tatapi.tourismthailand.org/tatapi/v5/routes/' + item.route_id, {
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+                "Accept-Language": "TH"
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                setDataTrip(json);
+                setLoadingTrip(false);
+            })
+            .catch((error) => console.error(error));
+    }, []);
+
+    console.log(dataTrip.result);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -31,7 +56,8 @@ export default function TripDetail({ navigation }) {
             <ScrollView>
                 {/* Header & Image */}
                 <View className="w-full h-full bg-blue-light">
-                    {/* <Image className="absolute w-full h-full" source={require('../assets/IntroImage.png')} /> */}
+                    <Image className="absolute w-full h-full" source={{ uri: item.thumbnail_url }} />
+                    <View className="w-full h-full bg-black absolute opacity-30"></View>
                     <View className="mx-[32px] pt-16 flex flex-row justify-between">
                         <Pressable onPress={() => {
                             navigation.goBack();
@@ -98,7 +124,7 @@ export default function TripDetail({ navigation }) {
                                         <TripOnDay navigation={navigation}></TripOnDay>
                                     </View>
                                 </View> */}
-                                
+
 
                             </View>
                         </View>

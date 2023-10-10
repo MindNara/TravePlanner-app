@@ -56,7 +56,7 @@ export default function CreateTrip({ navigation }) {
 
                 {/* Content */}
                 <View className="mx-[32px] pt-8">
-                    <View className="relative bg-white w-full h-auto rounded-[20px] shadow-lg shadow-black">
+                    <View className="relative bg-white w-full h-auto rounded-[20px] shadow-lg shadow-[#2E2E2E]">
                         <View className="bg-white m-[20px]">
                             {/* Title */}
                             <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-5 px-6 justify-center">

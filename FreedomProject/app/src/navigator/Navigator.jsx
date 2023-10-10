@@ -3,9 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { Intro, PlaceDetail, TripPlan, SignUp, SignIn, TripDetail } from "../screens/index";
+import { Intro, PlaceDetail, TripPlan, SignUp, SignIn, TripDetail, MyDreamTrip } from "../screens/index";
 import { TabBar } from "../navigator/index";
-import MyDreamTrip from "../screens/MyDreamTrip";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

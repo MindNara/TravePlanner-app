@@ -20,7 +20,6 @@ export default function ExploreTrip({ navigation }) {
     const { data, loading } = PlaceApi();
 
     const { dataTrip, loadedTrip } = TripApi();
-
     // console.log(dataTrip.result);
 
     const placeItems = data.result ? data.result.filter((item, index) => index < 5) : [];
@@ -110,6 +109,7 @@ export default function ExploreTrip({ navigation }) {
                     <View>
                         <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
                         <View className="mt-[20px]">
+
                             {loading ? (<Text>Loading...</Text>) : (
                                 TripItems.map((item, index) => {
                                     return (
@@ -118,6 +118,7 @@ export default function ExploreTrip({ navigation }) {
 
                                 })
                             )}
+                            
                         </View>
                     </View>
                 </View>
