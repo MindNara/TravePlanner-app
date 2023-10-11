@@ -7,7 +7,8 @@ import {
     Image,
     Pressable,
     ImageBackground,
-    ScrollView
+    ScrollView,
+    FlatList
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { TripOnDay } from '../components/index';
@@ -37,7 +38,7 @@ export default function TripDetail({ route, navigation }) {
             .catch((error) => console.error(error));
     }, []);
 
-    console.log(dataTrip.result);
+    // console.log(dataTrip.result);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -50,6 +51,16 @@ export default function TripDetail({ route, navigation }) {
     if (!loaded) {
         return null;
     }
+
+
+
+    // function numday(){
+    //     for (i = 0; i < item.number_of_days; i++){
+    //         const num = i;
+    //         return num;
+    //     }
+    // }
+
 
     return (
         <View className="container mx-auto h-full bg-white">
@@ -76,16 +87,16 @@ export default function TripDetail({ route, navigation }) {
                     {/* Content */}
                     <View className="bg-white bottom-0 mt-40 w-full h-full rounded-t-[50px]">
 
-                        <View className="mx-[32px] pt-12">
+                        <View className="mx-[20px] pt-12">
                             <View className="flex flex-row items-center">
                                 <View style={[styles.textbox, { alignItems: 'center', justifyContent: 'center' }]}>
-                                    <Text className="text-[20px] text-white" style={{ fontFamily: 'promptBold' }}>03</Text>
-                                    <Text className="text-[12px] text-white mt-[-5px]" style={{ fontFamily: 'promptBold' }}>DAY</Text>
+                                    <Text className="text-[20px] text-white" style={{ fontFamily: 'promptBold' }}>{item.number_of_days}</Text>
+                                    <Text className="text-[12px] text-white mt-[-5px]" style={{ fontFamily: 'promptBold' }}>DAYS</Text>
                                 </View>
-                                <Text className="text-[26px] text-gray-dark ml-[20px]" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
+                                <Text className="text-[26px] text-gray-dark ml-[16px] w-60" style={{ fontFamily: 'promptSemiBold' }}>{item.route_name}</Text>
                             </View>
 
-                            <View className="pt-[30px] ml-[30px] mr-[10px]">
+                            <View className="pt-[30px] mx-4 mr-[10px]">
                                 {/* box day1 */}
                                 {/* <View className="flex flex-row items-center mb-[15px]">
                                     <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
@@ -95,43 +106,78 @@ export default function TripDetail({ route, navigation }) {
                                 </View>
                                 <View className="h-auto border-dashed border-l-2 border-black ml-[1px]">
                                     <View style={{ alignItems: "center", justifyContent: "center" }}>
-                                        <TripOnDay navigation={navigation}></TripOnDay>
+                                        {loadingTrip ? (<Text>Loading...</Text>) : (
+                                            <FlatList scrollEnabled={false}
+                                                data={dataTrip.result.days[0].place_stops}
+                                                keyExtractor={item => item.route_id}
+                                                renderItem={({ item }) => (
+                                                    <TripOnDay item={item} navigation={navigation} />
+                                                )}
+                                            />
+                                        )}
                                     </View>
                                 </View> */}
 
-                                {/* box day2 */}
-                                {/* <View className="flex flex-row items-center my-[15px]">
+                                { loadingTrip || !dataTrip.result.days ?
+                                (<Text>Loading...</Text>) :  (
+                                <FlatList scrollEnabled={false}
+                                    data={dataTrip.result.days}
+                                    keyExtractor={item => 'day-' + item.day.toString()}
+                                    renderItem={({ item }) => (
+                                        // <TripOnDay item={item} navigation={navigation} />
+                                        <View>
+                                            <View className="flex flex-row items-center mb-[15px]">
+                                                <View className="w-[24px] h-[24px] left-[0] rounded-xl items-center justify-center border-collapse border-[1px]">
+                                                    <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
+                                                </View>
+                                                <Text className="text-[20px] ml-[5px] text-gray-dark" style={{ fontFamily: 'promptBold' }}> DAY {item.day}</Text>
+                                            </View>
+                                            <View className="h-auto border-dashed border-l-2 border-black ml-[10px]">
+                                                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                                                    {loadingTrip ? (<Text>Loading...</Text>) : (
+                                                        <FlatList scrollEnabled={false}
+                                                            data={dataTrip.result.days[item.day - 1].place_stops}
+                                                            keyExtractor={(item) => item.route_id}
+                                                            renderItem={({ item }) => (
+                                                                <TripOnDay item={item} navigation={navigation} />
+                                                            )}
+
+                                                        />
+                                                    )}
+                                                </View>
+                                            </View>
+
+                                        </View>
+
+                                    )}
+                                />
+                                )}
+
+                                {/* <View className="flex flex-row items-center mb-[15px]">
                                     <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
                                         <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
                                     </View>
-                                    <Text className="text-[20px] ml-[5px] text-gray-dark" style={{ fontFamily: 'promptBold' }}>DAY 2</Text>
+                                    <Text className="text-[20px] ml-[5px] text-gray-dark" style={{ fontFamily: 'promptBold' }}>DAY 1</Text>
                                 </View>
                                 <View className="h-auto border-dashed border-l-2 border-black ml-[1px]">
                                     <View style={{ alignItems: "center", justifyContent: "center" }}>
-                                        <TripOnDay navigation={navigation}></TripOnDay>
+                                        {loadingTrip ? (<Text>Loading...</Text>) : (
+                                            <FlatList scrollEnabled={false}
+                                                data={dataTrip.result.days[0].place_stops}
+                                                keyExtractor={item => item.route_id}
+                                                renderItem={({ item }) => (
+                                                    <TripOnDay item={item} navigation={navigation} />
+                                                )}
+                                            />
+                                        )}
                                     </View>
                                 </View> */}
-
-                                {/* box day3 */}
-                                {/* <View className="flex flex-row items-center my-[15px]">
-                                    <View className="w-[24px] h-[24px] left-[-10] rounded-xl items-center justify-center border-collapse border-[1px]">
-                                        <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
-                                    </View>
-                                    <Text className="text-[20px] ml-[5px] text-gray-dark" style={{ fontFamily: 'promptBold' }}>DAY 3</Text>
-                                </View>
-                                <View className="h-auto border-dashed border-l-2 border-black ml-[1px]">
-                                    <View style={{ alignItems: "center", justifyContent: "center" }}>
-                                        <TripOnDay navigation={navigation}></TripOnDay>
-                                    </View>
-                                </View> */}
-
-
                             </View>
                         </View>
                     </View>
                 </View>
-            </ScrollView>
-        </View>
+            </ScrollView >
+        </View >
     );
 }
 
