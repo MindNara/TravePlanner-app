@@ -27,7 +27,9 @@ export default function ExploreTrip({ navigation }) {
 
     const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
     // console.log("eiei");
-    // console.log(TripItems);
+    console.log(TripItems);
+
+    
 
 
     const [loaded] = useFonts({
@@ -110,13 +112,23 @@ export default function ExploreTrip({ navigation }) {
                         <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
                         <View className="mt-[20px]">
 
-                            {loading ? (<Text>Loading...</Text>) : (
+                            {/* {loadedTrip ? (<Text>Loading...</Text>) : (
                                 TripItems.map((item, index) => {
                                     return (
                                         <RecommendedTrip item={item} key={index} navigation={navigation} />
                                     )
 
                                 })
+                            )} */}
+
+                            {loadedTrip ? (<Text>Loading...</Text>) : (
+                                <FlatList scrollEnabled={false}
+                                    data={TripItems}
+                                    keyExtractor={item => item.route_id}
+                                    renderItem={({ item }) => (
+                                        <RecommendedTrip item={item} navigation={navigation} />
+                                    )}
+                                />
                             )}
                             
                         </View>
