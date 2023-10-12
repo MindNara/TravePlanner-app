@@ -27,7 +27,7 @@ export default function ExploreTrip({ navigation }) {
 
     const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
     // console.log("eiei");
-    console.log(TripItems);
+    // console.log(TripItems);
 
     
 
@@ -111,15 +111,6 @@ export default function ExploreTrip({ navigation }) {
                     <View>
                         <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
                         <View className="mt-[20px]">
-
-                            {/* {loadedTrip ? (<Text>Loading...</Text>) : (
-                                TripItems.map((item, index) => {
-                                    return (
-                                        <RecommendedTrip item={item} key={index} navigation={navigation} />
-                                    )
-
-                                })
-                            )} */}
 
                             {loadedTrip ? (<Text>Loading...</Text>) : (
                                 <FlatList scrollEnabled={false}

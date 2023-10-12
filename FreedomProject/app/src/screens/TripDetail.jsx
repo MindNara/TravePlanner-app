@@ -52,16 +52,6 @@ export default function TripDetail({ route, navigation }) {
         return null;
     }
 
-
-
-    // function numday(){
-    //     for (i = 0; i < item.number_of_days; i++){
-    //         const num = i;
-    //         return num;
-    //     }
-    // }
-
-
     return (
         <View className="container mx-auto h-full bg-white">
             <ScrollView>
