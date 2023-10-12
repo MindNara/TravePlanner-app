@@ -30,7 +30,7 @@ export default function TripOnDay({ navigation, item }) {
     return (
         <View>
             <Pressable onPress={() => {
-                navigation.navigate("PlaceDetail");
+                navigation.navigate("PlaceDetail", {item : item});
             }}>
                 <View className="bg-gray-light w-[270px] h-[150px] rounded-[20px] ml-[20px] justify-center px-3 mb-4">
                     <View className="flex flex-row">

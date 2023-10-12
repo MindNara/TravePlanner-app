@@ -57,8 +57,8 @@ export default function TripDetail({ route, navigation }) {
             <ScrollView>
                 {/* Header & Image */}
                 <View className="w-full h-full bg-blue-light">
-                    <Image className="absolute w-full h-full" source={{ uri: item.thumbnail_url }} />
-                    <View className="w-full h-full bg-black absolute opacity-30"></View>
+                    {/* <Image className="absolute w-full h-full" source={{ uri: item.thumbnail_url }} />
+                    <View className="w-full h-full bg-black absolute opacity-30"></View> */}
                     <View className="mx-[32px] pt-16 flex flex-row justify-between">
                         <Pressable onPress={() => {
                             navigation.goBack();
