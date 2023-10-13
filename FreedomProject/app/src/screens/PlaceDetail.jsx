@@ -15,7 +15,7 @@ import { useFonts } from '@expo-google-fonts/prompt';
 export default function PlaceDetails({ route, navigation }) {
 
     const item = route.params.item;
-    console.log(item);
+    // console.log(item);
 
     const [loading, setLoading] = useState(true);
     const [dataDetail, setDataDetail] = useState([]);
@@ -37,8 +37,8 @@ export default function PlaceDetails({ route, navigation }) {
             .catch((error) => console.error(error));
     }, []);
 
-    console.log("eiei");
-    console.log(dataDetail);
+    // console.log("eiei");
+    console.log(dataDetail.result.latitude);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -83,7 +83,9 @@ export default function PlaceDetails({ route, navigation }) {
                                     <View>
                                         <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{dataDetail.result.destination}</Text>
                                         <Text className="text-[28px] text-gray-dark mt-[-6px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
-                                        <Text className="text-[13px] text-gray-dark mt-[20px]" style={{ fontFamily: 'promptLight' }}>{dataDetail.result.place_information.detail}</Text>
+                                        {dataDetail.result.place_information.detail == "" ? (
+                                            <Text className="text-[13px] text-gray-dark mt-[20px]" style={{ fontFamily: 'promptLight' }}>{dataDetail.result.place_information.introduction}</Text>
+                                        ) : (<Text className="text-[13px] text-gray-dark mt-[20px]" style={{ fontFamily: 'promptLight' }}>{dataDetail.result.place_information.detail}</Text>)}
                                         <View className="flex flex-row items-center mt-[30px] gap-x-[16px]">
                                             <View className="justify-center items-center h-[45px] w-[45px] bg-gray-light rounded-3xl">
                                                 <Image className="" source={{ uri: 'https://img.icons8.com/pastel-glyph/64/2E2E2E/shipping-location--v1.png' }}

@@ -35,8 +35,7 @@ export default function TripOnDay({ navigation, item }) {
                 <View className="bg-gray-light w-[270px] h-[150px] rounded-[20px] ml-[20px] justify-center px-3 mb-4">
                     <View className="flex flex-row">
                         {/* Image */}
-                        <Image source={{ uri: item.thumbnail_url }}
-                            style={{ width: 112, height: 128, borderRadius: 20 }} />
+                        {item.thumbnail_url == ""? (<Image source={require('../assets/TripImage.png')} style={{ width: 112, height: 128, borderRadius: 20 }} />) : (<Image source={{ uri: item.thumbnail_url }} style={{ width: 112, height: 128, borderRadius: 20 }} />)}
                         {/* Text */}
                         <View className="justify-center">
                             <View className="ml-[14px] w-[120px]">

@@ -35,9 +35,7 @@ export default function RecommendedTrip({ navigation, item }) {
                 <View className="bg-gray-light w-[full] h-[120px] rounded-[20px] mb-4 flex flex-row items-center">
                     {/* Image */}
                     <View className="relative w-[120px] h-full">
-                        <Image
-                            source={{ uri: item.thumbnail_url }}
-                            className="w-full h-full rounded-[20px]" />
+                        {item.thumbnail_url == ""? (<Image source={require('../assets/TripImage.png')}  className="w-full h-full rounded-[20px]" />) : (<Image source={{ uri: item.thumbnail_url }} className="w-full h-full rounded-[20px]" />)}  
                         <View className="bg-gray-dark w-full h-full rounded-[20px] opacity-10 absolute"></View>
                     </View>
 
