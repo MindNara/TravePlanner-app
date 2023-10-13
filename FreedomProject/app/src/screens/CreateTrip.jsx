@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
+// import firebase from '../../firebase/firebaseDB';
 
 export default function CreateTrip({ navigation }) {
 
@@ -19,8 +20,36 @@ export default function CreateTrip({ navigation }) {
     const [openRet, setOpenRet] = useState(false);
 
     const [title, setTiltle] = useState('');
+    const [des, setDes] = useState('');
     const [selectedDateDep, setSelectedDateDep] = useState(dateToday);
     const [selectedDateRet, setSelectedDateRet] = useState(dateToday);
+
+    const [trips, setTrips] = useState([]);
+    // const tripsCollection = firebase.firestore().collection("trips");
+
+    // const getTripsCollection = (querySnapshot) => {
+    //     const allData = [];
+    //     querySnapshot.forEach((res) => {
+    //         const { trip_id, trip_titel, trip_description, trip_start_date, trip_end_date, trip_image, user_id } = res.data();
+    //         allData.push({
+    //             key: res.trip_id,
+    //             trip_id,
+    //             trip_titel,
+    //             trip_description,
+    //             trip_start_date,
+    //             trip_end_date,
+    //             trip_image,
+    //             user_id
+    //         });
+    //     });
+    //     setTrips(allData);
+    //     console.log(allData);
+    // };
+
+    // useEffect(() => {
+    //     const unsubscribe = tripsCollection.onSnapshot(getTripsCollection);
+    //     return () => unsubscribe();
+    // }, []);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -61,7 +90,8 @@ export default function CreateTrip({ navigation }) {
                             {/* Title */}
                             <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-5 px-6 justify-center">
                                 <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
-                                <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name">Trip Name</TextInput>
+                                <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name"
+                                    value={title} onChangeText={text => setTiltle(text)} ></TextInput>
                             </View>
                             {/* Date */}
                             <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark mt-[24px] py-6 px-6 flex flex-row justify-between items-center">
@@ -93,7 +123,8 @@ export default function CreateTrip({ navigation }) {
                             {/* Descriptions */}
                             <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-5 px-6 justify-center mt-[24px]">
                                 <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DESCRIPTIONS</Text>
-                                <TextInput multiline className="text-[15px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
+                                <TextInput multiline className="text-[15px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions"
+                                    value={des} onChangeText={text => setDes(text)} ></TextInput>
                             </View>
                         </View>
 
@@ -104,7 +135,7 @@ export default function CreateTrip({ navigation }) {
 
                         {/* Btn Start Planning */}
                         <Pressable onPress={() => {
-                            navigation.navigate("TripPlan", { dateDep: selectedDateDep, dateRut: selectedDateRet });
+                            // navigation.navigate("TripPlan", { dateDep: selectedDateDep, dateRut: selectedDateRet });
                         }} className="bg-gray-dark h-[50px] m-[20px] rounded-[10px] justify-center items-center">
                             <Text className="text-[12px] text-gray-light tracking-[2px]" style={{ fontFamily: 'promptMedium' }}>START PLANNING</Text>
                         </Pressable>
@@ -139,8 +170,8 @@ export default function CreateTrip({ navigation }) {
                                         setSelectedDateDep(date);
                                     }}
                                     style={{ borderRadius: 10 }}
-                                    current="2023-10-05"
-                                    selected="2023-10-05"
+                                    current={dateToday}
+                                    selected={dateToday}
                                     mode="calendar"
                                 />
                             </View>
@@ -155,8 +186,8 @@ export default function CreateTrip({ navigation }) {
                                         setSelectedDateRet(date);
                                     }}
                                     style={{ borderRadius: 10 }}
-                                    current="2023-10-05"
-                                    selected="2023-10-05"
+                                    current={dateToday}
+                                    selected={dateToday}
                                     mode="calendar"
                                 />
                             </View>
