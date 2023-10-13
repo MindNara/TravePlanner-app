@@ -38,7 +38,7 @@ export default function PlaceDetails({ route, navigation }) {
     }, []);
 
     // console.log("eiei");
-    console.log(dataDetail.result.latitude);
+    // console.log(dataDetail.result);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
