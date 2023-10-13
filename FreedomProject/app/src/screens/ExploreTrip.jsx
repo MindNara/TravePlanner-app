@@ -25,7 +25,6 @@ export default function ExploreTrip({ navigation }) {
     const { data, loading } = PlaceApi(searchPlace);
     // const onChangeSearch = query => setSearchPlace(query);
     // console.log(dataTrip.result);
-
     const placeItems = data.result ? data.result.filter((item, index) => index < 5) : [];
     // console.log(placeItems);
 

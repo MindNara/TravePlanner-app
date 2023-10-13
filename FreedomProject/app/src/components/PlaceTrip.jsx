@@ -36,8 +36,10 @@ export default function PlaceTrip({ navigation, item }) {
                 <View className="h-[223px] w-[156px] bg-gray-light mr-[15px] rounded-[20px]">
                     {/* Image */}
                     <View className="relative w-full h-[160]">
-                        <Image className="w-full h-full rounded-[20px]"
-                            source={{ uri: item.thumbnail_url }} />
+                        {item.thumbnail_url == "" ? (<Image className="w-full h-full rounded-[20px]"
+                            source={require('../assets/TripImage.png')} />) : (<Image className="w-full h-full rounded-[20px]"
+                            source={{ uri: item.thumbnail_url }} />)}
+                        
                         <View className="bg-gray-dark w-full h-full rounded-[20px] opacity-10 absolute z-20"></View>
                         <View style={[styles.btn]} className="absolute bg-white right-2 top-2 opacity-60"></View>
                         <Image className="absolute right-[15px] top-[15px]" source={{ uri: 'https://img.icons8.com/ios-filled/50/9a1b29/like--v1.png' }}
