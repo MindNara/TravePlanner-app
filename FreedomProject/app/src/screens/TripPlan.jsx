@@ -14,8 +14,10 @@ import { useFonts } from "@expo-google-fonts/prompt";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TripEventBox, PlaceTrip } from '../components/index';
+import { useFocusEffect } from "@react-navigation/native";
+import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../../firebase/firebaseDB';
 
-export default function TripPlan({ route, navigation }) {
+const TripPlan = ({ route, navigation }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [isFav, setIsFav] = useState(true);
@@ -27,6 +29,26 @@ export default function TripPlan({ route, navigation }) {
         bottomSheetModelRef.current?.present();
         setIsOpen(true);
     }
+
+    const [trips, setTrips] = useState([]);
+    const getTrips = async () => {
+        const querySnapshot = await getDocs(collection(db, "trips"));
+        console.log("Total trips: ", querySnapshot.size);
+        const tempDoc = [];
+        querySnapshot.forEach((doc) => {
+            tempDoc.push({ ...doc.data(), key: doc.id });
+        });
+        setTrips(tempDoc);
+    }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getTrips();
+            return () => {
+                setTrips([]);
+            };
+        }, [])
+    );
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -366,3 +388,5 @@ export default function TripPlan({ route, navigation }) {
         </GestureHandlerRootView>
     );
 }
+
+export default TripPlan;

@@ -7,12 +7,13 @@ import {
     Image,
     Pressable,
     TextInput,
+    Alert
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
-// import firebase from '../../firebase/firebaseDB';
+import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../../firebase/firebaseDB';
 
-export default function CreateTrip({ navigation }) {
+const CreateTrip = ({ navigation }) => {
 
     const dateToday = getToday();
     const [isOpen, setIsOpen] = useState(false);
@@ -24,32 +25,24 @@ export default function CreateTrip({ navigation }) {
     const [selectedDateDep, setSelectedDateDep] = useState(dateToday);
     const [selectedDateRet, setSelectedDateRet] = useState(dateToday);
 
-    const [trips, setTrips] = useState([]);
-    // const tripsCollection = firebase.firestore().collection("trips");
-
-    // const getTripsCollection = (querySnapshot) => {
-    //     const allData = [];
-    //     querySnapshot.forEach((res) => {
-    //         const { trip_id, trip_titel, trip_description, trip_start_date, trip_end_date, trip_image, user_id } = res.data();
-    //         allData.push({
-    //             key: res.trip_id,
-    //             trip_id,
-    //             trip_titel,
-    //             trip_description,
-    //             trip_start_date,
-    //             trip_end_date,
-    //             trip_image,
-    //             user_id
-    //         });
-    //     });
-    //     setTrips(allData);
-    //     console.log(allData);
-    // };
-
-    // useEffect(() => {
-    //     const unsubscribe = tripsCollection.onSnapshot(getTripsCollection);
-    //     return () => unsubscribe();
-    // }, []);
+    // POST
+    const addTrip = async () => {
+        try {
+            const tripRef = await addDoc(collection(db, "trips"), {
+                trip_id: '2', // เซฟให้ id ต่อจากอันที่มีอยู่แล้ว
+                title: title,
+                description: des,
+                start_date: selectedDateDep,
+                end_date: selectedDateRet,
+                trip_image: '',
+                user_id: '1'
+            });
+            Alert.alert("Success", "Trip added successfully");
+            navigation.navigate('TripPlan');
+        } catch (e) {
+            Alert.alert("Error", "Error adding document: ", e.message);
+        }
+    }
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -134,9 +127,7 @@ export default function CreateTrip({ navigation }) {
                         {/* <View className="absolute bg-gray-light w-[20px] h-[20px] rounded-xl bottom-[100px] right-[-10]"></View> */}
 
                         {/* Btn Start Planning */}
-                        <Pressable onPress={() => {
-                            // navigation.navigate("TripPlan", { dateDep: selectedDateDep, dateRut: selectedDateRet });
-                        }} className="bg-gray-dark h-[50px] m-[20px] rounded-[10px] justify-center items-center">
+                        <Pressable onPress={() => { addTrip() }} className="bg-gray-dark h-[50px] m-[20px] rounded-[10px] justify-center items-center">
                             <Text className="text-[12px] text-gray-light tracking-[2px]" style={{ fontFamily: 'promptMedium' }}>START PLANNING</Text>
                         </Pressable>
 
@@ -199,5 +190,4 @@ export default function CreateTrip({ navigation }) {
     );
 }
 
-const styles = StyleSheet.create({
-});
+export default CreateTrip;
