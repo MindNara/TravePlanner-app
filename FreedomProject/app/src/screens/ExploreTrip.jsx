@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-import { PlaceTrip, RecommendedTrip, Header, MyTrip } from '../components/index';
+import { PlaceTrip, RecommendedTrip, Header, MyAllTrip } from '../components/index';
 import { PlaceApi, TripApi } from '../data/PlaceApi';
 
 export default function ExploreTrip({ navigation }) {
@@ -74,7 +74,7 @@ export default function ExploreTrip({ navigation }) {
                         </View>
                     </View>
                 </View>
-                
+                {searchPlace == "" ? (
                 <View className="h-full mx-[32px] bg-white">
                     <View className="my-[20px]">
                         <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Popular Places</Text>
@@ -111,7 +111,22 @@ export default function ExploreTrip({ navigation }) {
                             
                         </View>
                     </View>
+                </View>) : (
+                <View className="h-full mx-[32px] bg-white">
+                <View className="my-[20px]">
+                    <View className="flex flex-row flex-wrap justify-between">
+                        {loading ? (
+                            <Text>Loading...</Text>
+                        ) : (
+                            placeItems.map((item, index) => (
+                                <View key={item.place_id} className={index % 2 === 0 ? "w-[50%] pr-[8px]" : "w-[50%] pl-[8px]"}>
+                                    <PlaceTrip item={item} navigation={navigation} />
+                                </View>
+                            ))
+                        )}
+                    </View>
                 </View>
+            </View>)}
 
             </View>
         </ScrollView >

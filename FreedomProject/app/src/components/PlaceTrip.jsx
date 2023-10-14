@@ -29,7 +29,7 @@ export default function PlaceTrip({ navigation, item }) {
     }
 
     return (
-        <View>
+        <View className="mb-4">
             <Pressable onPress={() => {
                 navigation.navigate("PlaceDetail", { item: item });
             }}>
