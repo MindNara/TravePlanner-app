@@ -61,18 +61,22 @@ export default function MyDreamTrip({ navigation }) {
                     </View>
 
                     <View className="mt-2">
-                        <View className="flex flex-row mt-[20px] justify-between">
+                        <View className="flex-row flex-wrap mt-[20px]">
+                            <MyAllTrip navigation={navigation} />
+                            <MyAllTrip navigation={navigation} />
+                            <MyAllTrip navigation={navigation} />
+                            <MyAllTrip navigation={navigation} />
                             <MyAllTrip navigation={navigation} />
                             <MyAllTrip navigation={navigation} />
                         </View>
-                        <View className="flex flex-row mt-[20px] justify-between">
+                        {/* <View className="flex flex-row mt-[20px] justify-between">
                             <MyAllTrip navigation={navigation} />
                             <MyAllTrip navigation={navigation} />
                         </View>
                         <View className="flex flex-row my-[20px] justify-between">
                             <MyAllTrip navigation={navigation} />
                             <MyAllTrip navigation={navigation} />
-                        </View>
+                        </View> */}
                     </View>
                 </View>
             </View>

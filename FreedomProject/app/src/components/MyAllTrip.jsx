@@ -26,7 +26,7 @@ export default function MyAllTrip({ navigation }) {
     }
 
     return (
-        <View>
+        <View className="m-1">
             <Pressable onPress={() => {
                 navigation.navigate("TripPlan");
             }}>
