@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     SafeAreaView,
     Text,
@@ -9,8 +9,50 @@ import {
     TextInput
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { firebase_auth } from '../../firebase/firebaseDB';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function Intro({ navigation }) {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [username, setUsername] = useState('');
+
+    const [loading, setLoading] = useState(false);
+    const auth = firebase_auth;
+
+    const db = getFirestore();
+
+    
+    const signUp = async () => {
+        setLoading(true)
+        try{
+            const response = await createUserWithEmailAndPassword(auth, email, password);
+            console.log(response);
+            alert('Sign Up Complete');
+
+            const userDocRef = doc(db, 'users', response.user.uid);  // กำหนด path สำหรับ document
+            await setDoc(userDocRef, {
+                user_email: email,
+                user_fname: firstname,  
+                user_lname: lastname,
+                user_image: '',
+                user_password: password,
+                user_username: username,         
+            });
+            navigation.navigate("SingIn");
+        }
+        catch (error){
+            console.log(error);
+            alert('Sign Up Fail');
+        }
+        finally {
+            setLoading(false);
+        }
+    }
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -39,29 +81,27 @@ export default function Intro({ navigation }) {
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <View className="mt-16">
                         <View>
-                            <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                            <TextInput value={firstname} onChangeText={text => setFirstname(text)} className="relative px-6" style={[styles.input]}></TextInput>
                             <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
                         </View>
                         <View className="mt-6">
-                            <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                            <TextInput value={lastname} onChangeText={text => setLastname(text)} className="relative px-6" style={[styles.input]}></TextInput>
                             <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
                         </View>
                         <View className="mt-6">
-                            <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                            <TextInput value={username} onChangeText={text => setUsername(text)} className="relative px-6" style={[styles.input]}></TextInput>
                             <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Username</Text>
                         </View>
                         <View className="mt-6">
-                            <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                            <TextInput value={email} onChangeText={text => setEmail(text)} className="relative px-6" style={[styles.input]}></TextInput>
                             <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
                         </View>
                         <View className="mt-6">
-                            <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                            <TextInput value={password} onChangeText={text => setPassword(text)} className="relative px-6" style={[styles.input]}></TextInput>
                             <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
                         </View>
                         <View className="mt-8">
-                            <Pressable style={styles.button} onPress={() => {
-                                navigation.navigate("SingIn");
-                            }}>
+                            <Pressable style={styles.button} onPress={signUp}>
                                 <Text style={{ color: 'white', fontFamily: 'promptSemiBold' }} className="text-[16px] tracking-[1px]">SIGN UP</Text>
                             </Pressable>
                         </View>
