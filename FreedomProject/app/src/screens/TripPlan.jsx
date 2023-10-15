@@ -39,6 +39,7 @@ const TripPlan = ({ route, navigation }) => {
             tempDoc.push({ ...doc.data(), key: doc.id });
         });
         setTrips(tempDoc);
+        // console.log(tempDoc);
     }
 
     useFocusEffect(
@@ -49,6 +50,7 @@ const TripPlan = ({ route, navigation }) => {
             };
         }, [])
     );
+    // console.log(getTrips);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
