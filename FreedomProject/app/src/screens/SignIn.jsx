@@ -25,9 +25,9 @@ export default function SingIn({ navigation }) {
         setLoading(true)
         try{
             const response = await signInWithEmailAndPassword(auth, email, password);
-            console.log(response);
+            console.log(response.user.uid);
             alert('Sign In Complete');
-            navigation.navigate('Content');
+            navigation.navigate('Content', { uid: response.user.uid });
         }
         catch (error){
             console.log(error);
