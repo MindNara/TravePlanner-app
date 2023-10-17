@@ -14,8 +14,8 @@ import { useFonts } from "@expo-google-fonts/prompt";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TripEventBox, PlaceTrip } from '../components/index';
-import { db } from '../firebase/firebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
+import { useSelector } from "react-redux";
+import { tripSelector } from '../redux/tripsSlice';
 
 const TripPlan = ({ route, navigation }) => {
 
@@ -33,33 +33,17 @@ const TripPlan = ({ route, navigation }) => {
         setIsOpen(true);
     }
 
-    const [trips, setTrips] = useState([]);
-    const getTrips = async () => {
-        try {
-            const tripRef = doc(db, 'trips', tripKey);
-            const tripInfo = await getDoc(tripRef);
+    const trip = useSelector(tripSelector);
+    const trips = trip.trips;
+    // console.log(trips);
 
-            if (tripInfo.exists()) {
-                setTrips(tripInfo.data());
-                // console.log(trips);
-            } else {
-                console.log('No user found with given docId');
-                return null;
-            }
-        } catch (error) {
-            console.error('Error fetching user:', error);
-            return null;
-        }
-    }
+    const tripItem = trips.find(trip => trip.key === tripKey);
+    console.log(tripItem);
 
-    useEffect(() => {
-        getTrips();
-    }, []);
-
-    const tripStartDate = new Date(trips.trip_end_date);
-    const tripEndDate = new Date(trips.trip_start_date);
-
-    // console.log(trips.trip_end_date.slice(2));
+    const tripEndDate = tripItem.trip_end_date.slice(8);
+    const tripStartDate = tripItem.trip_start_date.slice(8);
+    const differanceDate = parseInt(tripEndDate) - parseInt(tripStartDate) + 1;
+    // console.log(differanceDate);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -301,20 +285,24 @@ const TripPlan = ({ route, navigation }) => {
                                     className="text-[14px] text-gray-dark opacity-80"
                                     style={{ fontFamily: "promptSemiBold" }}
                                 >
-                                    8/14 - 8/20
+                                    {differanceDate == 1 ? (
+                                        tripItem.trip_start_date.slice(5)
+                                    ) : (
+                                        tripItem.trip_start_date.slice(5) + " - " + tripItem.trip_end_date.slice(5)
+                                    )}
                                 </Text>
                             </View>
                             <Text
                                 className="text-[32px] text-gray-dark"
                                 style={{ fontFamily: "promptSemiBold" }}
                             >
-                                {trips.trip_title}
+                                {tripItem.trip_title}
                             </Text>
                             <Text
                                 className="text-[14px] text-gray-dark leading-4 mt-2"
                                 style={{ fontFamily: "promptLight" }}
                             >
-                                {trips.trip_description}
+                                {tripItem.trip_description}
                             </Text>
                         </View>
                     </View>
