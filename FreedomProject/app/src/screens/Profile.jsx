@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -18,7 +18,16 @@ export default function Profile({ navigation }) {
     const user = useSelector(userSelector);
     const user_info = user.user_info;
 
-    console.log(user_info);
+    console.log(user_info.user_lname);
+
+    const [user_fname, setUser_fname] = useState(user_info.user_fname);
+    const [user_lname, setUser_lname] = useState(user_info.user_lname);
+    const [user_email, setUser_email] = useState(user_info.user_email);
+    const [user_password, setUser_password] = useState("********");
+    const [user_image, setUser_image] = useState("");
+    const [user_username, setUser_username] = useState(user_info.user_username);
+    const [isPressed, setIsPressed] = useState(false);
+    console.log(isPressed);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -45,25 +54,27 @@ export default function Profile({ navigation }) {
                     </View>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <View className="mt-8 ml-6 flex flex-row">
-                            <Text className="text-[24px]" style={{ fontFamily: 'promptSemiBold' }}>USERNAME</Text>
-                            <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
-                                style={{ width: 24, height: 24 }} className="ml-2 mt-1" />
+                            <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }} editable={false}  >{user_username}</TextInput>
+                            <Pressable onPress={() => setIsPressed(true)}>
+                                <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
+                                    style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
+                            </Pressable>
                         </View>
                         <View className="mt-8">
                             <View>
-                                <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname} editable={false} ></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
                             </View>
                             <View className="mt-6">
-                                <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} editable={false} ></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
                             </View>
                             <View className="mt-6">
-                                <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email} editable={false} ></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
                             </View>
                             <View className="mt-6">
-                                <TextInput className="relative px-6" style={[styles.input]}></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_password} editable={false} ></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
                             </View>
                             <View className="mt-[30px]">
