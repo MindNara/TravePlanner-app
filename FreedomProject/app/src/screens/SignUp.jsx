@@ -107,7 +107,7 @@ export default function Intro({ navigation }) {
                         <View className="mt-[15px] flex flex-row" style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Text className="text-[15px]" style={{ fontFamily: 'promptRegular' }}>Already have an account?</Text>
                             <Pressable onPress={() => {
-                                navigation.navigate("SingIn");
+                                navigation.navigate("SignIn");
                             }}>
                                 <Text className="text-[15px] pl-2" style={{ fontFamily: 'promptMedium', textDecorationLine: "underline" }}>Sign In</Text>
                             </Pressable>
