@@ -15,9 +15,9 @@ export default function MyTrip({ navigation, item }) {
 
     // console.log(item.key);
 
-    // const tripEndDate = item.trip_end_date.slice(8);
-    // const tripStartDate = item.trip_start_date.slice(8);
-    // const differanceDate = parseInt(tripEndDate) - parseInt(tripStartDate) + 1;
+    const tripEndDate = item.trip_end_date.slice(8);
+    const tripStartDate = item.trip_start_date.slice(8);
+    const differanceDate = parseInt(tripEndDate) - parseInt(tripStartDate) + 1;
     // console.log(differanceDate);
 
     const [loaded] = useFonts({
@@ -50,11 +50,11 @@ export default function MyTrip({ navigation, item }) {
                             <Image className="mr-[6px]" source={{ uri: 'https://img.icons8.com/metro/96/2E2E2E/tear-off-calendar.png' }}
                                 style={{ width: 10, height: 10 }} />
                             <Text className="text-[8px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>
-                                {/* {differanceDate == 1 ? (
+                                {differanceDate == 1 ? (
                                     item.trip_start_date.slice(5)
                                 ) : (
                                     item.trip_start_date.slice(5) + " - " + item.trip_end_date.slice(5)
-                                )} */}
+                                )}
                             </Text>
                         </View>
                     </View>
