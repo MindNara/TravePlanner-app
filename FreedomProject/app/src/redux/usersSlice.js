@@ -24,7 +24,7 @@ const usersSlice = createSlice({
         usersInfo(state, action) {
             if (state.loading === 'login success') {
                 state.user_info = action.payload;
-                console.log('UserInfo: ' + state.user_info);
+                // console.log('UserInfo: ' + state.user_info);
             }
         }
     },

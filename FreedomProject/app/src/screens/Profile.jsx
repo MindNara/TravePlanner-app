@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
     SafeAreaView,
     Text,
@@ -18,7 +19,7 @@ export default function Profile({ navigation }) {
     const user = useSelector(userSelector);
     const user_info = user.user_info;
 
-    console.log(user_info.user_lname);
+    // console.log(user_info.user_lname);
 
     const [user_fname, setUser_fname] = useState(user_info.user_fname);
     const [user_lname, setUser_lname] = useState(user_info.user_lname);
@@ -28,6 +29,12 @@ export default function Profile({ navigation }) {
     const [user_username, setUser_username] = useState(user_info.user_username);
     const [isPressed, setIsPressed] = useState(false);
     console.log(isPressed);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setIsPressed(false); // ตั้งค่า isPressed เป็น false ทุกครั้งที่หน้านี้ถูก focus
+        }, [])
+    );
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -44,6 +51,7 @@ export default function Profile({ navigation }) {
     return (
         <View className="container mx-auto h-full bg-blue-light " >
             <View className="absolute w-full h-[620px] bottom-0 bg-white rounded-t-[50px]">
+                {isPressed == false ? (
                 <View>
                     <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
                     <View className="ml-[230] mt-2">
@@ -92,7 +100,56 @@ export default function Profile({ navigation }) {
 
                         </View>
                     </View>
-                </View>
+                </View>) : (
+                <View>
+                    <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
+                    <View className="ml-[230] mt-2">
+                        <View style={[styles.picbtn]} className="rounded-full">
+                            <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/30/FFFFFF/edit-image.png' }}
+                                style={{ width: 24, height: 24 }} />
+                        </View>
+                    </View>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <View className="mt-8 ml-6 flex flex-row">
+                            <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }}  >{user_username}</TextInput>
+                            <Pressable>
+                                <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
+                                    style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
+                            </Pressable>
+                        </View>
+                        <View className="mt-8">
+                            <View>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname}></TextInput>
+                                <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
+                            </View>
+                            <View className="mt-6">
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} ></TextInput>
+                                <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
+                            </View>
+                            <View className="mt-6">
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email}></TextInput>
+                                <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
+                            </View>
+                            <View className="mt-6">
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_info.user_password}></TextInput>
+                                <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
+                            </View>
+                            <View className="mt-[30px]">
+                                <Pressable style={styles.button}  onPress={() => setIsPressed(false)}>
+                                    <Text className="text-[14px] tracking-[1px]" style={{ color: 'white', fontFamily: 'promptSemiBold' }}>SAVE</Text>
+                                </Pressable>
+                            </View>
+                            <View className="mt-[16px]">
+                                <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
+                                    navigation.navigate("Intro");
+                                }}>
+                                    <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
+                                </Pressable>
+                            </View>
+
+                        </View>
+                    </View>
+                </View>)}
             </View>
             {/* <Text >My Profile</Text> */}
         </View>
