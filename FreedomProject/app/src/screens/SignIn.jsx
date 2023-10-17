@@ -13,7 +13,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { firebase_auth } from '../firebase/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from "react-redux";
-import { usersId } from "../redux/usersSlice";
+import { usersId, usersLoading } from "../redux/usersSlice";
 
 export default function SingIn({ navigation }) {
 
@@ -31,6 +31,7 @@ export default function SingIn({ navigation }) {
             const response = await signInWithEmailAndPassword(auth, email, password);
             const user_id = response.user.uid;
             dispatch(usersId(user_id));
+            dispatch(usersLoading());
             // console.log(user_id);
             alert('Sign In Complete');
             navigation.navigate('Content');

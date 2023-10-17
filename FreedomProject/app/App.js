@@ -9,8 +9,6 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 // add icons to library
 library.add(fab, faCircle);
 
-// import { createStore } from 'redux';
-// import rootReducer from './src/redux/reducers/rootReducer';
 import { Provider } from 'react-redux';
 import store from './src/redux/store';
 
