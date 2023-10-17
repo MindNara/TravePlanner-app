@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { getFirestore, doc, setDoc } from "firebase/firestore";
-import { firebase_auth } from '../firebase/firebaseDB';
+import { firebase_auth } from '../firebase/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function Intro({ navigation }) {

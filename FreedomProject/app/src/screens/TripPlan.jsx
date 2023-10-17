@@ -15,7 +15,7 @@ import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } fro
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TripEventBox, PlaceTrip } from '../components/index';
 import { useFocusEffect } from "@react-navigation/native";
-import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../../firebase/firebaseDB';
+import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../firebase/firebaseConfig';
 
 const TripPlan = ({ route, navigation }) => {
 

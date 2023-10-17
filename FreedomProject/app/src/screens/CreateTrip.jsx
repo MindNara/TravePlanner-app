@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
-import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../firebase/firebaseDB';
+import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../firebase/firebaseConfig';
 
 const CreateTrip = ({ navigation }) => {
 

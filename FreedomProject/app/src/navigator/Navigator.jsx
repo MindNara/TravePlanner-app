@@ -19,42 +19,42 @@ function MainNavigator() {
             <Stack.Screen name="SingIn" component={SignIn} />
             <Stack.Screen name="Content" component={TabBar} />
             <Stack.Screen name="PlaceDetail" component={PlaceDetail} />
-            <Stack.Screen name="TripPlan" component={CreateTripNavigator} />
+            <Stack.Screen name="TripPlan" component={TripPlan} />
             <Stack.Screen name="MyDreamTrip" component={MyDreamTrip} />
             <Stack.Screen name="TripDetail" component={TripDetail} />
         </Stack.Navigator>
     );
 }
 
-function PlaceDetailNavigator() {
-    return (
-        <Stack.Navigator screenOptions={{
-            headerShown: false,
-        }}>
-            <Stack.Screen name="RecommandTripDetail" component={PlaceDetail} />
-        </Stack.Navigator>
-    );
-}
+// function PlaceDetailNavigator() {
+//     return (
+//         <Stack.Navigator screenOptions={{
+//             headerShown: false,
+//         }}>
+//             <Stack.Screen name="RecommandTripDetail" component={PlaceDetail} />
+//         </Stack.Navigator>
+//     );
+// }
 
-function TripDetailNavigator() {
-    return (
-        <Stack.Navigator screenOptions={{
-            headerShown: false,
-        }}>
-            <Stack.Screen name="TripDetailNavigator" component={TripDetail} />
-        </Stack.Navigator>
-    );
-}
+// function TripDetailNavigator() {
+//     return (
+//         <Stack.Navigator screenOptions={{
+//             headerShown: false,
+//         }}>
+//             <Stack.Screen name="TripDetailNavigator" component={TripDetail} />
+//         </Stack.Navigator>
+//     );
+// }
 
-function CreateTripNavigator() {
-    return (
-        <Stack.Navigator screenOptions={{
-            headerShown: false,
-        }}>
-            <Stack.Screen name="MainTripPlan" component={TripPlan} />
-        </Stack.Navigator>
-    );
-}
+// function CreateTripNavigator() {
+//     return (
+//         <Stack.Navigator screenOptions={{
+//             headerShown: false,
+//         }}>
+//             <Stack.Screen name="MainTripPlan" component={TripPlan} />
+//         </Stack.Navigator>
+//     );
+// }
 
 export default function Navigator() {
     return (

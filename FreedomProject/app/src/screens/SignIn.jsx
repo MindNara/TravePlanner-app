@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { firebase_auth } from '../firebase/firebaseDB';
+import { firebase_auth } from '../firebase/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from "react-redux";
 import { usersId } from "../redux/usersSlice";
