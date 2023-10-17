@@ -13,6 +13,8 @@ import { useFonts } from '@expo-google-fonts/prompt';
 
 export default function MyTrip({ navigation, item }) {
 
+    // console.log(item.key);
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -28,7 +30,7 @@ export default function MyTrip({ navigation, item }) {
     return (
         <View>
             <Pressable onPress={() => {
-                navigation.navigate("TripPlan");
+                navigation.navigate("TripPlan", { tripKey: item.key });
             }}>
                 <ImageBackground className="relative h-[210px] w-[156px] justify-end items-center"
                     source={require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>

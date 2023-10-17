@@ -14,10 +14,13 @@ import { useFonts } from "@expo-google-fonts/prompt";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TripEventBox, PlaceTrip } from '../components/index';
-import { useFocusEffect } from "@react-navigation/native";
-import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../firebase/firebaseConfig';
+import { db } from '../firebase/firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 
 const TripPlan = ({ route, navigation }) => {
+
+    const { tripKey } = route.params;
+    // console.log(tripKey);
 
     const [isOpen, setIsOpen] = useState(false);
     const [isFav, setIsFav] = useState(true);
@@ -32,25 +35,31 @@ const TripPlan = ({ route, navigation }) => {
 
     const [trips, setTrips] = useState([]);
     const getTrips = async () => {
-        const querySnapshot = await getDocs(collection(db, "trips"));
-        console.log("Total trips: ", querySnapshot.size);
-        const tempDoc = [];
-        querySnapshot.forEach((doc) => {
-            tempDoc.push({ ...doc.data(), key: doc.id });
-        });
-        setTrips(tempDoc);
-        // console.log(tempDoc);
+        try {
+            const tripRef = doc(db, 'trips', tripKey);
+            const tripInfo = await getDoc(tripRef);
+
+            if (tripInfo.exists()) {
+                setTrips(tripInfo.data());
+                // console.log(trips);
+            } else {
+                console.log('No user found with given docId');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching user:', error);
+            return null;
+        }
     }
 
-    useFocusEffect(
-        React.useCallback(() => {
-            getTrips();
-            return () => {
-                setTrips([]);
-            };
-        }, [])
-    );
-    // console.log(getTrips);
+    useEffect(() => {
+        getTrips();
+    }, []);
+
+    const tripStartDate = new Date(trips.trip_end_date);
+    const tripEndDate = new Date(trips.trip_start_date);
+
+    // console.log(trips.trip_end_date.slice(2));
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -299,13 +308,13 @@ const TripPlan = ({ route, navigation }) => {
                                 className="text-[32px] text-gray-dark"
                                 style={{ fontFamily: "promptSemiBold" }}
                             >
-                                PROVINCE
+                                {trips.trip_title}
                             </Text>
                             <Text
                                 className="text-[14px] text-gray-dark leading-4 mt-2"
                                 style={{ fontFamily: "promptLight" }}
                             >
-                                Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.
+                                {trips.trip_description}
                             </Text>
                         </View>
                     </View>

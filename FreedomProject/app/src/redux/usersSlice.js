@@ -14,7 +14,7 @@ const usersSlice = createSlice({
         },
         usersInfo(state, action){
             state.user_info = action.payload;
-            console.log('userInfo: ' + state.user_info);
+            console.log('UserInfo: ' + state.user_info);
         }
     },
 })

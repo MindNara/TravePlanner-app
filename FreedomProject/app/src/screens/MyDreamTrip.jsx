@@ -12,8 +12,15 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { MyAllTrip, Header } from '../components/index';
+import { useSelector } from "react-redux";
+import { tripSelector } from '../redux/tripsSlice';
 
 export default function MyDreamTrip({ navigation }) {
+
+    const trip = useSelector(tripSelector);
+    const tripInfo = trip.trips;
+    console.log(tripInfo);
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),

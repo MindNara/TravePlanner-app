@@ -15,10 +15,11 @@ import { TripApi } from "../data/PlaceApi";
 import { useSelector } from "react-redux";
 import { userSelector } from "../redux/usersSlice";
 import { useFocusEffect } from "@react-navigation/native";
-import { db, collection, getDocs } from '../../firebase/firebaseDB';
+import { db, collection, getDocs } from '../firebase/firebaseConfig';
 import { query, where, doc, getDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
 import { usersId, usersInfo } from "../redux/usersSlice";
+import { tripsReceived } from '../redux/tripsSlice';
 
 
 export default function Home({ navigation }) {
@@ -45,24 +46,12 @@ export default function Home({ navigation }) {
                 tripsDoc.push({ ...doc.data(), key: doc.id });
             });
             setTrips(tripsDoc);
+            dispatch(tripsReceived(tripsDoc));
         } catch (error) {
             console.error("Error fetching trips:", error);
         }
     }
 
-    // const getUserInfo = async () => {
-    //     try {
-    //         const querySnapshot = await getDocs(query(collection(db, "users")));
-    //         console.log("Total User: ", querySnapshot.size);
-    //         const userInfoDoc = [];
-    //         querySnapshot.forEach((doc) => {
-    //             userInfoDoc.push({ ...doc.data(), key: doc.id });
-    //         });
-    //         setUserInfo(userInfoDoc);
-    //     } catch (error) {
-    //         console.error("Error fetching userInfo:", error);
-    //     }
-    // }
     const getUserInfo = async () => {
         try {
             const userRef = doc(db, 'users', user_id);
@@ -94,8 +83,8 @@ export default function Home({ navigation }) {
         }, [user_id])
     );
 
-    console.log(trips);
-    console.log(userInfo);
+    // console.log(trips);
+    // console.log(userInfo);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),

@@ -41,8 +41,9 @@ const CreateTrip = ({ navigation }) => {
                 trip_image: '',
                 user_id: user_id
             });
+            const tripKey = tripRef.id;
             Alert.alert("Success", "Trip added successfully");
-            navigation.navigate('TripPlan');
+            navigation.navigate('TripPlan', { tripKey: tripKey });
         } catch (e) {
             Alert.alert("Error", "Error adding document: ", e.message);
         }
