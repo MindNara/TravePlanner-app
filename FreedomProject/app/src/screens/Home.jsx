@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../redux/usersSlice";
 import { useFocusEffect } from "@react-navigation/native";
 import { db, collection, getDocs } from '../../firebase/firebaseDB';
-import { where } from 'firebase/firestore';
+import { query, where } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
 
@@ -28,23 +28,30 @@ export default function Home({ navigation }) {
     const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
 
     const [trips, setTrips] = useState([]);
+
     const getTrips = async () => {
-        const querySnapshot = await getDocs(collection(db, "trips"), where("user_id", "==", user_id));
-        console.log("Total trips: ", querySnapshot.size);
-        const tripsDoc = [];
-        querySnapshot.forEach((doc) => {
-            tripsDoc.push({ ...doc.data(), key: doc.id });
-        });
-        setTrips(tripsDoc);
+        try {
+            const querySnapshot = await getDocs(query(collection(db, "trips"), where("user_id", "==", user_id)));
+            console.log("Total trips: ", querySnapshot.size);
+            const tripsDoc = [];
+            querySnapshot.forEach((doc) => {
+                tripsDoc.push({ ...doc.data(), key: doc.id });
+            });
+            setTrips(tripsDoc);
+        } catch (error) {
+            console.error("Error fetching trips:", error);
+        }
     }
 
     useFocusEffect(
         React.useCallback(() => {
-            getTrips();
+            if (user_id) {
+                getTrips();
+            }
             return () => {
                 setTrips([]);
             };
-        }, [])
+        }, [user_id])
     );
     console.log(trips);
 

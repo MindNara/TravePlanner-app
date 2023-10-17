@@ -31,7 +31,7 @@ export default function SingIn({ navigation }) {
             const response = await signInWithEmailAndPassword(auth, email, password);
             const user_id = response.user.uid;
             dispatch(usersId(user_id));
-            console.log(user_id);
+            // console.log(user_id);
             alert('Sign In Complete');
             navigation.navigate('Content');
         }
