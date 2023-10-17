@@ -12,6 +12,8 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
 import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../firebase/firebaseConfig';
+import { useSelector } from "react-redux";
+import { userSelector } from "../redux/usersSlice";
 
 const CreateTrip = ({ navigation }) => {
 
@@ -25,6 +27,9 @@ const CreateTrip = ({ navigation }) => {
     const [selectedDateDep, setSelectedDateDep] = useState(dateToday);
     const [selectedDateRet, setSelectedDateRet] = useState(dateToday);
 
+    const user = useSelector(userSelector);
+    const user_id = user.user_id;
+
     // POST
     const addTrip = async () => {
         try {
@@ -34,7 +39,7 @@ const CreateTrip = ({ navigation }) => {
                 trip_start_date: selectedDateDep,
                 trip_end_date: selectedDateRet,
                 trip_image: '',
-                user_id: '1' // เอาจาก key
+                user_id: user_id
             });
             Alert.alert("Success", "Trip added successfully");
             navigation.navigate('TripPlan');

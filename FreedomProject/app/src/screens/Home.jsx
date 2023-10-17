@@ -113,7 +113,6 @@ export default function Home({ navigation }) {
                                     return (
                                         <RecommendedTrip item={item} key={index} navigation={navigation} />
                                     )
-
                                 })
                             )}
                         </View>
