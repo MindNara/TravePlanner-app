@@ -87,8 +87,13 @@ export default function Home({ navigation }) {
                             </Pressable>
                         </View>
                         <View className="mt-[20px] flex flex-row justify-between">
-                            <MyTrip navigation={navigation} />
-                            <MyTrip navigation={navigation} />
+                            {user_id == null ? (<Text>Loading...</Text>) : (
+                                trips.map((item, index) => {
+                                    return (
+                                        <MyTrip item={item} key={index} navigation={navigation} />
+                                    )
+                                })
+                            )}
                         </View>
                     </View>
 

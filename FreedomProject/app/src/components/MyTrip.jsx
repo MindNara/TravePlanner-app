@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function MyTrip({ navigation }) {
+export default function MyTrip({ navigation, item }) {
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -38,7 +38,7 @@ export default function MyTrip({ navigation }) {
                     <View className="relative bg-white opacity-40 w-[145px] h-[76px] mb-2 py-2 px-3 rounded-[20px] items-center" />
                     <View className="absolute w-[110px] h-[70px] px-1">
                         <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>Province</Text>
-                        <Text className="text-[16px] my-[-2px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>Trip Name</Text>
+                        <Text className="text-[16px] my-[-2px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>{item.trip_title}</Text>
                         <View className="flex flex-row mt-[3px] items-center">
                             <Image className="mr-[6px]" source={{ uri: 'https://img.icons8.com/metro/96/2E2E2E/tear-off-calendar.png' }}
                                 style={{ width: 10, height: 10 }} />
