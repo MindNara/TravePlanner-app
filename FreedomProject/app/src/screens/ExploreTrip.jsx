@@ -17,8 +17,6 @@ import { PlaceApi, TripApi } from '../data/PlaceApi';
 
 export default function ExploreTrip({ navigation }) {
 
-
-
     const { dataTrip, loadedTrip } = TripApi();
 
     const [searchPlace, setSearchPlace] = useState("");
@@ -32,11 +30,8 @@ export default function ExploreTrip({ navigation }) {
     // console.log("eiei");
     // console.log(TripItems);
 
-    console.log(searchPlace);
-    console.log(data);
-
-
-
+    // console.log(searchPlace);
+    // console.log(data);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),

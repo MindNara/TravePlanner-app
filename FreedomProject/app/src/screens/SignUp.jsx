@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { getFirestore, doc, setDoc } from "firebase/firestore";
-import { firebase_auth } from '../../firebase/firebaseDB';
+import { firebase_auth } from '../firebase/firebaseDB';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function Intro({ navigation }) {
@@ -26,10 +26,9 @@ export default function Intro({ navigation }) {
 
     const db = getFirestore();
 
-    
     const signUp = async () => {
         setLoading(true)
-        try{
+        try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
             console.log(response);
             alert('Sign Up Complete');
@@ -37,15 +36,15 @@ export default function Intro({ navigation }) {
             const userDocRef = doc(db, 'users', response.user.uid);  // กำหนด path สำหรับ document
             await setDoc(userDocRef, {
                 user_email: email,
-                user_fname: firstname,  
+                user_fname: firstname,
                 user_lname: lastname,
                 user_image: '',
                 user_password: password,
-                user_username: username,         
+                user_username: username,
             });
             navigation.navigate("SingIn");
         }
-        catch (error){
+        catch (error) {
             console.log(error);
             alert('Sign Up Fail');
         }

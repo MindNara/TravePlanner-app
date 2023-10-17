@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
-import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../../firebase/firebaseDB';
+import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../firebase/firebaseDB';
 
 const CreateTrip = ({ navigation }) => {
 
@@ -29,13 +29,12 @@ const CreateTrip = ({ navigation }) => {
     const addTrip = async () => {
         try {
             const tripRef = await addDoc(collection(db, "trips"), {
-                trip_id: '2', // เซฟให้ id ต่อจากอันที่มีอยู่แล้ว
-                title: title,
-                description: des,
-                start_date: selectedDateDep,
-                end_date: selectedDateRet,
+                trip_title: title,
+                trip_description: des,
+                trip_start_date: selectedDateDep,
+                trip_end_date: selectedDateRet,
                 trip_image: '',
-                user_id: '1'
+                user_id: '1' // เอาจาก key
             });
             Alert.alert("Success", "Trip added successfully");
             navigation.navigate('TripPlan');

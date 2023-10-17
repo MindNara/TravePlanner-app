@@ -10,8 +10,10 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { firebase_auth } from '../../firebase/firebaseDB';
+import { firebase_auth } from '../firebase/firebaseDB';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useDispatch } from "react-redux";
+import { usersId } from "../redux/usersSlice";
 
 export default function SingIn({ navigation }) {
 
@@ -21,15 +23,19 @@ export default function SingIn({ navigation }) {
     const [loading, setLoading] = useState(false);
     const auth = firebase_auth;
 
+    const dispatch = useDispatch();
+
     const signIn = async () => {
         setLoading(true)
-        try{
+        try {
             const response = await signInWithEmailAndPassword(auth, email, password);
-            console.log(response.user.uid);
+            const user_id = response.user.uid;
+            dispatch(usersId(user_id));
+            console.log(user_id);
             alert('Sign In Complete');
-            navigation.navigate('Content', { uid: response.user.uid });
+            navigation.navigate('Content');
         }
-        catch (error){
+        catch (error) {
             console.log(error);
             alert('Sign In Fail');
         }
