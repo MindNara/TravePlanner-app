@@ -10,8 +10,16 @@ import {
     Pressable
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
+import { useSelector } from "react-redux";
+import { userSelector } from "../redux/usersSlice";
 
 export default function Profile({ navigation }) {
+
+    const user = useSelector(userSelector);
+    const user_info = user.user_info;
+
+    console.log(user_info);
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),

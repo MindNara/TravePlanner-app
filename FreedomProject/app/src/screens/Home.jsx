@@ -16,18 +16,25 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../redux/usersSlice";
 import { useFocusEffect } from "@react-navigation/native";
 import { db, collection, getDocs } from '../../firebase/firebaseDB';
-import { query, where } from 'firebase/firestore';
+import { query, where, doc, getDoc } from 'firebase/firestore';
+import { useDispatch } from "react-redux";
+import { usersId, usersInfo } from "../redux/usersSlice";
+
 
 export default function Home({ navigation }) {
 
+    const dispatch = useDispatch();
+
     const user = useSelector(userSelector);
     const user_id = user.user_id;
-    console.log(user_id);
+    // console.log(user_id);
 
     const { dataTrip, loadedTrip } = TripApi();
     const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
 
     const [trips, setTrips] = useState([]);
+
+    const [userInfo, setUserInfo] = useState([]);
 
     const getTrips = async () => {
         try {
@@ -43,17 +50,52 @@ export default function Home({ navigation }) {
         }
     }
 
+    // const getUserInfo = async () => {
+    //     try {
+    //         const querySnapshot = await getDocs(query(collection(db, "users")));
+    //         console.log("Total User: ", querySnapshot.size);
+    //         const userInfoDoc = [];
+    //         querySnapshot.forEach((doc) => {
+    //             userInfoDoc.push({ ...doc.data(), key: doc.id });
+    //         });
+    //         setUserInfo(userInfoDoc);
+    //     } catch (error) {
+    //         console.error("Error fetching userInfo:", error);
+    //     }
+    // }
+    const getUserInfo = async () => {
+        try {
+            const userRef = doc(db, 'users', user_id);
+            const fetchUserInfo = await getDoc(userRef);
+
+            if (fetchUserInfo.exists()) {
+                setUserInfo(fetchUserInfo.data());
+                dispatch(usersInfo(fetchUserInfo.data()));
+            } else {
+                console.log('No user found with given docId');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching user:', error);
+            return null;
+        }
+    }
+
     useFocusEffect(
         React.useCallback(() => {
             if (user_id) {
                 getTrips();
+                getUserInfo();
             }
             return () => {
                 setTrips([]);
+                setUserInfo([]);
             };
         }, [user_id])
     );
+
     console.log(trips);
+    console.log(userInfo);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -73,7 +115,7 @@ export default function Home({ navigation }) {
                 <View className="mx-[32px] pt-14 bg-white gap-y-[24px]">
                     {/* Header */}
                     <View className="relative">
-                        <Header screen={"Home"} title={"Hello"} subtitle={"Username"} navigation={navigation} />
+                        <Header screen={"Home"} title={"Hello"} subtitle={userInfo.user_username} navigation={navigation} />
                     </View>
 
                     {/* My Trip */}
