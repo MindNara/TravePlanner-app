@@ -13,18 +13,24 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 import { useSelector } from "react-redux";
 import { userSelector } from "../redux/usersSlice";
+import { firebase_auth, db } from '../firebase/firebaseConfig';
+import { updatePassword } from 'firebase/auth';
+import { useDispatch } from "react-redux";
+import { usersId, usersLoading } from "../redux/usersSlice";
 
 export default function Profile({ navigation }) {
 
     const user = useSelector(userSelector);
     const user_info = user.user_info;
 
+    const dispatch = useDispatch();
+
     // console.log(user_info.user_lname);
 
     const [user_fname, setUser_fname] = useState(user_info.user_fname);
     const [user_lname, setUser_lname] = useState(user_info.user_lname);
     const [user_email, setUser_email] = useState(user_info.user_email);
-    const [user_password, setUser_password] = useState("********");
+    const [user_password, setUser_password] = useState(user_info.user_password);
     const [user_image, setUser_image] = useState("");
     const [user_username, setUser_username] = useState(user_info.user_username);
     const [isPressed, setIsPressed] = useState(false);
@@ -32,7 +38,8 @@ export default function Profile({ navigation }) {
 
     useFocusEffect(
         React.useCallback(() => {
-            setIsPressed(false); // ตั้งค่า isPressed เป็น false ทุกครั้งที่หน้านี้ถูก focus
+            setIsPressed(false);
+            setUser_password(user_info.user_password); // ตั้งค่า isPressed เป็น false ทุกครั้งที่หน้านี้ถูก focus
         }, [])
     );
 
@@ -43,6 +50,20 @@ export default function Profile({ navigation }) {
         promptSemiBold: require("../assets/fonts/Prompt-SemiBold.ttf"),
         promptBold: require("../assets/fonts/Prompt-Bold.ttf"),
     });
+
+    const changePassword = async () => {
+        const user = firebase_auth.currentUser;
+        try {
+            await updatePassword(user, user_password)
+            alert('Password updated successfully');
+        } catch (error) {
+            console.log(error);
+            alert('Error updating password');
+        }
+        setIsPressed(false)
+    };
+
+    console.log(firebase_auth.currentUser);
 
     if (!loaded) {
         return null;
@@ -82,7 +103,7 @@ export default function Profile({ navigation }) {
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
                             </View>
                             <View className="mt-6">
-                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_password} editable={false} ></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value="*********" editable={false} ></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
                             </View>
                             <View className="mt-[30px]">
@@ -119,28 +140,29 @@ export default function Profile({ navigation }) {
                         </View>
                         <View className="mt-8">
                             <View>
-                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname}></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname} onChangeText={text => setUser_fname(text)} editable={true}></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
                             </View>
                             <View className="mt-6">
-                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} ></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} onChangeText={text => setUser_lname(text)} editable={true}></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
                             </View>
                             <View className="mt-6">
-                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email}></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email} onChangeText={text => setUser_email(text)} editable={true}></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
                             </View>
                             <View className="mt-6">
-                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_info.user_password}></TextInput>
+                                <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_password} onChangeText={text => setUser_password(text)} editable={true}></TextInput>
                                 <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
                             </View>
                             <View className="mt-[30px]">
-                                <Pressable style={styles.button}  onPress={() => setIsPressed(false)}>
+                                <Pressable style={styles.button}  onPress={changePassword}>
                                     <Text className="text-[14px] tracking-[1px]" style={{ color: 'white', fontFamily: 'promptSemiBold' }}>SAVE</Text>
                                 </Pressable>
                             </View>
                             <View className="mt-[16px]">
                                 <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
+                                    dispatch(usersLoading());
                                     navigation.navigate("Intro");
                                 }}>
                                     <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
