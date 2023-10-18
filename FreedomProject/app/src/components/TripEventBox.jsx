@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-export default function TripEventBox({ navigation }) {
+export default function TripEventBox({ navigation, item }) {
 
-    // ดึงจาก Database มา show เป็น FlatList
+    // console.log(item);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -38,16 +38,16 @@ export default function TripEventBox({ navigation }) {
                                 <Image className="" source={{ uri: 'https://img.icons8.com/pastel-glyph/64/2E2E2E/shipping-location--v1.png' }}
                                     style={{ width: 12, height: 12 }} />
                             </View>
-                            <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptMedium' }}>PLACE</Text>
+                            <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptMedium' }}>{item.place_category}</Text>
                         </View>
                         <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/F8F8F8/menu-2.png' }}
                             style={{ width: 20, height: 20 }} />
                     </View>
                     <View className="flex flex-row justify-between items-center mt-3">
-                        <Text className="text-[16px] text-gray-light" style={{ fontFamily: 'promptSemiBold' }}>Place Name</Text>
+                        <Text className="text-[16px] text-gray-light" style={{ fontFamily: 'promptSemiBold' }}>{item.place_title}</Text>
                         <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptRegular' }}>09:15 AM</Text>
                     </View>
-                    <Text className="text-[10px] text-gray-light mt-2" style={{ fontFamily: 'promptLight' }}>Lorem ipsum dolor sit amet, consecoert adipisciot eit sed do.</Text>
+                    <Text className="text-[10px] text-gray-light mt-2" style={{ fontFamily: 'promptLight' }}>{item.place_description}</Text>
                 </View>
             </Pressable>
         </View>

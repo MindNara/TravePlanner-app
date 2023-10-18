@@ -21,7 +21,6 @@ import { useDispatch } from "react-redux";
 import { usersId, usersInfo } from "../redux/usersSlice";
 import { tripsReceived } from '../redux/tripsSlice';
 
-
 export default function Home({ navigation }) {
 
     const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -12,10 +12,38 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { TripEventBox, PlaceTrip } from '../components/index';
+import { db } from '../firebase/firebaseConfig';
+import { query, where, doc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { useDispatch } from "react-redux";
+import { placesReceived } from '../redux/placesSlice';
+import { useSelector } from "react-redux";
+import { placeSelector } from '../redux/placesSlice';
 
-export default function TripDatePlan({ navigation }) {
+export default function TripDatePlan({ navigation, item }) {
 
+    // console.log("Schedule ID: " + item.key);
+    const dispatch = useDispatch();
 
+    const getPlaces = async () => {
+        try {
+            const querySnapshot = await getDocs(query(collection(db, "places"), where("schedule_id", "==", item.key)));
+            console.log("Total places: ", querySnapshot.size);
+            const placesDoc = [];
+            querySnapshot.forEach((doc) => {
+                placesDoc.push({ ...doc.data(), key: doc.id });
+            });
+            dispatch(placesReceived(placesDoc));
+        } catch (error) {
+            console.error("Error fetching places:", error);
+        }
+    }
+    useEffect(() => {
+        getPlaces();
+    }, [item.key]);
+
+    const place = useSelector(placeSelector);
+    const placesItem = place.places;
+    console.log(placesItem);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -47,9 +75,13 @@ export default function TripDatePlan({ navigation }) {
             {/* Plan event */}
             <View className="bg-white w-[295px] h-auto ml-3">
                 {/* Place */}
-                {/* <Pressable onPress={() => { navigation.navigate("PlaceDetail") }}> */}
-                <TripEventBox navigation={navigation} />
-                {/* </Pressable> */}
+                <Pressable onPress={() => { navigation.navigate("PlaceDetail", { placesItem: placesItem }) }}>
+                    {placesItem.map((item, index) => {
+                        return (
+                            <TripEventBox item={item} key={index} navigation={navigation} />
+                        )
+                    })}
+                </Pressable>
             </View>
         </View>
     );

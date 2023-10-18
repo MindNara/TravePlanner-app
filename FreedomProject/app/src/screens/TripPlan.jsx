@@ -17,11 +17,41 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TripEventBox, PlaceTrip, TripDatePlan } from '../components/index';
 import { useSelector } from "react-redux";
 import { tripSelector } from '../redux/tripsSlice';
+import { db } from '../firebase/firebaseConfig';
+import { query, where, doc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { useDispatch } from "react-redux";
+import { scheduleReceived } from "../redux/schedulesSlice";
+import { useFocusEffect } from "@react-navigation/native";
 
 const TripPlan = ({ route, navigation }) => {
 
+    const dispatch = useDispatch();
     const { tripKey } = route.params;
     // console.log(tripKey);
+
+    const [schedules, setSchedules] = useState([]);
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchData = async () => {
+                if (tripKey) {
+                    try {
+                        const querySnapshot = await getDocs(query(collection(db, "schedules"), where("trip_id", "==", tripKey)));
+                        // console.log("Total schdules: ", querySnapshot.size);
+                        const schdulesDoc = [];
+                        querySnapshot.forEach((doc) => {
+                            schdulesDoc.push({ ...doc.data(), key: doc.id });
+                        });
+                        setSchedules(schdulesDoc);
+                        dispatch(scheduleReceived(schdulesDoc));
+                        // console.log(schdulesDoc);
+                    } catch (error) {
+                        console.error("Error fetching schedules:", error);
+                    }
+                }
+            };
+            fetchData();
+        }, [tripKey])
+    );
 
     const [isOpen, setIsOpen] = useState(false);
     const [isFav, setIsFav] = useState(true);
@@ -51,6 +81,17 @@ const TripPlan = ({ route, navigation }) => {
     const [initialDate, setInitialDate] = useState(1);
     const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
+    const tripDate = tripItem.trip_start_date;
+    const formatTripDate = tripDate.replace(/\//g, '-');
+    const startDate = new Date(formatTripDate);
+
+    const currentDate = new Date(startDate);
+    currentDate.setDate(currentDate.getDate());
+    // console.log(currentDate);
+
+    const [currentDates, setCurrentDates] = useState(currentDate);
+    // console.log("Calendar Date: " + currentDates);
+
     useEffect(() => {
         setSelectedDate(initialDate);
     }, [initialDate]);
@@ -76,6 +117,7 @@ const TripPlan = ({ route, navigation }) => {
                 className={`h-[76px] w-[42px] rounded-[20px] mr-[10px] ${selectedDate === date || i === selectedDate ? 'bg-gray-dark' : 'bg-gray-light'}`}
                 onPress={() => {
                     setSelectedDate(date);
+                    setCurrentDates(currentDate);
                 }}
                 onLongPress={() => {
                     setInitialDate(date);
@@ -99,6 +141,16 @@ const TripPlan = ({ route, navigation }) => {
             </TouchableOpacity>
         );
     }
+
+    const filteredSchedules = schedules.filter(schedule => {
+        const scheduleDate = new Date((schedule.schedule_date).replace(/\//g, '-'));
+        return (
+            scheduleDate.getDate() === currentDates.getDate() &&
+            scheduleDate.getMonth() === currentDates.getMonth() &&
+            scheduleDate.getFullYear() === currentDates.getFullYear()
+        );
+    });
+    // console.log(filteredSchedules);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -370,9 +422,11 @@ const TripPlan = ({ route, navigation }) => {
                         </View>
 
                         {/* Trip Plan */}
-                        <View>
-                            <TripDatePlan navigation={navigation} />
-                        </View>
+                        {filteredSchedules.map((item, index) => {
+                            return (
+                                <TripDatePlan item={item} key={index} navigation={navigation} />
+                            )
+                        })}
                     </View>
                 </ScrollView>
             </BottomSheetModalProvider>
