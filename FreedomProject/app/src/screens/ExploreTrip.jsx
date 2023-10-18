@@ -24,6 +24,8 @@ export default function ExploreTrip({ navigation }) {
     // const onChangeSearch = query => setSearchPlace(query);
     // console.log(dataTrip.result);
     const placeItems = data.result ? data.result.filter((item, index) => index < 5) : [];
+
+    const PlaceAll = data.result ? data.result : [];
     // console.log(placeItems);
 
     const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
@@ -32,6 +34,7 @@ export default function ExploreTrip({ navigation }) {
 
     // console.log(searchPlace);
     // console.log(data);
+    console.log(PlaceAll);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -110,10 +113,10 @@ export default function ExploreTrip({ navigation }) {
                 <View className="h-full mx-[32px] bg-white">
                 <View className="my-[20px]">
                     <View className="flex flex-row flex-wrap justify-between">
-                        {loading ? (
+                        {loading || !PlaceAll || PlaceAll.length === 0 ? (
                             <Text>Loading...</Text>
                         ) : (
-                            placeItems.map((item, index) => (
+                            PlaceAll.map((item, index) => (
                                 <View key={item.place_id} className={index % 2 === 0 ? "w-[50%] pr-[8px]" : "w-[50%] pl-[8px]"}>
                                     <PlaceTrip item={item} navigation={navigation} />
                                 </View>
