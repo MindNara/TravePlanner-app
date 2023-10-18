@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     Text,
@@ -23,11 +23,14 @@ export default function TripDatePlan({ navigation, item }) {
 
     // console.log("Schedule ID: " + item.key);
     const dispatch = useDispatch();
+    const [numOfPlaces, setNumOfPlaces] = useState();
+    console.log("Number of places: " + numOfPlaces);
 
     const getPlaces = async () => {
         try {
             const querySnapshot = await getDocs(query(collection(db, "places"), where("schedule_id", "==", item.key)));
-            console.log("Total places: ", querySnapshot.size);
+            // console.log("Total places: ", querySnapshot.size);
+            setNumOfPlaces(querySnapshot.size);
             const placesDoc = [];
             querySnapshot.forEach((doc) => {
                 placesDoc.push({ ...doc.data(), key: doc.id });
@@ -45,6 +48,19 @@ export default function TripDatePlan({ navigation, item }) {
     const placesItem = place.places;
     console.log(placesItem);
 
+    const timeLine = [];
+    for (let i = 1; i <= numOfPlaces; i++) {
+
+        timeLine.push(
+            <View className="items-center justify-center mb-2">
+                <View className="w-[16px] h-[16px] bg-gray-dark rounded-xl items-center justify-center border-collapse border-[1px]"></View>
+                <View className="w-[1.5px] h-[120px] bg-gray-dark my-1"></View>
+                <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
+            </View>
+        )
+
+    }
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -61,14 +77,15 @@ export default function TripDatePlan({ navigation, item }) {
         <View className="bg-white w-full h-full mt-[36px] flex flex-row">
             {/* Line */}
             <View className="bg-white w-[42px] h-auto items-center">
-                <View className="w-[24px] h-[24px] rounded-xl items-center justify-center border-collapse border-[1px]">
+                {timeLine}
+                {/* <View className="w-[24px] h-[24px] rounded-xl items-center justify-center border-collapse border-[1px]">
                     <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
                 </View>
                 <View className="w-[1.5px] h-[120px] bg-gray-dark my-1"></View>
                 <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
                 <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View>
                 <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-                <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View>
+                <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View> */}
                 {/* <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View> */}
             </View>
 
