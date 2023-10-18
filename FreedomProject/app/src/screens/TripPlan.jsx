@@ -14,7 +14,7 @@ import {
 import { useFonts } from "@expo-google-fonts/prompt";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { TripEventBox, PlaceTrip, TripDatePlan } from '../components/index';
+import TripDatePlan from "../components/TripDatePlan";
 import { useSelector } from "react-redux";
 import { tripSelector } from '../redux/tripsSlice';
 import { db } from '../firebase/firebaseConfig';
@@ -22,6 +22,8 @@ import { query, where, doc, getDoc, getDocs, collection } from 'firebase/firesto
 import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
 import { useFocusEffect } from "@react-navigation/native";
+import DatePicker from 'react-native-modern-datepicker';
+import SelectDropdown from 'react-native-select-dropdown';
 
 const TripPlan = ({ route, navigation }) => {
 
@@ -152,6 +154,31 @@ const TripPlan = ({ route, navigation }) => {
     });
     // console.log(filteredSchedules);
 
+    const date = new Date();
+    const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+    const [title, setTitle] = useState('');
+    const [des, setDes] = useState('');
+    const [address, setAddress] = useState('');
+    const [openTime, setOpenTime] = useState(false);
+    const [time, setTime] = useState(formattedTime);
+    const [category, setCategory] = useState('');
+
+    const categorys = ['Place', 'Restaurant', 'Hotel']
+
+    const formatTime = () => {
+        const timeParts = time.split(':');
+        const hours = parseInt(timeParts[0], 10);
+        const minutes = parseInt(timeParts[1], 10);
+
+        date.setHours(hours);
+        date.setMinutes(minutes);
+
+        const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+        return formattedTime;
+    }
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -175,13 +202,14 @@ const TripPlan = ({ route, navigation }) => {
                     snapPoints={snapPoints}
                     backgroundStyle={{ borderRadius: 50 }}
                     onDismiss={() => {
-                        setIsOpen(false),
-                            setIsFav(true)
+                        setIsOpen(false);
+                        setIsFav(true);
+                        setOpenTime(false);
                     }}
                 >
                     <View>
-                        {/* SearchBar */}
                         {isFav ? (
+                            // Form trip events
                             <View className="bg-white h-full mx-[32px] my-[24px]">
 
                                 <View className="flex flex-row justify-between mb-5">
@@ -202,44 +230,71 @@ const TripPlan = ({ route, navigation }) => {
                                 <BottomSheetScrollView>
                                     {/* Add Trip */}
                                     <View className="w-full bg-gray-light mb-5 rounded-[10px]">
-                                        <View className="bg-gray-light w-full h-auto rounded-[10px]">
+                                        <View className="bg-gray-light w-full h-auto rounded-[10px] relative">
+                                            {openTime && (
+                                                <DatePicker
+                                                    mode="time"
+                                                    minuteInterval={3}
+                                                    onTimeChange={selectedTime => {
+                                                        setTime(selectedTime);
+                                                        setOpenTime(false);
+                                                    }}
+                                                    className="absolute w-[260px] z-10 left-8 top-10"
+                                                    style={{ borderRadius: 10 }}
+                                                />
+                                            )}
                                             <View className="m-[20px]">
                                                 {/* Title */}
                                                 <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center">
                                                     <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
-                                                    <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name">ExampleTitle</TextInput>
+                                                    <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name"
+                                                        onChangeText={text => setTitle(text)}></TextInput>
                                                 </View>
 
                                                 {/* Time & Category */}
                                                 <View className="flex flex-row justify-between mt-[15px]">
-                                                    <View className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
+                                                    <Pressable onPress={() => { setOpenTime(true) }} className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
                                                         <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TIME</Text>
-                                                        <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Time">08:00 AM</TextInput>
-                                                    </View>
-                                                    <View className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
-                                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>CATEGORY</Text>
-                                                        <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Category">Place</TextInput>
+                                                        <Text multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }}>{formatTime()}</Text>
+                                                    </Pressable>
+                                                    <View className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 justify-center">
+                                                        <Text className="text-[12px] text-gray-dark opacity-80 px-6" style={{ fontFamily: 'promptMedium' }}>CATEGORY</Text>
+                                                        {/* <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Category">Place</TextInput> */}
+                                                        <SelectDropdown
+                                                            data={categorys}
+                                                            onSelect={(selectedItem, index) => {
+                                                                setCategory(selectedItem);
+                                                            }}
+                                                            buttonStyle={{ backgroundColor: '#F8F8F8', width: 'auto', height: 26 }}
+                                                            buttonTextStyle={{ fontSize: 14, fontFamily: 'promptMedium', textAlign: 'left', paddingLeft: 8 }}
+                                                            defaultButtonText={"Category..."}
+                                                            dropdownStyle={{ width: 140, borderRadius: 10 }}
+                                                            rowStyle={{ height: 40 }}
+                                                            rowTextStyle={{ fontSize: 14, fontFamily: 'promptRegular', textAlign: 'left', paddingLeft: 16 }}
+                                                        />
                                                     </View>
                                                 </View>
 
                                                 {/* Descriptions */}
                                                 <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
                                                     <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DESCRIPTIONS</Text>
-                                                    <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
+                                                    <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions"
+                                                        onChangeText={text => setDes(text)}></TextInput>
                                                 </View>
 
                                                 {/* Address */}
                                                 <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
                                                     <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>ADDRESS</Text>
-                                                    <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions">Lorem ipsum dolor sit amet, conseco adipiscing eit sed do.</TextInput>
+                                                    <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Address"
+                                                        onChangeText={text => setAddress(text)}></TextInput>
                                                 </View>
 
                                                 {/* Btn */}
                                                 <View className="flex flex-row justify-between items-center mt-[15px]">
-                                                    <Pressable className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
+                                                    <Pressable onPress={() => { }} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
                                                         <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CONFIRM</Text>
                                                     </Pressable>
-                                                    <Pressable className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
+                                                    <Pressable onPress={() => { }} className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
                                                         <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
                                                     </Pressable>
                                                 </View>
@@ -250,6 +305,7 @@ const TripPlan = ({ route, navigation }) => {
 
                             </View>
                         ) : (
+                            // My Wishlist
                             <View className="h-auto w-full">
                                 <View className="bg-white h-auto my-5 fixed mx-[32px]">
                                     {/* Title */}
@@ -261,7 +317,10 @@ const TripPlan = ({ route, navigation }) => {
                                         <View className="flex flex-row items-center">
                                             <Image source={{ uri: 'https://img.icons8.com/material-rounded/96/2E2E2E/sorting-options.png' }}
                                                 style={{ width: 20, height: 20 }} className="mr-[20px]" />
-                                            <Pressable onPress={() => { setIsFav(true) }}>
+                                            <Pressable onPress={() => {
+                                                setIsFav(true);
+                                                setOpenTime(false);
+                                            }}>
                                                 <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/multiply.png' }}
                                                     style={{ width: 24, height: 24 }} />
                                             </Pressable>
@@ -424,7 +483,7 @@ const TripPlan = ({ route, navigation }) => {
                         {/* Trip Plan */}
                         {filteredSchedules.map((item, index) => {
                             return (
-                                <TripDatePlan item={item} key={index} navigation={navigation} />
+                                <TripDatePlan item={item} navigation={navigation} />
                             )
                         })}
                     </View>
