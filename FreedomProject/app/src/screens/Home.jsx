@@ -82,7 +82,6 @@ export default function Home({ navigation }) {
             };
         }, [user_id])
     );
-
     // console.log(trips);
     // console.log(userInfo);
 

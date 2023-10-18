@@ -9,11 +9,12 @@ import {
     ImageBackground,
     ScrollView,
     TextInput,
+    TouchableOpacity,
 } from "react-native";
 import { useFonts } from "@expo-google-fonts/prompt";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { TripEventBox, PlaceTrip } from '../components/index';
+import { TripEventBox, PlaceTrip, TripDatePlan } from '../components/index';
 import { useSelector } from "react-redux";
 import { tripSelector } from '../redux/tripsSlice';
 
@@ -38,12 +39,66 @@ const TripPlan = ({ route, navigation }) => {
     // console.log(trips);
 
     const tripItem = trips.find(trip => trip.key === tripKey);
-    console.log(tripItem);
+    // console.log(tripItem);
 
     const tripEndDate = tripItem.trip_end_date.slice(8);
     const tripStartDate = tripItem.trip_start_date.slice(8);
     const differanceDate = parseInt(tripEndDate) - parseInt(tripStartDate) + 1;
     // console.log(differanceDate);
+
+    // Selected Date
+    const [selectedDate, setSelectedDate] = useState(1);
+    const [initialDate, setInitialDate] = useState(1);
+    const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    useEffect(() => {
+        setSelectedDate(initialDate);
+    }, [initialDate]);
+
+    const calendarButtons = [];
+    for (let i = 1; i <= differanceDate; i++) {
+        const date = i;
+
+        const tripDate = tripItem.trip_start_date;
+        const formatTripDate = tripDate.replace(/\//g, '-');
+        const startDate = new Date(formatTripDate);
+
+        const currentDate = new Date(startDate);
+        currentDate.setDate(currentDate.getDate() + i - 1);
+        // console.log(currentDate);
+
+        const dayIndex = currentDate.getDay();
+        const dayName = daysOfWeek[dayIndex - 1];
+
+        calendarButtons.push(
+            <TouchableOpacity
+                key={i}
+                className={`h-[76px] w-[42px] rounded-[20px] mr-[10px] ${selectedDate === date || i === selectedDate ? 'bg-gray-dark' : 'bg-gray-light'}`}
+                onPress={() => {
+                    setSelectedDate(date);
+                }}
+                onLongPress={() => {
+                    setInitialDate(date);
+                }}
+            >
+                <View className={`justify-center items-center h-full`}>
+                    <Text
+                        className={`text-[12px] ${selectedDate === date ? 'text-gray-light' : 'text-gray-dark'}`}
+                        style={{ fontFamily: "promptMedium" }}
+                    >
+                        {currentDate.getDate()}
+                    </Text>
+                    <Text
+                        className={`text-[12px] mb-[6px] ${selectedDate === date ? 'text-gray-light' : 'text-gray-dark'}`}
+                        style={{ fontFamily: "promptRegular" }}
+                    >
+                        {dayName}
+                    </Text>
+                    <Text className="w-[5px] h-[5px] bg-gray-light rounded-xl"></Text>
+                </View>
+            </TouchableOpacity>
+        );
+    }
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -311,75 +366,12 @@ const TripPlan = ({ route, navigation }) => {
                     <View className="mx-[32px] pt-[20px]">
                         {/* Calendar */}
                         <View className="bg-white h-[76px] flex flex-row">
-                            <View className="bg-gray-dark h-[76px] w-[42px] rounded-[20px] shadow-lg shadow-black justify-center items-center mr-[10px]">
-                                <Text
-                                    className="text-[12px] text-gray-light"
-                                    style={{ fontFamily: "promptMedium" }}
-                                >
-                                    14
-                                </Text>
-                                <Text
-                                    className="text-[12px] text-gray-light mb-[6px]"
-                                    style={{ fontFamily: "promptRegular" }}
-                                >
-                                    Mon
-                                </Text>
-                                <Text className="w-[5px] h-[5px] bg-white rounded-xl"></Text>
-                            </View>
-                            <View className="bg-gray-light h-[76px] w-[42px] rounded-[20px] justify-center items-center mr-[10px]">
-                                <Text
-                                    className="text-[12px] text-gray-dark opacity-60"
-                                    style={{ fontFamily: "promptMedium" }}
-                                >
-                                    15
-                                </Text>
-                                <Text
-                                    className="text-[12px] text-gray-dark mb-[6px] opacity-60"
-                                    style={{ fontFamily: "promptRegular" }}
-                                >
-                                    Tue
-                                </Text>
-                                <Text className="w-[6px] h-[6px] rounded-xl opacity-60 border-[1px] border-gray-dark"></Text>
-                            </View>
-                            <View className="bg-gray-light h-[76px] w-[42px] rounded-[20px] justify-center items-center mr-[10px]">
-                                <Text
-                                    className="text-[12px] text-gray-dark opacity-60"
-                                    style={{ fontFamily: "promptMedium" }}
-                                >
-                                    16
-                                </Text>
-                                <Text
-                                    className="text-[12px] text-gray-dark mb-[6px] opacity-60"
-                                    style={{ fontFamily: "promptRegular" }}
-                                >
-                                    Wed
-                                </Text>
-                                <Text className="w-[6px] h-[6px] rounded-xl opacity-60 border-[1px] border-gray-dark"></Text>
-                            </View>
+                            {calendarButtons}
                         </View>
 
                         {/* Trip Plan */}
-                        <View className="bg-white w-full h-full mt-[36px] flex flex-row">
-                            {/* Line */}
-                            <View className="bg-white w-[42px] h-auto items-center">
-                                <View className="w-[24px] h-[24px] rounded-xl items-center justify-center border-collapse border-[1px]">
-                                    <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
-                                </View>
-                                <View className="w-[1.5px] h-[120px] bg-gray-dark my-1"></View>
-                                <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-                                <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View>
-                                <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-                                <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View>
-                                {/* <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View> */}
-                            </View>
-
-                            {/* Plan event */}
-                            <View className="bg-white w-[295px] h-auto ml-3">
-                                {/* Place */}
-                                {/* <Pressable onPress={() => { navigation.navigate("PlaceDetail") }}> */}
-                                <TripEventBox navigation={navigation} />
-                                {/* </Pressable> */}
-                            </View>
+                        <View>
+                            <TripDatePlan navigation={navigation} />
                         </View>
                     </View>
                 </ScrollView>
