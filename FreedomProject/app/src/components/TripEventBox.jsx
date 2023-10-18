@@ -14,7 +14,7 @@ import { useFonts } from '@expo-google-fonts/prompt';
 
 export default function TripEventBox({ navigation, item }) {
 
-    // console.log(item);
+    console.log(item);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -30,7 +30,7 @@ export default function TripEventBox({ navigation, item }) {
 
     return (
         <View>
-            <Pressable onPress={() => { navigation.navigate("PlaceDetail") }}>
+            <Pressable onPress={() => { navigation.navigate("PlaceDetailForTrip", { item: item }) }}>
                 <View className="bg-gray-dark h-auto rounded-[30px] p-6 mb-3">
                     <View className="flex flex-row items-center justify-between">
                         <View className="flex flex-row items-center">

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { Intro, PlaceDetail, TripPlan, SignUp, SignIn, TripDetail, MyDreamTrip } from "../screens/index";
+import { Intro, PlaceDetail, TripPlan, SignUp, SignIn, TripDetail, MyDreamTrip, PlaceDetailForTrip } from "../screens/index";
 import { TabBar } from "../navigator/index";
 
 import { useSelector } from "react-redux";
@@ -27,6 +27,7 @@ function MainNavigator() {
                 <Stack.Screen name="TripPlan" component={TripPlan} />
                 <Stack.Screen name="MyDreamTrip" component={MyDreamTrip} />
                 <Stack.Screen name="TripDetail" component={TripDetail} />
+                <Stack.Screen name="PlaceDetailForTrip" component={PlaceDetailForTrip} />
             </Stack.Navigator>
         ) : (
             <Stack.Navigator screenOptions={{
@@ -40,6 +41,7 @@ function MainNavigator() {
                 <Stack.Screen name="TripPlan" component={TripPlan} />
                 <Stack.Screen name="MyDreamTrip" component={MyDreamTrip} />
                 <Stack.Screen name="TripDetail" component={TripDetail} />
+                <Stack.Screen name="PlaceDetailForTrip" component={PlaceDetailForTrip} />
             </Stack.Navigator>
         )
     );

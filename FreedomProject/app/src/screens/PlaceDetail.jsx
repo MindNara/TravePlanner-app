@@ -15,7 +15,7 @@ import { useFonts } from '@expo-google-fonts/prompt';
 export default function PlaceDetails({ route, navigation }) {
 
     const item = route.params.item;
-    // console.log(item);
+    console.log(item);
 
     const [loading, setLoading] = useState(true);
     const [dataDetail, setDataDetail] = useState([]);

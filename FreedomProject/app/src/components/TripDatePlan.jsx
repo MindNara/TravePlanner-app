@@ -92,13 +92,11 @@ export default function TripDatePlan({ navigation, item }) {
             {/* Plan event */}
             <View className="bg-white w-[295px] h-auto ml-3">
                 {/* Place */}
-                <Pressable onPress={() => { navigation.navigate("PlaceDetail", { placesItem: placesItem }) }}>
-                    {placesItem.map((item, index) => {
-                        return (
-                            <TripEventBox item={item} key={index} navigation={navigation} />
-                        )
-                    })}
-                </Pressable>
+                {placesItem.map((item, index) => {
+                    return (
+                        <TripEventBox item={item} navigation={navigation} />
+                    )
+                })}
             </View>
         </View>
     );

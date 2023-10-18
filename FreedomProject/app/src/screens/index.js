@@ -12,6 +12,7 @@ import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import TripDetail from "./TripDetail";
 import MyDreamTrip from "./MyDreamTrip";
+import PlaceDetailForTrip from "./PlaceDetailForTrip";
 
 export {
     Home,
@@ -26,4 +27,5 @@ export {
     SignIn,
     TripDetail,
     MyDreamTrip,
+    PlaceDetailForTrip,
 };

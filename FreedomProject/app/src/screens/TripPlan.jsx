@@ -415,7 +415,7 @@ const TripPlan = ({ route, navigation }) => {
                     </View>
 
                     {/* Content */}
-                    <View className="mx-[32px] pt-[20px]">
+                    <View className="mx-[32px] pt-[20px] h-auto">
                         {/* Calendar */}
                         <View className="bg-white h-[76px] flex flex-row">
                             {calendarButtons}
