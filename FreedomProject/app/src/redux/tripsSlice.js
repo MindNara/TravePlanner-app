@@ -9,11 +9,11 @@ const tripsSlice = createSlice({
     reducers: {
         tripId(state, action) {
             state.trip_id = action.payload;
-            console.log(state.trip_id);
+            // console.log(state.trip_id);
         },
         tripsReceived(state, action) {
             state.trips = action.payload;
-            console.log(state.trips);
+            // console.log(state.trips);
         },
     },
 })

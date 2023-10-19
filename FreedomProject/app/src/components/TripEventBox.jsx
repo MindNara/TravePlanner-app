@@ -14,7 +14,7 @@ import { useFonts } from '@expo-google-fonts/prompt';
 
 export default function TripEventBox({ navigation, item }) {
 
-    console.log(item);
+    // console.log(item);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),

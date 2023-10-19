@@ -24,7 +24,7 @@ export default function TripDatePlan({ navigation, item }) {
     // console.log("Schedule ID: " + item.key);
     const dispatch = useDispatch();
     const [numOfPlaces, setNumOfPlaces] = useState();
-    console.log("Number of places: " + numOfPlaces);
+    // console.log("Number of places: " + numOfPlaces);
 
     const getPlaces = async () => {
         try {

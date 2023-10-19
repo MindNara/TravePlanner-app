@@ -6,12 +6,14 @@ import {
     StyleSheet,
     Image,
     Pressable,
-    TextInput
+    TextInput,
+    Alert
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
-import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { firebase_auth } from '../firebase/firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { db } from '../firebase/firebaseConfig';
+import { setDoc, doc, getFirestore, collection, addDoc } from 'firebase/firestore';
 
 export default function Intro({ navigation }) {
 
@@ -20,6 +22,7 @@ export default function Intro({ navigation }) {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState('');
 
     const [loading, setLoading] = useState(false);
     const auth = firebase_auth;
@@ -30,10 +33,12 @@ export default function Intro({ navigation }) {
         setLoading(true)
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response);
-            alert('Sign Up Complete');
+            // console.log(response);
+            const user_id = response.user.uid;
+            // setUserId(user_id);
+            console.log(user_id);
 
-            const userDocRef = doc(db, 'users', response.user.uid);  // กำหนด path สำหรับ document
+            const userDocRef = doc(db, 'users', user_id);  // กำหนด path สำหรับ document
             await setDoc(userDocRef, {
                 user_email: email,
                 user_fname: firstname,
@@ -42,14 +47,38 @@ export default function Intro({ navigation }) {
                 user_password: password,
                 user_username: username,
             });
-            navigation.navigate("SingIn");
+            navigation.navigate("SignIn");
+            alert('Sign Up Complete');
+            addTrip(user_id);
         }
         catch (error) {
             console.log(error);
-            alert('Sign Up Fail');
+            alert('Sign Up Fail', error.message);
         }
         finally {
             setLoading(false);
+        }
+    }
+
+    const addTrip = async (userId) => {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1;
+        const day = currentDate.getDate();
+        const formattedDate = `${year}/${month}/${day}`;
+        console.log("User ID of Trip: " + userId);
+
+        try {
+            const tripRef = await addDoc(collection(db, "trips"), {
+                trip_title: 'Test',
+                trip_description: 'Description',
+                trip_start_date: formattedDate,
+                trip_end_date: formattedDate,
+                trip_image: '',
+                user_id: userId
+            });
+        } catch (e) {
+            alert("Error", "Error adding document: ", e.message);
         }
     }
 
@@ -100,7 +129,9 @@ export default function Intro({ navigation }) {
                             <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
                         </View>
                         <View className="mt-8">
-                            <Pressable style={styles.button} onPress={signUp}>
+                            <Pressable style={styles.button} onPress={() => {
+                                signUp();
+                            }}>
                                 <Text style={{ color: 'white', fontFamily: 'promptSemiBold' }} className="text-[16px] tracking-[1px]">SIGN UP</Text>
                             </Pressable>
                         </View>

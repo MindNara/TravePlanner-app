@@ -10,6 +10,7 @@ import {
     ScrollView,
     TextInput,
     TouchableOpacity,
+    Alert,
 } from "react-native";
 import { useFonts } from "@expo-google-fonts/prompt";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
@@ -18,12 +19,14 @@ import TripDatePlan from "../components/TripDatePlan";
 import { useSelector } from "react-redux";
 import { tripSelector } from '../redux/tripsSlice';
 import { db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { query, where, doc, getDoc, getDocs, collection, addDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
 import { useFocusEffect } from "@react-navigation/native";
 import DatePicker from 'react-native-modern-datepicker';
 import SelectDropdown from 'react-native-select-dropdown';
+import { placesReceived } from '../redux/placesSlice';
+
 
 const TripPlan = ({ route, navigation }) => {
 
@@ -54,6 +57,61 @@ const TripPlan = ({ route, navigation }) => {
             fetchData();
         }, [tripKey])
     );
+
+    const date = new Date();
+    const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+    const [title, setTitle] = useState('');
+    const [des, setDes] = useState('');
+    const [address, setAddress] = useState('');
+    const [openTime, setOpenTime] = useState(false);
+    const [time, setTime] = useState(formattedTime);
+    const [category, setCategory] = useState('');
+    const categorys = ['Place', 'Restaurant', 'Hotel']
+
+    // Check AM, PM
+    const formatTime = () => {
+        const timeParts = time.split(':');
+        const hours = parseInt(timeParts[0], 10);
+        const minutes = parseInt(timeParts[1], 10);
+
+        date.setHours(hours);
+        date.setMinutes(minutes);
+
+        const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        return formattedTime;
+    }
+
+    const addTripEvents = async () => {
+        try {
+            const tripRef = await addDoc(collection(db, "places"), {
+                place_title: title,
+                place_description: des,
+                place_category: category,
+                trip_image: '',
+                place_time: time,
+                place_address: address,
+                place_latitude: '',
+                place_longitude: '',
+                schedule_id: filteredSchedules[0].key,
+
+            });
+            // dispatch(placesReceived({
+            //     place_title: title,
+            //     place_description: des,
+            //     place_category: category,
+            //     trip_image: '',
+            //     place_time: time,
+            //     place_address: address,
+            //     place_latitude: '',
+            //     place_longitude: '',
+            //     schedule_id: filteredSchedules[0].key
+            // }));
+            Alert.alert("Success", "Trip added successfully");
+        } catch (e) {
+            Alert.alert("Error", "Error adding document: ", e.message);
+        }
+    }
 
     const [isOpen, setIsOpen] = useState(false);
     const [isFav, setIsFav] = useState(true);
@@ -153,31 +211,6 @@ const TripPlan = ({ route, navigation }) => {
         );
     });
     // console.log(filteredSchedules);
-
-    const date = new Date();
-    const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-
-    const [title, setTitle] = useState('');
-    const [des, setDes] = useState('');
-    const [address, setAddress] = useState('');
-    const [openTime, setOpenTime] = useState(false);
-    const [time, setTime] = useState(formattedTime);
-    const [category, setCategory] = useState('');
-
-    const categorys = ['Place', 'Restaurant', 'Hotel']
-
-    const formatTime = () => {
-        const timeParts = time.split(':');
-        const hours = parseInt(timeParts[0], 10);
-        const minutes = parseInt(timeParts[1], 10);
-
-        date.setHours(hours);
-        date.setMinutes(minutes);
-
-        const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-
-        return formattedTime;
-    }
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -291,7 +324,9 @@ const TripPlan = ({ route, navigation }) => {
 
                                                 {/* Btn */}
                                                 <View className="flex flex-row justify-between items-center mt-[15px]">
-                                                    <Pressable onPress={() => { }} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
+                                                    <Pressable onPress={() => {
+                                                        addTripEvents();
+                                                    }} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
                                                         <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CONFIRM</Text>
                                                     </Pressable>
                                                     <Pressable onPress={() => { }} className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">

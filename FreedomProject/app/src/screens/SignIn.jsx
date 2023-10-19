@@ -19,6 +19,7 @@ export default function SingIn({ navigation }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [userId, setUserId] = useState('');
 
     const [loading, setLoading] = useState(false);
     const auth = firebase_auth;
@@ -30,6 +31,7 @@ export default function SingIn({ navigation }) {
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
             const user_id = response.user.uid;
+            setUserId(user_id);
             dispatch(usersId(user_id));
             dispatch(usersLoading());
             // console.log(user_id);
