@@ -8,7 +8,8 @@ import {
     StyleSheet,
     TextInput,
     Button,
-    Pressable
+    Pressable,
+    ScrollView
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { useSelector } from "react-redux";
@@ -140,6 +141,7 @@ export default function Profile({ navigation }) {
                 user_lname: lname,
                 user_username: username,
             });
+            alert("Update Profile Success");
             console.log("Data updated in Firestore!");
         } catch (error) {
             console.error("Error updating data in Firestore: ", error);
@@ -153,8 +155,10 @@ export default function Profile({ navigation }) {
     }
 
     return (
-        <View className="container mx-auto h-full bg-blue-light " >
-            <View className="absolute w-full h-[620px] bottom-0 bg-white rounded-t-[50px]">
+        <ScrollView>
+        <View className="container mx-auto h-full bg-white " >
+            <View className="w-full h-full bg-blue-light">
+            <View className="bottom-0 mt-40 bg-white w-full h-full rounded-t-[50px]">
                 {isPressed == false ? (
                     <View>
                         <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
@@ -215,7 +219,7 @@ export default function Profile({ navigation }) {
                         </View>
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <View className="mt-8 ml-6 flex flex-row">
-                                <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }} value={user_username} onChangeText={text => setUser_username(text)} editable={true} ></TextInput>
+                                <TextInput className="text-[24px]" style={{fontFamily: 'promptSemiBold', color: 'black'}} value={user_username} onChangeText={text => setUser_username(text)} editable={true} ></TextInput>
                                 <Pressable>
                                     <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
                                         style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
@@ -261,9 +265,11 @@ export default function Profile({ navigation }) {
                             </View>
                         </View>
                     </View>)}
+                </View>
             </View>
             {/* <Text >My Profile</Text> */}
         </View>
+        </ScrollView>
     );
 }
 
