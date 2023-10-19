@@ -7,7 +7,8 @@ import {
     Image,
     ScrollView,
     ImageBackground,
-    Pressable
+    Pressable,
+    FlatList,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { MyTrip, RecommendedTrip, Header } from '../components/index';
@@ -117,11 +118,17 @@ export default function Home({ navigation }) {
                         </View>
                         <View className="mt-[20px] flex flex-row justify-between">
                             {user_id == null ? (<Text>Loading...</Text>) : (
-                                trips.map((item, index) => {
-                                    return (
-                                        <MyTrip item={item} key={index} navigation={navigation} />
-                                    )
-                                })
+                                <FlatList
+                                    data={trips}
+                                    keyExtractor={item => item.id}
+                                    renderItem={({ item }) => {
+                                        return (
+                                            <MyTrip item={item} navigation={navigation} />
+                                        )
+                                    }}
+                                    horizontal={true}
+                                    showsHorizontalScrollIndicator={false}
+                                />
                             )}
                         </View>
                     </View>

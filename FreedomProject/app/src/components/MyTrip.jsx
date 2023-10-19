@@ -33,7 +33,7 @@ export default function MyTrip({ navigation, item }) {
     }
 
     return (
-        <View>
+        <View className="mr-4">
             <Pressable onPress={() => {
                 navigation.navigate("TripPlan", { tripKey: item.key });
             }}>

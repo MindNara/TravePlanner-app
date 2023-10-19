@@ -22,7 +22,6 @@ export default function Intro({ navigation }) {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [username, setUsername] = useState('');
-    const [userId, setUserId] = useState('');
 
     const [loading, setLoading] = useState(false);
     const auth = firebase_auth;
@@ -35,8 +34,7 @@ export default function Intro({ navigation }) {
             const response = await createUserWithEmailAndPassword(auth, email, password);
             // console.log(response);
             const user_id = response.user.uid;
-            // setUserId(user_id);
-            console.log(user_id);
+            // console.log(user_id);
 
             const userDocRef = doc(db, 'users', user_id);  // กำหนด path สำหรับ document
             await setDoc(userDocRef, {
@@ -66,7 +64,7 @@ export default function Intro({ navigation }) {
         const month = currentDate.getMonth() + 1;
         const day = currentDate.getDate();
         const formattedDate = `${year}/${month}/${day}`;
-        console.log("User ID of Trip: " + userId);
+        // console.log("User ID of Trip: " + userId);
 
         try {
             const tripRef = await addDoc(collection(db, "trips"), {
