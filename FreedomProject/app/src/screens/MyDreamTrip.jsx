@@ -34,7 +34,7 @@ export default function MyDreamTrip({ navigation }) {
     }
 
     return (
-        <ScrollView>
+        <ScrollView className="bg-white">
             <View className="container mx-auto bg-white">
                 <View className="h-full mx-[32px] pt-14 bg-white">
                     {/* Header */}

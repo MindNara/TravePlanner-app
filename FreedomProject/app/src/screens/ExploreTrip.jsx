@@ -49,8 +49,8 @@ export default function ExploreTrip({ navigation }) {
     }
 
     return (
-        <ScrollView>
-            <View className="container mx-auto bg-white">
+        <ScrollView className="bg-white">
+            <View className="container mx-auto h-full bg-white">
                 <View className="w-full h-[200px]">
                     <View className="w-full h-[165px] bg-white px-[32px] rounded-b-[0px]">
                         {/* Header */}

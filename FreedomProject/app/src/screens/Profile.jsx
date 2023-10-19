@@ -155,7 +155,7 @@ export default function Profile({ navigation }) {
     }
 
     return (
-        <ScrollView>
+        <ScrollView className="bg-white">
         <View className="container mx-auto h-full bg-white " >
             <View className="w-full h-full bg-blue-light">
             <View className="bottom-0 mt-40 bg-white w-full h-full rounded-t-[50px]">
@@ -170,7 +170,7 @@ export default function Profile({ navigation }) {
                         </View>
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <View className="mt-8 ml-6 flex flex-row">
-                                <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }} editable={false}  >{user_username}</TextInput>
+                                <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }} editable={false}>{user_username}</TextInput>
                                 <Pressable onPress={() => setIsPressed(true)}>
                                     <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
                                         style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
