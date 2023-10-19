@@ -119,7 +119,7 @@ export default function Home({ navigation }) {
                         <View className="mt-[20px] flex flex-row justify-between">
                             {user_id == null ? (<Text>Loading...</Text>) : (
                                 <FlatList
-                                    data={trips}
+                                    data={trips.slice(0, 5)}
                                     keyExtractor={item => item.id}
                                     renderItem={({ item }) => {
                                         return (

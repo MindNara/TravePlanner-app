@@ -14,7 +14,22 @@ import { useFonts } from '@expo-google-fonts/prompt';
 
 export default function TripEventBox({ navigation, item }) {
 
-    // console.log(item);
+    const formatTime = () => {
+        const time = item.place_time;
+        const [hours, minutes] = time.split(':');
+        let period = 'AM';
+        let hour = parseInt(hours);
+
+        if (hour >= 12) {
+            period = 'PM';
+            if (hour > 12) {
+                hour -= 12;
+            }
+        }
+        const formattedTime = `${hour}:${minutes} ${period}`;
+        // console.log(formattedTime);
+        return formattedTime;
+    }
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -29,7 +44,7 @@ export default function TripEventBox({ navigation, item }) {
     }
 
     return (
-        <View>
+        <View className="h-40 mb-2">
             <Pressable onPress={() => { navigation.navigate("PlaceDetailForTrip", { item: item }) }}>
                 <View className="bg-gray-dark h-auto rounded-[30px] p-6 mb-3">
                     <View className="flex flex-row items-center justify-between">
@@ -45,9 +60,9 @@ export default function TripEventBox({ navigation, item }) {
                     </View>
                     <View className="flex flex-row justify-between items-center mt-3">
                         <Text className="text-[16px] text-gray-light" style={{ fontFamily: 'promptSemiBold' }}>{item.place_title}</Text>
-                        <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptRegular' }}>09:15 AM</Text>
+                        <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptRegular' }}>{formatTime()}</Text>
                     </View>
-                    <Text className="text-[10px] text-gray-light mt-2" style={{ fontFamily: 'promptLight' }}>{item.place_description}</Text>
+                    <Text className="text-[10px] text-gray-light mt-2 h-8" style={{ fontFamily: 'promptLight' }}>{item.place_description}</Text>
                 </View>
             </Pressable>
         </View>

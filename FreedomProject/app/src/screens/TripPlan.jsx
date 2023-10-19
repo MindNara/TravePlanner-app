@@ -23,9 +23,10 @@ import { query, where, doc, getDoc, getDocs, collection, addDoc } from 'firebase
 import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
 import { useFocusEffect } from "@react-navigation/native";
-import DatePicker from 'react-native-modern-datepicker';
 import SelectDropdown from 'react-native-select-dropdown';
 import { placesReceived } from '../redux/placesSlice';
+import { EditTripPlan, UpdateButton } from "../components";
+import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
 
 
 const TripPlan = ({ route, navigation }) => {
@@ -94,22 +95,12 @@ const TripPlan = ({ route, navigation }) => {
                 place_latitude: '',
                 place_longitude: '',
                 schedule_id: filteredSchedules[0].key,
-
             });
-            // dispatch(placesReceived({
-            //     place_title: title,
-            //     place_description: des,
-            //     place_category: category,
-            //     trip_image: '',
-            //     place_time: time,
-            //     place_address: address,
-            //     place_latitude: '',
-            //     place_longitude: '',
-            //     schedule_id: filteredSchedules[0].key
-            // }));
-            Alert.alert("Success", "Trip added successfully");
         } catch (e) {
             Alert.alert("Error", "Error adding document: ", e.message);
+        } finally {
+            Alert.alert("Success", "Trip added successfully");
+            bottomSheetModelRef.current?.close();
         }
     }
 
@@ -117,7 +108,10 @@ const TripPlan = ({ route, navigation }) => {
     const [isFav, setIsFav] = useState(true);
 
     const bottomSheetModelRef = useRef(null);
-    const snapPoints = ["72%", "94%"];
+    const snapPoints = ["72%", "93%"];
+
+    const bottomSheetEditTrip = useRef(null);
+    const snapPointsEditTrip = ["57%"];
 
     function handlePresentModel() {
         bottomSheetModelRef.current?.present();
@@ -212,6 +206,18 @@ const TripPlan = ({ route, navigation }) => {
     });
     // console.log(filteredSchedules);
 
+    // Update Trip
+    const dateToday = getToday();
+    const [openDep, setOpenDep] = useState(false);
+    const [openRet, setOpenRet] = useState(false);
+
+    const [titleTrip, setTitleTrip] = useState(tripItem.trip_title);
+    const [desTrip, setDesTrip] = useState(tripItem.trip_description);
+    const [selectedDateDep, setSelectedDateDep] = useState(tripItem.trip_start_date);
+    const [selectedDateRet, setSelectedDateRet] = useState(tripItem.trip_end_date);
+
+    
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -228,7 +234,7 @@ const TripPlan = ({ route, navigation }) => {
 
         <GestureHandlerRootView className="relative container mx-auto h-full bg-white">
             <BottomSheetModalProvider>
-                {/* Bottom Sheet */}
+                {/* Bottom Sheet Create Event */}
                 <BottomSheetModal
                     ref={bottomSheetModelRef}
                     index={isFav ? 0 : 1}
@@ -329,7 +335,7 @@ const TripPlan = ({ route, navigation }) => {
                                                     }} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
                                                         <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CONFIRM</Text>
                                                     </Pressable>
-                                                    <Pressable onPress={() => { }} className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
+                                                    <Pressable onPress={() => { bottomSheetModelRef.current?.close(); }} className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
                                                         <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
                                                     </Pressable>
                                                 </View>
@@ -409,11 +415,114 @@ const TripPlan = ({ route, navigation }) => {
                     </View>
                 </Pressable>
 
+                <BottomSheetModal
+                    ref={bottomSheetEditTrip}
+                    index={0}
+                    snapPoints={snapPointsEditTrip}
+                    backgroundStyle={{ borderRadius: 50 }}
+                    onDismiss={() => {
+                        setIsOpen(false);
+                    }}
+                >
+                    <View className="bg-white h-full mx-[32px] my-[24px]">
+                        <View className="w-full bg-gray-light mb-5 rounded-[10px]">
+                            <View className="m-[20px]">
+                                {/* Title */}
+                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center" >
+                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
+                                    <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name"
+                                        onChangeText={text => setTitleTrip(text)}>{titleTrip}</TextInput>
+                                </View >
+
+                                {/* Date */}
+                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark mt-[20px] py-6 px-6 flex flex-row justify-between items-center" >
+                                    <View>
+                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DEPARTURE</Text>
+                                        <Pressable className="flex flex-row items-center"
+                                            onPress={() => {
+                                                setOpenDep(true);
+                                            }}>
+                                            <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>{selectedDateDep}</Text>
+                                            <Image source={{ uri: 'https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png' }}
+                                                style={{ width: 14, height: 14 }} />
+                                        </Pressable>
+                                    </View>
+                                    <View>
+                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>RETURN</Text>
+                                        <Pressable className="flex flex-row items-center"
+                                            onPress={() => {
+                                                setOpenRet(true);
+                                            }}>
+                                            <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>{selectedDateRet}</Text>
+                                            <Image source={{ uri: 'https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png' }}
+                                                style={{ width: 14, height: 14 }} />
+                                        </Pressable>
+                                    </View>
+                                </View >
+
+                                {/* Descriptions */}
+                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]" >
+                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DESCRIPTIONS</Text>
+                                    <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions"
+                                        onChangeText={text => setDesTrip(text)}>{desTrip}</TextInput>
+                                </View >
+                                {/* Btn */}
+                                <View className="flex flex-row justify-between items-center mt-[15px]">
+                                    <Pressable onPress={() => {
+                                        // 
+                                    }} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
+                                        <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>UPDATE</Text>
+                                    </Pressable>
+                                    <Pressable onPress={() => { bottomSheetEditTrip.current?.close(); }} className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
+                                        <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
+                                    </Pressable>
+                                </View>
+                            </View>
+                        </View>
+
+                        {/* Date Picker */}
+                        {openDep && (
+                            <View className="absolute z-20 w-full h-full">
+                                <View className="mx-[32px] top-[5%]">
+                                    <DatePicker
+                                        style={{ borderRadius: 10 }}
+                                        current={dateToday}
+                                        selected={dateToday}
+                                        mode="calendar"
+                                        onDateChange={(date) => {
+                                            setSelectedDateDep(date);
+                                            setOpenDep(false);
+                                        }}
+                                    />
+                                </View>
+                            </View>
+                        )}
+
+                        {openRet && (
+                            <View className="absolute z-10 w-full h-auto">
+                                <View className="mx-[32px] top-[5%]">
+                                    <DatePicker
+                                        onDateChange={(date) => {
+                                            setSelectedDateRet(date);
+                                            setOpenRet(false);
+                                        }}
+                                        style={{ borderRadius: 10 }}
+                                        current={dateToday}
+                                        selected={dateToday}
+                                        mode="calendar"
+                                    />
+                                </View>
+                            </View>
+                        )}
+                    </View>
+                </BottomSheetModal>
+
                 <ScrollView>
                     {/* Background */}
                     {isOpen && (
                         <Pressable onPress={() => {
-                            bottomSheetModelRef.current?.close()
+                            bottomSheetModelRef.current?.close();
+                            bottomSheetEditTrip.current?.close();
                         }} style={{ zIndex: 3 }} className="absolute h-full w-full bg-gray-dark opacity-30" />
                     )}
 
@@ -459,7 +568,10 @@ const TripPlan = ({ route, navigation }) => {
                                     />
                                 </View>
                                 {/* Menu */}
-                                <View>
+                                <Pressable onPress={() => {
+                                    bottomSheetEditTrip.current?.present();
+                                    setIsOpen(true);
+                                }}>
                                     <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
                                     <Image
                                         className="absolute top-[8px] left-2"
@@ -468,7 +580,7 @@ const TripPlan = ({ route, navigation }) => {
                                         }}
                                         style={{ width: 20, height: 20 }}
                                     />
-                                </View>
+                                </Pressable>
                             </View>
                         </View>
 
