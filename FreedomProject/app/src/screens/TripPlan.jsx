@@ -42,21 +42,33 @@ const TripPlan = ({ route, navigation }) => {
                 if (tripKey) {
                     try {
                         const querySnapshot = await getDocs(query(collection(db, "schedules"), where("trip_id", "==", tripKey)));
-                        // console.log("Total schdules: ", querySnapshot.size);
+                        console.log("Total schdules: ", querySnapshot.size);
                         const schdulesDoc = [];
-                        querySnapshot.forEach((doc) => {
-                            schdulesDoc.push({ ...doc.data(), key: doc.id });
-                        });
-                        setSchedules(schdulesDoc);
-                        dispatch(scheduleReceived(schdulesDoc));
-                        // console.log(schdulesDoc);
+                        if (querySnapshot.size != 0) {
+                            querySnapshot.forEach((doc) => {
+                                schdulesDoc.push({ ...doc.data(), key: doc.id });
+                            });
+                            setSchedules(schdulesDoc);
+                            dispatch(scheduleReceived(schdulesDoc));
+                            // console.log(schdulesDoc);
+
+                            // ดึง trips มาใส่ใน store ด้วย
+                            // const queryPlaces = await getDocs(query(collection(db, "places"), where("schedule_id", "==", schdulesDoc[0].key)));
+                            // const placesDoc = [];
+                            // queryPlaces.forEach((doc) => {
+                            //     placesDoc.push({ ...doc.data(), key: doc.id });
+                            // });
+                            // dispatch(placesReceived(placesDoc));
+                            // console.log(placesDoc);
+                        }
+
                     } catch (error) {
                         console.error("Error fetching schedules:", error);
                     }
                 }
             };
             fetchData();
-        }, [tripKey])
+        }, [initialDate])
     );
 
     const date = new Date();
@@ -84,6 +96,17 @@ const TripPlan = ({ route, navigation }) => {
     }
 
     const addTripEvents = async () => {
+        // const dataToDispatch = {
+        //     place_title: title,
+        //     place_description: des,
+        //     place_category: category,
+        //     trip_image: '',
+        //     place_time: time,
+        //     place_address: address,
+        //     place_latitude: '',
+        //     place_longitude: '',
+        //     schedule_id: filteredSchedules[0].key,
+        // };
         try {
             const tripRef = await addDoc(collection(db, "places"), {
                 place_title: title,
@@ -96,6 +119,8 @@ const TripPlan = ({ route, navigation }) => {
                 place_longitude: '',
                 schedule_id: filteredSchedules[0].key,
             });
+            // dispatch(placesReceived({ dataToDispatch }));
+            // console.log(dataToDispatch);
         } catch (e) {
             Alert.alert("Error", "Error adding document: ", e.message);
         } finally {
@@ -118,6 +143,7 @@ const TripPlan = ({ route, navigation }) => {
         setIsOpen(true);
     }
 
+    // Trip  Button
     const trip = useSelector(tripSelector);
     const trips = trip.trips;
     // console.log(trips);
@@ -216,7 +242,7 @@ const TripPlan = ({ route, navigation }) => {
     const [selectedDateDep, setSelectedDateDep] = useState(tripItem.trip_start_date);
     const [selectedDateRet, setSelectedDateRet] = useState(tripItem.trip_end_date);
 
-    
+
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),

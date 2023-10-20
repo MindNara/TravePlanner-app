@@ -46,7 +46,7 @@ export default function TripDatePlan({ navigation, item }) {
 
     const place = useSelector(placeSelector);
     const placesItem = place.places;
-    console.log(placesItem);
+    // console.log(placesItem);
 
     const timeLine = [];
     for (let i = 1; i <= numOfPlaces; i++) {
