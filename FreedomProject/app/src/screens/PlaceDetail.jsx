@@ -11,6 +11,7 @@ import {
     Button
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
+import MapView from 'react-native-maps';
 // import { ScrollView } from 'react-native-gesture-handler';
 
 export default function PlaceDetails({ route, navigation }) {
@@ -20,6 +21,8 @@ export default function PlaceDetails({ route, navigation }) {
 
     const [loading, setLoading] = useState(true);
     const [dataDetail, setDataDetail] = useState([]);
+
+    const [showMap, setShowMap] = useState(true);
 
     const apiKey = 'GBlAR1kAdZLNcsEPOzvbb6chWCSSoyX2qORdP5ifIdceDVTo2crn)n0yJHoUqvj4V=2';
 
@@ -112,11 +115,21 @@ export default function PlaceDetails({ route, navigation }) {
 
                                         </View>
                                         <View style={{ alignItems: 'center', justifyContent: 'center' }} className="mb-4">
-                                            <Pressable style={styles.button} className="bg-blue-light" onPress={() => {
-                                             
+                                            {/* <Pressable style={styles.button} className="bg-blue-light" onPress={() => {
+                                                setShowMap(true)
                                             }}>
                                                 <Text className="text-[14px] text-gray-datk" style={{ fontFamily: 'promptMedium' }}>VIEW MAP</Text>
-                                            </Pressable>
+                                            </Pressable> */}
+                                            {showMap && 
+                                                <MapView
+                                                style={{ height: 300, width: '100%', flex: 1, marginTop: 10, borderRadius: 10 }}
+                                                    initialRegion={{
+                                                        latitude: dataDetail.result.latitude,
+                                                        longitude: dataDetail.result.longitude,
+                                                        latitudeDelta: 0.005,
+                                                        longitudeDelta: 0.005,
+                                                    }}
+                                                />}
                                         </View>
                                     </View>
                                 )}
