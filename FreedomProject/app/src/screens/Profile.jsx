@@ -27,8 +27,8 @@ export default function Profile({ navigation }) {
 
     const dispatch = useDispatch();
 
-    console.log("eiei");
-    console.log(user_info);
+    // console.log("eiei");
+    // console.log(user_info);
 
     const [user_fname, setUser_fname] = useState(user_info.user_fname);
     const [user_lname, setUser_lname] = useState(user_info.user_lname);
@@ -90,7 +90,7 @@ export default function Profile({ navigation }) {
             
             const updatedDoc = await getDoc(userRef);
             const updatedData = updatedDoc.data();
-            console.log(updatedData);
+            // console.log(updatedData);
 
             // Dispatch การอัปเดต Redux store ด้วยข้อมูลที่ถูกต้อง
             dispatch(usersInfo(updatedData));

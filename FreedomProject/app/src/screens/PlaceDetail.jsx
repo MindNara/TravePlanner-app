@@ -61,7 +61,11 @@ export default function PlaceDetails({ route, navigation }) {
             <ScrollView>
                 {/* Header & Image */}
                 <View className="w-full h-full bg-blue-light">
-                    <Image className="absolute w-[400px] h-[300px]" source={{ uri: item.thumbnail_url }} />
+                    {item.thumbnail_url == "" ? (
+                        <Image className="absolute w-[400px] h-[300px]" source={require('../assets/TripImage.png')} />
+                    ) : (
+                        <Image className="absolute w-[400px] h-[300px]" source={{ uri: item.thumbnail_url }} />)}
+                    {/* <Image className="absolute w-[400px] h-[300px]" source={{ uri: item.thumbnail_url }} /> */}
                     <View className="w-[400px] h-[300px] bg-black absolute opacity-30"></View>
                     <View className="mx-[32px] pt-16 flex flex-row justify-between">
                         <Pressable onPress={() => {
@@ -106,7 +110,7 @@ export default function PlaceDetails({ route, navigation }) {
                                                 <Text className="text-[14px] w-[300px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>OPEN HOUR : {dataDetail.result.opening_hours.weekday_text.day1.time}</Text>) : (
                                                 <Text className="text-[14px] w-[300px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>OPEN HOUR : -</Text>)}
                                         </View>
-                                        <View className="flex flex-row mt-[10px] items-center gap-x-[16px] mb-4">
+                                        <View className="flex flex-row mt-[10px] items-center gap-x-[16px]">
                                             <View className="justify-center items-center h-[45px] w-[45px] bg-gray-light rounded-3xl">
                                                 <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/map-marker.png' }}
                                                     style={{ width: 22, height: 22 }} />
