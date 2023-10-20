@@ -7,7 +7,8 @@ import {
     Image,
     Pressable,
     ImageBackground,
-    ScrollView
+    ScrollView,
+    Button
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 // import { ScrollView } from 'react-native-gesture-handler';
@@ -95,10 +96,27 @@ export default function PlaceDetails({ route, navigation }) {
                                         </View>
                                         <View className="flex flex-row mt-[10px] items-center gap-x-[16px]">
                                             <View className="justify-center items-center h-[45px] w-[45px] bg-gray-light rounded-3xl">
+                                                <Image className="" source={{ uri: 'https://img.icons8.com/material-rounded/96/2E2E2E/retro-alarm-clock.png' }}
+                                                    style={{ width: 22, height: 22 }} />
+                                            </View>
+                                            {dataDetail?.result?.opening_hours?.weekday_text?.day1?.time ? (
+                                                <Text className="text-[14px] w-[300px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>OPEN HOUR : {dataDetail.result.opening_hours.weekday_text.day1.time}</Text>) : (
+                                                <Text className="text-[14px] w-[300px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>OPEN HOUR : -</Text>)}
+                                        </View>
+                                        <View className="flex flex-row mt-[10px] items-center gap-x-[16px] mb-4">
+                                            <View className="justify-center items-center h-[45px] w-[45px] bg-gray-light rounded-3xl">
                                                 <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/map-marker.png' }}
                                                     style={{ width: 22, height: 22 }} />
                                             </View>
-                                            <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>VIEW LOCATION</Text>
+                                            <Text className="text-[14px] pr-8 text-gray-dark" style={{ fontFamily: 'promptMedium' }}>LOCATION : {dataDetail.result.location.address} {dataDetail.result.location.district} {dataDetail.result.location.sub_district} {dataDetail.result.location.province} {dataDetail.result.location.postcode}</Text>
+
+                                        </View>
+                                        <View style={{ alignItems: 'center', justifyContent: 'center' }} className="mb-4">
+                                            <Pressable style={styles.button} className="bg-blue-light" onPress={() => {
+                                             
+                                            }}>
+                                                <Text className="text-[14px] text-gray-datk" style={{ fontFamily: 'promptMedium' }}>VIEW MAP</Text>
+                                            </Pressable>
                                         </View>
                                     </View>
                                 )}
@@ -111,4 +129,11 @@ export default function PlaceDetails({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 48,
+        paddingHorizontal: 32,
+        borderRadius: 10,
+    },
 });
