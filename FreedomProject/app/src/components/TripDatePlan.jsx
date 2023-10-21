@@ -29,7 +29,6 @@ export default function TripDatePlan({ navigation, item }) {
     const getPlaces = async () => {
         try {
             const querySnapshot = await getDocs(query(collection(db, "places"), where("schedule_id", "==", item.key)));
-            // console.log("Total places: ", querySnapshot.size);
             setNumOfPlaces(querySnapshot.size);
             const placesDoc = [];
             querySnapshot.forEach((doc) => {
@@ -40,25 +39,28 @@ export default function TripDatePlan({ navigation, item }) {
             console.error("Error fetching places:", error);
         }
     }
-    useEffect(() => {
-        getPlaces();
-    }, [item.key]);
 
     const place = useSelector(placeSelector);
     const placesItem = place.places;
     // console.log(placesItem);
 
-    const timeLine = [];
-    for (let i = 1; i <= numOfPlaces; i++) {
+    useEffect(() => {
+        getPlaces();
+    }, [item.key]);
 
-        timeLine.push(
-            <View className="items-center justify-center mb-2">
-                <View className="w-[16px] h-[16px] bg-gray-dark rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-                <View className="w-[1.5px] h-[120px] bg-gray-dark my-1"></View>
-                <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-            </View>
-        )
+    const generateTimeLine = () => {
+        const timeLine = [];
+        for (let i = 1; i <= numOfPlaces; i++) {
+            timeLine.push(
+                <View className="items-center justify-center mb-2">
+                    <View className="w-[16px] h-[16px] bg-gray-dark rounded-xl items-center justify-center border-collapse border-[1px]"></View>
+                    <View className="w-[1.5px] h-[120px] bg-gray-dark my-1"></View>
+                    <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
+                </View>
+            )
+        }
 
+        return timeLine;
     }
 
     const [loaded] = useFonts({
@@ -77,16 +79,7 @@ export default function TripDatePlan({ navigation, item }) {
         <View className="bg-white w-full h-full mt-[36px] flex flex-row">
             {/* Line */}
             <View className="bg-white w-[42px] h-auto items-center">
-                {timeLine}
-                {/* <View className="w-[24px] h-[24px] rounded-xl items-center justify-center border-collapse border-[1px]">
-                    <View className="bg-gray-dark w-[16px] h-[16px] rounded-xl"></View>
-                </View>
-                <View className="w-[1.5px] h-[120px] bg-gray-dark my-1"></View>
-                <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-                <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View>
-                <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-                <View className="w-[1.5px] h-[135px] bg-gray-dark my-1"></View> */}
-                {/* <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View> */}
+                {generateTimeLine()}
             </View>
 
             {/* Plan event */}

@@ -17,9 +17,9 @@ import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } fro
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import TripDatePlan from "../components/TripDatePlan";
 import { useSelector } from "react-redux";
-import { tripSelector } from '../redux/tripsSlice';
+import { tripSelector, tripsReceived } from '../redux/tripsSlice';
 import { db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDoc, getDocs, collection, addDoc } from 'firebase/firestore';
+import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
 import { useFocusEffect } from "@react-navigation/native";
@@ -27,49 +27,72 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { placesReceived } from '../redux/placesSlice';
 import { EditTripPlan, UpdateButton } from "../components";
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
+import { placeSelector } from '../redux/placesSlice';
+import { userSelector } from "../redux/usersSlice";
+import { scheduleSelector } from "../redux/schedulesSlice";
 
 
 const TripPlan = ({ route, navigation }) => {
 
     const dispatch = useDispatch();
     const { tripKey } = route.params;
-    // console.log(tripKey);
+    // console.log("Trip_id: " + tripKey);
 
+    const user = useSelector(userSelector);
+    const user_id = user.user_id;
+
+    const trip = useSelector(tripSelector);
+    const trips = trip.trips;
+    // console.log(trips);
+
+    const schedule = useSelector(scheduleSelector);
+    const schedulesItem = schedule.schedules;
+
+    const place = useSelector(placeSelector);
+    const placesItem = place.places;
+    // console.log(placesItem);
+
+    // เวลาเข้าหน้า trip plan ให้เรียก schedules
     const [schedules, setSchedules] = useState([]);
-    useFocusEffect(
-        React.useCallback(() => {
-            const fetchData = async () => {
-                if (tripKey) {
-                    try {
-                        const querySnapshot = await getDocs(query(collection(db, "schedules"), where("trip_id", "==", tripKey)));
-                        console.log("Total schdules: ", querySnapshot.size);
-                        const schdulesDoc = [];
-                        if (querySnapshot.size != 0) {
-                            querySnapshot.forEach((doc) => {
-                                schdulesDoc.push({ ...doc.data(), key: doc.id });
-                            });
-                            setSchedules(schdulesDoc);
-                            dispatch(scheduleReceived(schdulesDoc));
-                            // console.log(schdulesDoc);
+    const fetchData = async () => {
+        try {
+            const querySnapshot = await getDocs(query(collection(db, "schedules"), where("trip_id", "==", tripKey)));
+            console.log("Total schdules: ", querySnapshot.size);
+            const schdulesDoc = [];
+            querySnapshot.forEach((doc) => {
+                schdulesDoc.push({ ...doc.data(), key: doc.id });
+            });
+            setSchedules(schdulesDoc);
+            dispatch(scheduleReceived(schdulesDoc));
+            // console.log(schdulesDoc);
+        } catch (error) {
+            console.error("Error fetching schedules:", error);
+        }
+    };
 
-                            // ดึง trips มาใส่ใน store ด้วย
-                            // const queryPlaces = await getDocs(query(collection(db, "places"), where("schedule_id", "==", schdulesDoc[0].key)));
-                            // const placesDoc = [];
-                            // queryPlaces.forEach((doc) => {
-                            //     placesDoc.push({ ...doc.data(), key: doc.id });
-                            // });
-                            // dispatch(placesReceived(placesDoc));
-                            // console.log(placesDoc);
-                        }
+    const [tripItem, setTrips] = useState([]);
+    const fetchTrips = async () => {
+        try {
+            const tripsRef = doc(db, 'trips', tripKey);
+            const trips = await getDoc(tripsRef);
+            // console.log(trips.data());
 
-                    } catch (error) {
-                        console.error("Error fetching schedules:", error);
-                    }
-                }
-            };
-            fetchData();
-        }, [initialDate])
-    );
+            if (trips.exists()) {
+                setTrips(trips.data());
+                dispatch(tripsReceived(trips.data()));
+            } else {
+                console.log('No trip found with given docId');
+                return null;
+            }
+        } catch (error) {
+            console.error("Error fetching schedules:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+        fetchTrips();
+    }, []);
 
     const date = new Date();
     const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
@@ -96,17 +119,6 @@ const TripPlan = ({ route, navigation }) => {
     }
 
     const addTripEvents = async () => {
-        // const dataToDispatch = {
-        //     place_title: title,
-        //     place_description: des,
-        //     place_category: category,
-        //     trip_image: '',
-        //     place_time: time,
-        //     place_address: address,
-        //     place_latitude: '',
-        //     place_longitude: '',
-        //     schedule_id: filteredSchedules[0].key,
-        // };
         try {
             const tripRef = await addDoc(collection(db, "places"), {
                 place_title: title,
@@ -119,8 +131,21 @@ const TripPlan = ({ route, navigation }) => {
                 place_longitude: '',
                 schedule_id: filteredSchedules[0].key,
             });
-            // dispatch(placesReceived({ dataToDispatch }));
-            // console.log(dataToDispatch);
+
+            const newPlaces = [...placesItem];
+            newPlaces.push({
+                place_title: title,
+                place_description: des,
+                place_category: category,
+                trip_image: '',
+                place_time: time,
+                place_address: address,
+                place_latitude: '',
+                place_longitude: '',
+                schedule_id: filteredSchedules[0].key,
+            });
+            dispatch(placesReceived(newPlaces));
+
         } catch (e) {
             Alert.alert("Error", "Error adding document: ", e.message);
         } finally {
@@ -143,47 +168,33 @@ const TripPlan = ({ route, navigation }) => {
         setIsOpen(true);
     }
 
-    // Trip  Button
-    const trip = useSelector(tripSelector);
-    const trips = trip.trips;
-    // console.log(trips);
+    let differanceDate = 0;
+    let startDate;
+    let tripDate;
+    if (tripItem.trip_end_date !== undefined && tripItem.trip_start_date !== undefined) {
+        const tripEndDate = tripItem.trip_end_date.slice(8);
+        const tripStartDate = tripItem.trip_start_date.slice(8);
+        differanceDate = parseInt(tripEndDate) - parseInt(tripStartDate) + 1;
 
-    const tripItem = trips.find(trip => trip.key === tripKey);
-    // console.log(tripItem);
-
-    const tripEndDate = tripItem.trip_end_date.slice(8);
-    const tripStartDate = tripItem.trip_start_date.slice(8);
-    const differanceDate = parseInt(tripEndDate) - parseInt(tripStartDate) + 1;
-    // console.log(differanceDate);
+        tripDate = tripItem.trip_start_date;
+        const formatTripDate = tripDate.replace(/\//g, '-');
+        startDate = new Date(formatTripDate);
+    }
 
     // Selected Date
     const [selectedDate, setSelectedDate] = useState(1);
-    const [initialDate, setInitialDate] = useState(1);
     const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-    const tripDate = tripItem.trip_start_date;
-    const formatTripDate = tripDate.replace(/\//g, '-');
-    const startDate = new Date(formatTripDate);
 
     const currentDate = new Date(startDate);
     currentDate.setDate(currentDate.getDate());
-    // console.log(currentDate);
-
     const [currentDates, setCurrentDates] = useState(currentDate);
-    // console.log("Calendar Date: " + currentDates);
-
-    useEffect(() => {
-        setSelectedDate(initialDate);
-    }, [initialDate]);
 
     const calendarButtons = [];
     for (let i = 1; i <= differanceDate; i++) {
         const date = i;
 
-        const tripDate = tripItem.trip_start_date;
-        const formatTripDate = tripDate.replace(/\//g, '-');
+        const formatTripDate = tripDate?.replace(/\//g, '-');
         const startDate = new Date(formatTripDate);
-
         const currentDate = new Date(startDate);
         currentDate.setDate(currentDate.getDate() + i - 1);
         // console.log(currentDate);
@@ -198,9 +209,6 @@ const TripPlan = ({ route, navigation }) => {
                 onPress={() => {
                     setSelectedDate(date);
                     setCurrentDates(currentDate);
-                }}
-                onLongPress={() => {
-                    setInitialDate(date);
                 }}
             >
                 <View className={`justify-center items-center h-full`}>
@@ -222,14 +230,14 @@ const TripPlan = ({ route, navigation }) => {
         );
     }
 
-    const filteredSchedules = schedules.filter(schedule => {
-        const scheduleDate = new Date((schedule.schedule_date).replace(/\//g, '-'));
-        return (
-            scheduleDate.getDate() === currentDates.getDate() &&
-            scheduleDate.getMonth() === currentDates.getMonth() &&
-            scheduleDate.getFullYear() === currentDates.getFullYear()
-        );
-    });
+    // const filteredSchedules = schedules.filter(schedule => {
+    //     const scheduleDate = new Date((schedule.schedule_date).replace(/\//g, '-'));
+    //     return (
+    //         scheduleDate.getDate() === currentDates.getDate() &&
+    //         scheduleDate.getMonth() === currentDates.getMonth() &&
+    //         scheduleDate.getFullYear() === currentDates.getFullYear()
+    //     );
+    // });
     // console.log(filteredSchedules);
 
     // Update Trip
@@ -237,12 +245,38 @@ const TripPlan = ({ route, navigation }) => {
     const [openDep, setOpenDep] = useState(false);
     const [openRet, setOpenRet] = useState(false);
 
-    const [titleTrip, setTitleTrip] = useState(tripItem.trip_title);
-    const [desTrip, setDesTrip] = useState(tripItem.trip_description);
-    const [selectedDateDep, setSelectedDateDep] = useState(tripItem.trip_start_date);
-    const [selectedDateRet, setSelectedDateRet] = useState(tripItem.trip_end_date);
+    const [titleTrip, setTitleTrip] = useState('');
+    const [desTrip, setDesTrip] = useState('');
+    const [selectedDateDep, setSelectedDateDep] = useState('');
+    const [selectedDateRet, setSelectedDateRet] = useState('');
 
+    useEffect(() => {
+        if (trips.trip_title !== undefined && trips.trip_description !== undefined && trips.trip_start_date !== undefined && trips.trip_end_date !== undefined) {
+            setTitleTrip(trips.trip_title);
+            setDesTrip(trips.trip_description);
+            setSelectedDateDep(dateToday);
+            setSelectedDateRet(dateToday);
+        }
+    }, [trips.trip_title, trips.trip_description, trips.trip_start_date, trips.trip_end_date]);
 
+    const updateTrip = async () => {
+        const tripRef = doc(db, 'trips', tripKey);
+        // console.log(tripRef);
+        try {
+            await updateDoc(tripRef, {
+                trip_title: titleTrip,
+                trip_description: desTrip,
+                trip_start_date: selectedDateDep,
+                trip_end_date: selectedDateRet
+            });
+            const updatedDoc = await getDoc(tripRef);
+            const updatedData = updatedDoc.data();
+            dispatch(tripsReceived(updatedData));
+            console.log("Trip updated in Firestore!");
+        } catch (error) {
+            console.error("Error updating data in Firestore: ", error);
+        }
+    };
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -450,97 +484,99 @@ const TripPlan = ({ route, navigation }) => {
                         setIsOpen(false);
                     }}
                 >
-                    <View className="bg-white h-full mx-[32px] my-[24px]">
-                        <View className="w-full bg-gray-light mb-5 rounded-[10px]">
-                            <View className="m-[20px]">
-                                {/* Title */}
-                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center" >
-                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
-                                    <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name"
-                                        onChangeText={text => setTitleTrip(text)}>{titleTrip}</TextInput>
-                                </View >
+                    {titleTrip !== undefined ? (
+                        <View className="bg-white h-full mx-[32px] my-[24px]">
+                            <View className="w-full bg-gray-light mb-5 rounded-[10px]">
+                                <View className="m-[20px]">
+                                    {/* Title */}
+                                    <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center" >
+                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
+                                        <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name"
+                                            onChangeText={text => setTitleTrip(text)}>{titleTrip}</TextInput>
+                                    </View >
 
-                                {/* Date */}
-                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark mt-[20px] py-6 px-6 flex flex-row justify-between items-center" >
-                                    <View>
-                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DEPARTURE</Text>
-                                        <Pressable className="flex flex-row items-center"
-                                            onPress={() => {
-                                                setOpenDep(true);
-                                            }}>
-                                            <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>{selectedDateDep}</Text>
-                                            <Image source={{ uri: 'https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png' }}
-                                                style={{ width: 14, height: 14 }} />
+                                    {/* Date */}
+                                    <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark mt-[20px] py-6 px-6 flex flex-row justify-between items-center" >
+                                        <View>
+                                            <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DEPARTURE</Text>
+                                            <Pressable className="flex flex-row items-center"
+                                                onPress={() => {
+                                                    setOpenDep(true);
+                                                }}>
+                                                <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>{selectedDateDep}</Text>
+                                                <Image source={{ uri: 'https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png' }}
+                                                    style={{ width: 14, height: 14 }} />
+                                            </Pressable>
+                                        </View>
+                                        <View>
+                                            <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>RETURN</Text>
+                                            <Pressable className="flex flex-row items-center"
+                                                onPress={() => {
+                                                    setOpenRet(true);
+                                                }}>
+                                                <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>{selectedDateRet}</Text>
+                                                <Image source={{ uri: 'https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png' }}
+                                                    style={{ width: 14, height: 14 }} />
+                                            </Pressable>
+                                        </View>
+                                    </View >
+
+                                    {/* Descriptions */}
+                                    <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]" >
+                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DESCRIPTIONS</Text>
+                                        <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions"
+                                            onChangeText={text => setDesTrip(text)}>{desTrip}</TextInput>
+                                    </View >
+                                    {/* Btn */}
+                                    <View className="flex flex-row justify-between items-center mt-[15px]">
+                                        <Pressable onPress={() => updateTrip()} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
+                                            <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>UPDATE</Text>
+                                        </Pressable>
+                                        <Pressable onPress={() => { bottomSheetEditTrip.current?.close(); }} className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
+                                            <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
                                         </Pressable>
                                     </View>
-                                    <View>
-                                        <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>RETURN</Text>
-                                        <Pressable className="flex flex-row items-center"
-                                            onPress={() => {
-                                                setOpenRet(true);
-                                            }}>
-                                            <Text className="text-[15px] text-gray-dark mr-2" style={{ fontFamily: 'promptSemiBold' }}>{selectedDateRet}</Text>
-                                            <Image source={{ uri: 'https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png' }}
-                                                style={{ width: 14, height: 14 }} />
-                                        </Pressable>
-                                    </View>
-                                </View >
-
-                                {/* Descriptions */}
-                                <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]" >
-                                    <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>DESCRIPTIONS</Text>
-                                    <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Descriptions"
-                                        onChangeText={text => setDesTrip(text)}>{desTrip}</TextInput>
-                                </View >
-                                {/* Btn */}
-                                <View className="flex flex-row justify-between items-center mt-[15px]">
-                                    <Pressable onPress={() => {
-                                        // 
-                                    }} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
-                                        <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>UPDATE</Text>
-                                    </Pressable>
-                                    <Pressable onPress={() => { bottomSheetEditTrip.current?.close(); }} className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
-                                        <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
-                                    </Pressable>
                                 </View>
                             </View>
+
+                            {/* Date Picker */}
+                            {openDep && (
+                                <View className="absolute z-20 w-full h-full">
+                                    <View className="mx-[32px] top-[5%]">
+                                        <DatePicker
+                                            style={{ borderRadius: 10 }}
+                                            current={dateToday}
+                                            selected={dateToday}
+                                            mode="calendar"
+                                            onDateChange={(date) => {
+                                                setSelectedDateDep(date);
+                                                setOpenDep(false);
+                                            }}
+                                        />
+                                    </View>
+                                </View>
+                            )}
+
+                            {openRet && (
+                                <View className="absolute z-10 w-full h-auto">
+                                    <View className="mx-[32px] top-[5%]">
+                                        <DatePicker
+                                            onDateChange={(date) => {
+                                                setSelectedDateRet(date);
+                                                setOpenRet(false);
+                                            }}
+                                            style={{ borderRadius: 10 }}
+                                            current={dateToday}
+                                            selected={dateToday}
+                                            mode="calendar"
+                                        />
+                                    </View>
+                                </View>
+                            )}
                         </View>
-
-                        {/* Date Picker */}
-                        {openDep && (
-                            <View className="absolute z-20 w-full h-full">
-                                <View className="mx-[32px] top-[5%]">
-                                    <DatePicker
-                                        style={{ borderRadius: 10 }}
-                                        current={dateToday}
-                                        selected={dateToday}
-                                        mode="calendar"
-                                        onDateChange={(date) => {
-                                            setSelectedDateDep(date);
-                                            setOpenDep(false);
-                                        }}
-                                    />
-                                </View>
-                            </View>
-                        )}
-
-                        {openRet && (
-                            <View className="absolute z-10 w-full h-auto">
-                                <View className="mx-[32px] top-[5%]">
-                                    <DatePicker
-                                        onDateChange={(date) => {
-                                            setSelectedDateRet(date);
-                                            setOpenRet(false);
-                                        }}
-                                        style={{ borderRadius: 10 }}
-                                        current={dateToday}
-                                        selected={dateToday}
-                                        mode="calendar"
-                                    />
-                                </View>
-                            </View>
-                        )}
-                    </View>
+                    ) : (
+                        <Text>Loading...</Text>
+                    )}
                 </BottomSheetModal>
 
                 <ScrollView>
@@ -624,24 +660,26 @@ const TripPlan = ({ route, navigation }) => {
                                     className="text-[14px] text-gray-dark opacity-80"
                                     style={{ fontFamily: "promptSemiBold" }}
                                 >
-                                    {differanceDate == 1 ? (
-                                        tripItem.trip_start_date.slice(5)
-                                    ) : (
-                                        tripItem.trip_start_date.slice(5) + " - " + tripItem.trip_end_date.slice(5)
-                                    )}
+                                    {trips.trip_start_date !== undefined && trips.trip_end_date !== undefined ? (
+                                        differanceDate == 1 ? (
+                                            trips.trip_start_date.slice(5)
+                                        ) : (
+                                            trips.trip_start_date.slice(5) + " - " + trips.trip_end_date.slice(5)
+                                        )
+                                    ) : (<Text>Loading...</Text>)}
                                 </Text>
                             </View>
                             <Text
                                 className="text-[32px] text-gray-dark"
                                 style={{ fontFamily: "promptSemiBold" }}
                             >
-                                {tripItem.trip_title}
+                                {trips.trip_title}
                             </Text>
                             <Text
                                 className="text-[14px] text-gray-dark leading-4 mt-2"
                                 style={{ fontFamily: "promptLight" }}
                             >
-                                {tripItem.trip_description}
+                                {trips.trip_description}
                             </Text>
                         </View>
                     </View>
@@ -654,11 +692,11 @@ const TripPlan = ({ route, navigation }) => {
                         </View>
 
                         {/* Trip Plan */}
-                        {filteredSchedules.map((item, index) => {
+                        {/* {filteredSchedules.map((item, index) => {
                             return (
                                 <TripDatePlan item={item} navigation={navigation} />
                             )
-                        })}
+                        })} */}
                     </View>
                 </ScrollView>
             </BottomSheetModalProvider>

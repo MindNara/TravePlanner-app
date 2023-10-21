@@ -14,9 +14,12 @@ import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datep
 import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../firebase/firebaseConfig';
 import { useSelector } from "react-redux";
 import { userSelector } from "../redux/usersSlice";
+import { useDispatch } from "react-redux";
+import { tripsReceived, tripSelector } from '../redux/tripsSlice';
 
 const CreateTrip = ({ navigation }) => {
 
+    const dispatch = useDispatch();
     const dateToday = getToday();
     const [isOpen, setIsOpen] = useState(false);
     const [openDep, setOpenDap] = useState(false);
@@ -30,8 +33,12 @@ const CreateTrip = ({ navigation }) => {
     const user = useSelector(userSelector);
     const user_id = user.user_id;
 
+    const trip = useSelector(tripSelector);
+    const tripsItem = trip.trips;
+
     // POST
     const addTrip = async () => {
+
         try {
             // save trips
             const tripRef = await addDoc(collection(db, "trips"), {
@@ -43,8 +50,21 @@ const CreateTrip = ({ navigation }) => {
                 user_id: user_id
             });
             const tripKey = tripRef.id;
+
+            const newTrips = [...tripsItem];
+            newTrips.push({
+                trip_title: title,
+                trip_description: des,
+                trip_start_date: selectedDateDep,
+                trip_end_date: selectedDateRet,
+                trip_image: '',
+                user_id: user_id,
+            });
+            // console.log(newTrips);
+            dispatch(tripsReceived(newTrips));
+
             await addSchedul(tripKey, selectedDateDep, selectedDateRet);
-            // navigation.navigate('TripPlan', { tripKey: tripKey });
+            navigation.navigate('TripPlan', { tripKey: tripKey });
         } catch (e) {
             Alert.alert("Error", "Error adding document: ", e.message);
         }
@@ -54,9 +74,8 @@ const CreateTrip = ({ navigation }) => {
         try {
             // save schedules
             const scheduleDates = generateScheduleDates(selectedDateDep, selectedDateRet);
-            console.log(scheduleDates);
+            // console.log(scheduleDates);
             for (const scheduleDate of scheduleDates) {
-                // console.log(scheduleDate);
                 await addDoc(collection(db, "schedules"), {
                     schedule_date: scheduleDate,
                     trip_id: tripKey,
@@ -66,12 +85,10 @@ const CreateTrip = ({ navigation }) => {
             Alert.alert("Error", "Error adding document: " + error.message);
         } finally {
             Alert.alert("Success", "Trip added successfully");
-            navigation.navigate('TripPlan', { tripKey: tripKey });
         }
     }
 
     const generateScheduleDates = (startDate, endDate) => {
-        console.log(startDate, endDate);
         const scheduleDates = [];
         let currentDate = new Date(startDate.replace(/\//g, "-"));
         let lastDate = new Date(endDate.replace(/\//g, "-"));
@@ -88,7 +105,6 @@ const CreateTrip = ({ navigation }) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        console.log(`${year}/${month}/${day}`);
         return `${year}/${month}/${day}`;
     }
 
