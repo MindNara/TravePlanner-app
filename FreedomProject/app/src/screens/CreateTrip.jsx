@@ -50,62 +50,10 @@ const CreateTrip = ({ navigation }) => {
                 user_id: user_id
             });
             const tripKey = tripRef.id;
-
-            const newTrips = [...tripsItem];
-            newTrips.push({
-                trip_title: title,
-                trip_description: des,
-                trip_start_date: selectedDateDep,
-                trip_end_date: selectedDateRet,
-                trip_image: '',
-                user_id: user_id,
-            });
-            // console.log(newTrips);
-            dispatch(tripsReceived(newTrips));
-
-            await addSchedul(tripKey, selectedDateDep, selectedDateRet);
             navigation.navigate('TripPlan', { tripKey: tripKey });
         } catch (e) {
             Alert.alert("Error", "Error adding document: ", e.message);
         }
-    }
-
-    const addSchedul = async (tripKey, selectedDateDep, selectedDateRet) => {
-        try {
-            // save schedules
-            const scheduleDates = generateScheduleDates(selectedDateDep, selectedDateRet);
-            // console.log(scheduleDates);
-            for (const scheduleDate of scheduleDates) {
-                await addDoc(collection(db, "schedules"), {
-                    schedule_date: scheduleDate,
-                    trip_id: tripKey,
-                });
-            }
-        } catch (error) {
-            Alert.alert("Error", "Error adding document: " + error.message);
-        } finally {
-            Alert.alert("Success", "Trip added successfully");
-        }
-    }
-
-    const generateScheduleDates = (startDate, endDate) => {
-        const scheduleDates = [];
-        let currentDate = new Date(startDate.replace(/\//g, "-"));
-        let lastDate = new Date(endDate.replace(/\//g, "-"));
-
-        while (currentDate <= lastDate) {
-            scheduleDates.push(formatDate(currentDate));
-            currentDate.setDate(currentDate.getDate() + 1);
-        }
-
-        return scheduleDates;
-    }
-
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}/${month}/${day}`;
     }
 
     const [loaded] = useFonts({
