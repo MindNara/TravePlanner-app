@@ -51,17 +51,9 @@ export default function PlaceTrip({ navigation, item }) {
             });
             // console.log(wishlistDoc)
             setWishlist(wishlistDoc);
-            
-
-            // วนลูปผ่าน wishlistDoc ที่ได้มา
-            // wishlistDoc.forEach((item_wishlist) => {
-            //     if(item.place_id === item_wishlist.place_id){
-            //         setLike(true);
-            //     }
-                
-            // });
             const isLiked = wishlistDoc.some(item_wishlist => item.place_id === item_wishlist.place_id);
             setLike(isLiked);
+            // dispatch(wishList(wishlistDoc));
         } catch (error) {
             console.error("Error fetching wishlist:", error);
         }
@@ -73,8 +65,8 @@ export default function PlaceTrip({ navigation, item }) {
         try {
             const wishlistRef = await addDoc(collection(db, "wishlist"), {
                 place_id: item.place_id,
-                place_title: item.place_name,
-                place_category: item.category_code,
+                place_name: item.place_name,
+                category_code: item.category_code,
                 place_province: item.location.province,
                 image_place: item.thumbnail_url,
                 status_like: true,
@@ -129,14 +121,18 @@ export default function PlaceTrip({ navigation, item }) {
     return (
         <View className="mb-4">
             <Pressable onPress={() => {
-                navigation.navigate("PlaceDetail", { item: item, status_like: like });
+                navigation.navigate("PlaceDetail", { item: item });
             }}>
                 <View className="h-[223px] w-[156px] bg-gray-light mr-[15px] rounded-[20px]">
                     {/* Image */}
                     <View className="relative w-full h-[160]">
-                        {item.thumbnail_url == "" ? (<Image className="w-full h-full rounded-[20px]"
-                            source={require('../assets/TripImage.png')} />) : (<Image className="w-full h-full rounded-[20px]"
-                                source={{ uri: item.thumbnail_url }} />)}
+                        {item.thumbnail_url !== "" && item.thumbnail_url ? (
+                            <Image className="w-full h-full rounded-[20px]"
+                                source={{ uri: item.thumbnail_url }} />) : item.image_place !== "" && item.image_place ? (
+                            <Image className="w-full h-full rounded-[20px]"
+                                source={{ uri: item.image_place }} />) : (
+                            <Image className="w-full h-full rounded-[20px]"
+                            source={require('../assets/TripImage.png')} />)}
 
                         <View className="bg-gray-dark w-full h-full rounded-[20px] opacity-10 absolute"></View>
                         {like === true ? (
@@ -160,7 +156,9 @@ export default function PlaceTrip({ navigation, item }) {
 
                     {/* Title */}
                     <View className="pt-[10px] pl-[12px]">
-                        <Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>{item.location.province}</Text>
+                        {item.location?.province !== "" && item.location?.province ? (
+                        <Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>{item.location?.province}</Text>) : item.place_province !== "" && item.place_province ? (
+                        <Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>{item.place_province}</Text>) : (<Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>province</Text>)}
                         <Text className="text-[18px] h-7 w-[130px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
                     </View>
                 </View>

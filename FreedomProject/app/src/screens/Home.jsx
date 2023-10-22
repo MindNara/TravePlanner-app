@@ -21,6 +21,7 @@ import { query, where, doc, getDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
 import { usersId, usersInfo } from "../redux/usersSlice";
 import { tripsReceived } from '../redux/tripsSlice';
+import { wishList, wishlistSelector } from '../redux/wishlistSlice';
 
 export default function Home({ navigation }) {
 

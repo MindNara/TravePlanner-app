@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
     Button,
     SafeAreaView,
@@ -8,11 +9,19 @@ import {
     StyleSheet,
     TextInput,
     ScrollView,
+    FlatList
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { PlaceTrip, RecommendedTrip, Header } from '../components/index';
+import { firebase_auth, db } from '../firebase/firebaseConfig';
+import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export default function Wishlist({ navigation }) {
+
+    const [wishlist, setWishlist] = useState([]);
+    const [like, setLike] = useState(true)
+
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
@@ -20,6 +29,37 @@ export default function Wishlist({ navigation }) {
         promptSemiBold: require("../assets/fonts/Prompt-SemiBold.ttf"),
         promptBold: require("../assets/fonts/Prompt-Bold.ttf"),
     });
+
+
+    const getWishlist = async () => {
+        const user = firebase_auth.currentUser;
+
+        try {
+            const querySnapshot = await getDocs(query(collection(db, "wishlist"), where("user_id", "==", user.uid)));
+            console.log("Total Wishlist: ", querySnapshot.size);
+            const wishlistDoc = [];
+            querySnapshot.forEach((doc) => {
+                wishlistDoc.push({ ...doc.data(), key: doc.id });
+            });
+            // console.log(wishlistDoc)
+            setWishlist(wishlistDoc);
+            // console.log(wishlist)
+            // const isLiked = wishlistDoc.some(item_wishlist => item.place_id === item_wishlist.place_id);
+            // setLike(isLiked);
+        } catch (error) {
+            console.error("Error fetching wishlist:", error);
+        }
+    }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getWishlist();
+        }, [])
+    );
+
+    useEffect(() => {
+        console.log(wishlist);
+    }, [wishlist]);
 
     if (!loaded) {
         return null;
@@ -47,24 +87,17 @@ export default function Wishlist({ navigation }) {
                         </View>
                     </View>
 
-                    <View className="my-2">
-                        <View className="flex flex-row mt-[20px] justify-between">
-                            {/* Popular places box1 */}
-                            {/* <PlaceTrip navigation={navigation} /> */}
-                            {/* Popular places box2 */}
-                            {/* <PlaceTrip navigation={navigation} /> */}
-                        </View>
-                        <View className="flex flex-row mt-[20px] justify-between">
-                            {/* Popular places box1 */}
-                            {/* <PlaceTrip navigation={navigation} /> */}
-                            {/* Popular places box2 */}
-                            {/* <PlaceTrip navigation={navigation} /> */}
-                        </View>
-                        <View className="flex flex-row mt-[20px] justify-between">
-                            {/* Popular places box1 */}
-                            {/* <PlaceTrip navigation={navigation} /> */}
-                            {/* Popular places box2 */}
-                            {/* <PlaceTrip navigation={navigation} /> */}
+                    <View className="mt-2">
+                        <View className="flex-row flex-wrap mt-[20px]">
+                            <FlatList
+                                data={wishlist}
+                                keyExtractor={item => item.place_id}
+                                renderItem={({ item }) => (
+                                    <PlaceTrip item={item} navigation={navigation} />
+                                )}
+                                numColumns={2}
+                                // showsHorizontalScrollIndicator={false}
+                            />
                         </View>
                     </View>
                 </View>

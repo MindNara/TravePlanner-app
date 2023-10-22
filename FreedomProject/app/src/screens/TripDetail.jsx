@@ -67,11 +67,11 @@ export default function TripDetail({ route, navigation }) {
                             <Image className="absolute top-[6.5px] left-[5px]" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/back.png' }}
                                 style={{ width: 22, height: 22 }} />
                         </Pressable>
-                        <View>
+                        {/* <View>
                             <View className="justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
                             <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
                                 style={{ width: 20, height: 20 }} />
-                        </View>
+                        </View> */}
                     </View>
 
                     {/* Content */}

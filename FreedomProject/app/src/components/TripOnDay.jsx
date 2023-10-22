@@ -45,8 +45,8 @@ export default function TripOnDay({ navigation, item }) {
                             </View>
                         </View>
                         {/* Fav */}
-                        <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                            style={{ width: 16, height: 16 }} className="right-5 top-1" />
+                        {/* <Image source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
+                            style={{ width: 16, height: 16 }} className="right-5 top-1" /> */}
                     </View>
                 </View>
             </Pressable>

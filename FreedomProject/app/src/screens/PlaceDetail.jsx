@@ -71,7 +71,7 @@ export default function PlaceDetails({ route, navigation }) {
             });
             // console.log(wishlistDoc)
             setWishlist(wishlistDoc);
-            
+
 
             // วนลูปผ่าน wishlistDoc ที่ได้มา
             // wishlistDoc.forEach((item_wishlist) => {
@@ -92,9 +92,9 @@ export default function PlaceDetails({ route, navigation }) {
         try {
             const wishlistRef = await addDoc(collection(db, "wishlist"), {
                 place_id: item.place_id,
-                place_title: item.place_name,
-                place_category: item.category_code,
-                place_province: item.location.province,
+                place_name: item.place_name,
+                category_code: item.category_code,
+                place_province: dataDetail.result.destination,
                 image_place: item.thumbnail_url,
                 status_like: true,
                 user_id: user.uid
@@ -146,10 +146,18 @@ export default function PlaceDetails({ route, navigation }) {
             <ScrollView>
                 {/* Header & Image */}
                 <View className="w-full h-full bg-blue-light">
-                    {item.thumbnail_url == "" ? (
+
+                    {item.thumbnail_url !== "" && item.thumbnail_url ? (
+                        <Image className="absolute w-[400px] h-[300px]"
+                            source={{ uri: item.thumbnail_url }} />) : item.image_place !== "" && item.image_place ? (
+                                <Image className="absolute w-[400px] h-[300px]"
+                                    source={{ uri: item.image_place }} />) : (
+                        <Image className="absolute w-[400px] h-[300px]"
+                            source={require('../assets/TripImage.png')} />)}
+                    {/* {item.thumbnail_url == "" ? (
                         <Image className="absolute w-[400px] h-[300px]" source={require('../assets/TripImage.png')} />
                     ) : (
-                        <Image className="absolute w-[400px] h-[300px]" source={{ uri: item.thumbnail_url }} />)}
+                        <Image className="absolute w-[400px] h-[300px]" source={{ uri: item.thumbnail_url }} />)} */}
                     {/* <Image className="absolute w-[400px] h-[300px]" source={{ uri: item.thumbnail_url }} /> */}
                     <View className="w-[400px] h-[300px] bg-black absolute opacity-30"></View>
                     <View className="mx-[32px] pt-16 flex flex-row justify-between">
@@ -162,20 +170,20 @@ export default function PlaceDetails({ route, navigation }) {
 
                         </Pressable>
                         {like == true ? (
-                        <Pressable onPress={unlikePlace}>
-                            <View>
-                                <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
-                                <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/ios-glyphs/30/9A1B29/like--v1.png' }}
-                                    style={{ width: 20, height: 20 }} />
-                            </View>
-                        </Pressable>):(
-                        <Pressable onPress={likePlace}>
-                            <View>
-                                <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
-                                <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/material-outlined/24/9a1b29/like--v1.png' }}
-                                    style={{ width: 20, height: 20 }} />
-                            </View>
-                        </Pressable>)}
+                            <Pressable onPress={unlikePlace}>
+                                <View>
+                                    <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
+                                    <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/ios-glyphs/30/9A1B29/like--v1.png' }}
+                                        style={{ width: 20, height: 20 }} />
+                                </View>
+                            </Pressable>) : (
+                            <Pressable onPress={likePlace}>
+                                <View>
+                                    <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
+                                    <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/material-outlined/24/9a1b29/like--v1.png' }}
+                                        style={{ width: 20, height: 20 }} />
+                                </View>
+                            </Pressable>)}
                     </View>
 
                     {/* content */}
@@ -184,7 +192,7 @@ export default function PlaceDetails({ route, navigation }) {
                             {loading || !dataDetail.result ?
                                 (<Text>Loading...</Text>) : (
                                     <View>
-                                        <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{dataDetail.result.destination}</Text>
+                                        <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{dataDetail.result.location.province}</Text>
                                         <Text className="text-[28px] text-gray-dark mt-[-6px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
                                         {dataDetail.result.place_information.detail == "" ? (
                                             <Text className="text-[13px] text-gray-dark mt-[20px]" style={{ fontFamily: 'promptLight' }}>{dataDetail.result.place_information.introduction}</Text>
