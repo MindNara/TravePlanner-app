@@ -19,7 +19,8 @@ import TripDatePlan from "../components/TripDatePlan";
 import { useSelector } from "react-redux";
 import { tripSelector, tripsReceived } from '../redux/tripsSlice';
 import { db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc } from 'firebase/firestore';
+import { query, where, doc, getDocs, collection, addDoc, updateDoc } from 'firebase/firestore';
+import { getDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
 import { useFocusEffect } from "@react-navigation/native";
@@ -45,37 +46,37 @@ const TripPlan = ({ route, navigation }) => {
     const trips = trip.trips;
     // console.log(trips);
 
-    const schedule = useSelector(scheduleSelector);
-    const schedulesItem = schedule.schedules;
+    // const schedule = useSelector(scheduleSelector);
+    // const schedulesItem = schedule.schedules;
 
     const place = useSelector(placeSelector);
     const placesItem = place.places;
     // console.log(placesItem);
 
-    // เวลาเข้าหน้า trip plan ให้เรียก schedules
-    const [schedules, setSchedules] = useState([]);
-    const fetchData = async () => {
-        try {
-            const querySnapshot = await getDocs(query(collection(db, "schedules"), where("trip_id", "==", tripKey)));
-            console.log("Total schdules: ", querySnapshot.size);
-            const schdulesDoc = [];
-            querySnapshot.forEach((doc) => {
-                schdulesDoc.push({ ...doc.data(), key: doc.id });
-            });
-            setSchedules(schdulesDoc);
-            dispatch(scheduleReceived(schdulesDoc));
-            // console.log(schdulesDoc);
-        } catch (error) {
-            console.error("Error fetching schedules:", error);
-        }
-    };
+    // เปลี่ยนเป็นดึง places แล้วเก็บเข้า store แทน
+    // const [schedules, setSchedules] = useState([]);
+    // const fetchData = async () => {
+    //     try {
+    //         const querySnapshot = await getDocs(query(collection(db, "schedules"), where("trip_id", "==", tripKey)));
+    //         console.log("Total schdules: ", querySnapshot.size);
+    //         const schdulesDoc = [];
+    //         querySnapshot.forEach((doc) => {
+    //             schdulesDoc.push({ ...doc.data(), key: doc.id });
+    //         });
+    //         setSchedules(schdulesDoc);
+    //         dispatch(scheduleReceived(schdulesDoc));
+    //         // console.log(schdulesDoc);
+    //     } catch (error) {
+    //         console.error("Error fetching schedules:", error);
+    //     }
+    // };
 
     const [tripItem, setTrips] = useState([]);
     const fetchTrips = async () => {
         try {
             const tripsRef = doc(db, 'trips', tripKey);
             const trips = await getDoc(tripsRef);
-            // console.log(trips.data());
+            console.log(trips.data());
 
             if (trips.exists()) {
                 setTrips(trips.data());
@@ -90,69 +91,12 @@ const TripPlan = ({ route, navigation }) => {
     };
 
     useEffect(() => {
-        fetchData();
+        // fetchData();
         fetchTrips();
     }, []);
 
     const date = new Date();
     const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-
-    const [title, setTitle] = useState('');
-    const [des, setDes] = useState('');
-    const [address, setAddress] = useState('');
-    const [openTime, setOpenTime] = useState(false);
-    const [time, setTime] = useState(formattedTime);
-    const [category, setCategory] = useState('');
-    const categorys = ['Place', 'Restaurant', 'Hotel']
-
-    // Check AM, PM
-    const formatTime = () => {
-        const timeParts = time.split(':');
-        const hours = parseInt(timeParts[0], 10);
-        const minutes = parseInt(timeParts[1], 10);
-
-        date.setHours(hours);
-        date.setMinutes(minutes);
-
-        const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-        return formattedTime;
-    }
-
-    const addTripEvents = async () => {
-        try {
-            const tripRef = await addDoc(collection(db, "places"), {
-                place_title: title,
-                place_description: des,
-                place_category: category,
-                trip_image: '',
-                place_time: time,
-                place_address: address,
-                place_latitude: '',
-                place_longitude: '',
-                schedule_id: filteredSchedules[0].key,
-            });
-
-            const newPlaces = [...placesItem];
-            newPlaces.push({
-                place_title: title,
-                place_description: des,
-                place_category: category,
-                trip_image: '',
-                place_time: time,
-                place_address: address,
-                place_latitude: '',
-                place_longitude: '',
-                schedule_id: filteredSchedules[0].key,
-            });
-            dispatch(placesReceived(newPlaces));
-
-        } catch (e) {
-            Alert.alert("Error", "Error adding document: ", e.message);
-        } finally {
-            Alert.alert("Success", "Trip added successfully");
-            bottomSheetModelRef.current?.close();
-        }
-    }
 
     const [isOpen, setIsOpen] = useState(false);
     const [isFav, setIsFav] = useState(true);
@@ -181,55 +125,66 @@ const TripPlan = ({ route, navigation }) => {
         startDate = new Date(formatTripDate);
     }
 
-    // Selected Date
+    // Calendar Button
     const [selectedDate, setSelectedDate] = useState(1);
     const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     const currentDate = new Date(startDate);
     currentDate.setDate(currentDate.getDate());
     const [currentDates, setCurrentDates] = useState(currentDate);
+    const [calendarButtons, setCalendarButtons] = useState([]);
+    // console.log(currentDates);
 
-    const calendarButtons = [];
-    for (let i = 1; i <= differanceDate; i++) {
-        const date = i;
+    const calendarBtn = (tripDate, differanceDate) => {
+        const buttons = [];
+        for (let i = 1; i <= differanceDate; i++) {
+            const date = i;
 
-        const formatTripDate = tripDate?.replace(/\//g, '-');
-        const startDate = new Date(formatTripDate);
-        const currentDate = new Date(startDate);
-        currentDate.setDate(currentDate.getDate() + i - 1);
-        // console.log(currentDate);
+            const formatTripDate = tripDate?.replace(/\//g, '-');
+            const startDate = new Date(formatTripDate);
+            const currentDate = new Date(startDate);
+            currentDate.setDate(currentDate.getDate() + i - 1);
 
-        const dayIndex = currentDate.getDay();
-        const dayName = daysOfWeek[dayIndex - 1];
+            const dayIndex = currentDate.getDay();
+            const dayName = daysOfWeek[dayIndex - 1];
 
-        calendarButtons.push(
-            <TouchableOpacity
-                key={i}
-                className={`h-[76px] w-[42px] rounded-[20px] mr-[10px] ${selectedDate === date || i === selectedDate ? 'bg-gray-dark' : 'bg-gray-light'}`}
-                onPress={() => {
-                    setSelectedDate(date);
-                    setCurrentDates(currentDate);
-                }}
-            >
-                <View className={`justify-center items-center h-full`}>
-                    <Text
-                        className={`text-[12px] ${selectedDate === date ? 'text-gray-light' : 'text-gray-dark'}`}
-                        style={{ fontFamily: "promptMedium" }}
-                    >
-                        {currentDate.getDate()}
-                    </Text>
-                    <Text
-                        className={`text-[12px] mb-[6px] ${selectedDate === date ? 'text-gray-light' : 'text-gray-dark'}`}
-                        style={{ fontFamily: "promptRegular" }}
-                    >
-                        {dayName}
-                    </Text>
-                    <Text className="w-[5px] h-[5px] bg-gray-light rounded-xl"></Text>
-                </View>
-            </TouchableOpacity>
-        );
+            buttons.push(
+                <TouchableOpacity
+                    key={i}
+                    className={`h-[76px] w-[42px] rounded-[20px] mr-[10px] ${selectedDate === date || i === selectedDate ? 'bg-gray-dark' : 'bg-gray-light'}`}
+                    onPress={() => {
+                        setSelectedDate(date);
+                        setCurrentDates(currentDate);
+                    }}
+                >
+                    <View className={`justify-center items-center h-full`}>
+                        <Text
+                            className={`text-[12px] ${selectedDate === date ? 'text-gray-light' : 'text-gray-dark'}`}
+                            style={{ fontFamily: "promptMedium" }}
+                        >
+                            {currentDate.getDate()}
+                        </Text>
+                        <Text
+                            className={`text-[12px] mb-[6px] ${selectedDate === date ? 'text-gray-light' : 'text-gray-dark'}`}
+                            style={{ fontFamily: "promptRegular" }}
+                        >
+                            {dayName}
+                        </Text>
+                        <Text className="w-[5px] h-[5px] bg-gray-light rounded-xl"></Text>
+                    </View>
+                </TouchableOpacity>
+            );
+        }
+        return buttons;
     }
 
+    useEffect(() => {
+        const buttons = calendarBtn(tripDate, differanceDate);
+        // console.log(buttons);
+        setCalendarButtons(buttons);
+    }, [trips, currentDates])
+
+    // เปลี่ยนเป็น filter ด้วย place แทน
     // const filteredSchedules = schedules.filter(schedule => {
     //     const scheduleDate = new Date((schedule.schedule_date).replace(/\//g, '-'));
     //     return (
@@ -254,11 +209,12 @@ const TripPlan = ({ route, navigation }) => {
         if (trips.trip_title !== undefined && trips.trip_description !== undefined && trips.trip_start_date !== undefined && trips.trip_end_date !== undefined) {
             setTitleTrip(trips.trip_title);
             setDesTrip(trips.trip_description);
-            setSelectedDateDep(dateToday);
-            setSelectedDateRet(dateToday);
+            setSelectedDateDep(trips.trip_start_date);
+            setSelectedDateRet(trips.trip_end_date);
         }
     }, [trips.trip_title, trips.trip_description, trips.trip_start_date, trips.trip_end_date]);
 
+    // Update Trip
     const updateTrip = async () => {
         const tripRef = doc(db, 'trips', tripKey);
         // console.log(tripRef);
@@ -272,11 +228,97 @@ const TripPlan = ({ route, navigation }) => {
             const updatedDoc = await getDoc(tripRef);
             const updatedData = updatedDoc.data();
             dispatch(tripsReceived(updatedData));
-            console.log("Trip updated in Firestore!");
+            console.log("Trip update successfully");
+
+            // const diff = parseInt(selectedDateRet.slice(8)) - parseInt(selectedDateDep.slice(8))
+            // const buttons = calendarBtn(selectedDateDep, diff);
+            // setCalendarButtons(buttons);
         } catch (error) {
-            console.error("Error updating data in Firestore: ", error);
+            console.log("Error adding document: ", error.message);
+        } finally {
+            bottomSheetEditTrip.current?.close();
         }
     };
+
+    // Add places
+    const [title, setTitle] = useState('');
+    const [des, setDes] = useState('');
+    const [address, setAddress] = useState('');
+    const [openTime, setOpenTime] = useState(false);
+    const [time, setTime] = useState(formattedTime);
+    const [category, setCategory] = useState('');
+    const categorys = ['Place', 'Restaurant', 'Hotel'];
+    const [scheduleDates, setScheduleDates] = useState('');
+
+    // Check AM, PM
+    const formatTime = () => {
+        const timeParts = time.split(':');
+        const hours = parseInt(timeParts[0], 10);
+        const minutes = parseInt(timeParts[1], 10);
+
+        date.setHours(hours);
+        date.setMinutes(minutes);
+
+        const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        return formattedTime;
+    }
+    // console.log(time);
+
+    // เซตค่า place_schedule_date เพื่อมาใส่ใน places
+    useEffect(() => {
+        const schedulesDate = new Date(currentDates);
+        const year = schedulesDate.getFullYear();
+        const month = String(schedulesDate.getMonth() + 1).padStart(2, '0');
+        const day = String(schedulesDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}/${month}/${day}`;
+        setScheduleDates(formattedDate);
+    }, [currentDates]);
+    // console.log(scheduleDates);
+
+    const addPlaces = async () => {
+        let place_schedule_date;
+        try {
+            if (scheduleDates === 'NaN/NaN/NaN' && tripItem.trip_start_date !== undefined) {
+                place_schedule_date = tripItem.trip_start_date;
+                const tripRef = await addDoc(collection(db, "places"), {
+                    place_title: title,
+                    place_description: des,
+                    place_category: category,
+                    trip_image: '',
+                    place_time: time,
+                    place_address: address,
+                    place_latitude: '',
+                    place_longitude: '',
+                    trip_id: tripKey,
+                    place_schedule_date: place_schedule_date,
+                });
+                // const addDoc = await getDoc(tripRef);
+                // const addData = addDoc.data();
+                // console.log(addDoc);
+                // dispatch(placesReceived(addData));
+            } else {
+                const tripRef = await addDoc(collection(db, "places"), {
+                    place_title: title,
+                    place_description: des,
+                    place_category: category,
+                    trip_image: '',
+                    place_time: time,
+                    place_address: address,
+                    place_latitude: '',
+                    place_longitude: '',
+                    trip_id: tripKey,
+                    place_schedule_date: scheduleDates,
+                });
+                // const addDoc = await getDoc(tripRef);
+                // const addData = addDoc.data();
+                // dispatch(placesReceived(addData));
+            }
+            Alert.alert("Success", "Trip added successfully");
+            bottomSheetModelRef.current?.close();
+        } catch (e) {
+            Alert.alert("Error", "Error adding document: ", e.message);
+        }
+    }
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -391,7 +433,7 @@ const TripPlan = ({ route, navigation }) => {
                                                 {/* Btn */}
                                                 <View className="flex flex-row justify-between items-center mt-[15px]">
                                                     <Pressable onPress={() => {
-                                                        addTripEvents();
+                                                        addPlaces();
                                                     }} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
                                                         <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CONFIRM</Text>
                                                     </Pressable>

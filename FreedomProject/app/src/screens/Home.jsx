@@ -25,10 +25,9 @@ import { tripsReceived } from '../redux/tripsSlice';
 export default function Home({ navigation }) {
 
     const dispatch = useDispatch();
-
     const user = useSelector(userSelector);
     const user_id = user.user_id;
-    // console.log(user_id);
+    // console.log("User ID: " + user_id);
 
     const { dataTrip, loadedTrip } = TripApi();
     const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
@@ -45,6 +44,7 @@ export default function Home({ navigation }) {
             querySnapshot.forEach((doc) => {
                 tripsDoc.push({ ...doc.data(), key: doc.id });
             });
+            // console.log(tripsDoc)
             setTrips(tripsDoc);
             dispatch(tripsReceived(tripsDoc));
         } catch (error) {
@@ -73,8 +73,8 @@ export default function Home({ navigation }) {
     useFocusEffect(
         React.useCallback(() => {
             if (user_id) {
-                getTrips();
                 getUserInfo();
+                getTrips();
             }
             return () => {
                 setTrips([]);
@@ -147,7 +147,7 @@ export default function Home({ navigation }) {
                             {loadedTrip ? (<Text>Loading...</Text>) : (
                                 TripItems.map((item, index) => {
                                     return (
-                                        <RecommendedTrip item={item} key={index} navigation={navigation} />
+                                        <RecommendedTrip item={item} navigation={navigation} />
                                     )
                                 })
                             )}
