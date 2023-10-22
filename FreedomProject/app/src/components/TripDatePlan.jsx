@@ -19,34 +19,11 @@ import { placesReceived } from '../redux/placesSlice';
 import { useSelector } from "react-redux";
 import { placeSelector } from '../redux/placesSlice';
 
-export default function TripDatePlan({ navigation, item }) {
+export default function TripDatePlan({ navigation, item, placesCount }) {
 
-    // console.log("Schedule ID: " + item.key);
     const dispatch = useDispatch();
-    const [numOfPlaces, setNumOfPlaces] = useState();
-    // console.log("Number of places: " + numOfPlaces);
-
-    const getPlaces = async () => {
-        try {
-            const querySnapshot = await getDocs(query(collection(db, "places"), where("schedule_id", "==", item.key)));
-            setNumOfPlaces(querySnapshot.size);
-            const placesDoc = [];
-            querySnapshot.forEach((doc) => {
-                placesDoc.push({ ...doc.data(), key: doc.id });
-            });
-            dispatch(placesReceived(placesDoc));
-        } catch (error) {
-            console.error("Error fetching places:", error);
-        }
-    }
-
-    const place = useSelector(placeSelector);
-    const placesItem = place.places;
-    // console.log(placesItem);
-
-    useEffect(() => {
-        getPlaces();
-    }, [item.key]);
+    const [numOfPlaces, setNumOfPlaces] = useState(placesCount);
+    console.log("Number of places: " + numOfPlaces);
 
     const generateTimeLine = () => {
         const timeLine = [];
@@ -59,8 +36,24 @@ export default function TripDatePlan({ navigation, item }) {
                 </View>
             )
         }
-
         return timeLine;
+    }
+
+    const formatTime = () => {
+        const time = item.place_time;
+        const [hours, minutes] = time.split(':');
+        let period = 'AM';
+        let hour = parseInt(hours);
+
+        if (hour >= 12) {
+            period = 'PM';
+            if (hour > 12) {
+                hour -= 12;
+            }
+        }
+        const formattedTime = `${hour}:${minutes} ${period}`;
+        // console.log(formattedTime);
+        return formattedTime;
     }
 
     const [loaded] = useFonts({
@@ -85,11 +78,34 @@ export default function TripDatePlan({ navigation, item }) {
             {/* Plan event */}
             <View className="bg-white w-[295px] h-auto ml-3">
                 {/* Place */}
-                {placesItem.map((item, index) => {
+                {/* {placesItem.map((item, index) => {
                     return (
                         <TripEventBox item={item} navigation={navigation} />
                     )
-                })}
+                })} */}
+
+                <View className="h-40 mb-2">
+                    <Pressable onPress={() => { navigation.navigate("PlaceDetailForTrip", { item: item }) }}>
+                        <View className="bg-gray-dark h-auto rounded-[30px] p-6 mb-3">
+                            <View className="flex flex-row items-center justify-between">
+                                <View className="flex flex-row items-center">
+                                    <View className="w-[20px] h-[20px] bg-gray-light rounded-[3px] justify-center items-center mr-3">
+                                        <Image className="" source={{ uri: 'https://img.icons8.com/pastel-glyph/64/2E2E2E/shipping-location--v1.png' }}
+                                            style={{ width: 12, height: 12 }} />
+                                    </View>
+                                    <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptMedium' }}>{item.place_category}</Text>
+                                </View>
+                                <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/F8F8F8/menu-2.png' }}
+                                    style={{ width: 20, height: 20 }} />
+                            </View>
+                            <View className="flex flex-row justify-between items-center mt-3">
+                                <Text className="text-[16px] text-gray-light" style={{ fontFamily: 'promptSemiBold' }}>{item.place_title}</Text>
+                                <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptRegular' }}>{formatTime()}</Text>
+                            </View>
+                            <Text className="text-[10px] text-gray-light mt-2 h-8" style={{ fontFamily: 'promptLight' }}>{item.place_description}</Text>
+                        </View>
+                    </Pressable>
+                </View>
             </View>
         </View>
     );

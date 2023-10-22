@@ -25,7 +25,7 @@ import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
 import { useFocusEffect } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown';
-import { placesReceived } from '../redux/placesSlice';
+import { placesReceived, placesItem } from '../redux/placesSlice';
 import { EditTripPlan, UpdateButton } from "../components";
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
 import { placeSelector } from '../redux/placesSlice';
@@ -50,33 +50,31 @@ const TripPlan = ({ route, navigation }) => {
     // const schedulesItem = schedule.schedules;
 
     const place = useSelector(placeSelector);
-    const placesItem = place.places;
+    const places = place.places;
     // console.log(placesItem);
 
     // เปลี่ยนเป็นดึง places แล้วเก็บเข้า store แทน
-    // const [schedules, setSchedules] = useState([]);
-    // const fetchData = async () => {
-    //     try {
-    //         const querySnapshot = await getDocs(query(collection(db, "schedules"), where("trip_id", "==", tripKey)));
-    //         console.log("Total schdules: ", querySnapshot.size);
-    //         const schdulesDoc = [];
-    //         querySnapshot.forEach((doc) => {
-    //             schdulesDoc.push({ ...doc.data(), key: doc.id });
-    //         });
-    //         setSchedules(schdulesDoc);
-    //         dispatch(scheduleReceived(schdulesDoc));
-    //         // console.log(schdulesDoc);
-    //     } catch (error) {
-    //         console.error("Error fetching schedules:", error);
-    //     }
-    // };
+    const fetchPlaces = async () => {
+        try {
+            const querySnapshot = await getDocs(query(collection(db, "places"), where("trip_id", "==", tripKey)));
+            console.log("Total places: ", querySnapshot.size);
+            const placesDoc = [];
+            querySnapshot.forEach((doc) => {
+                placesDoc.push({ ...doc.data(), key: doc.id });
+            });
+            dispatch(placesReceived(placesDoc));
+            // console.log(placesDoc);
+        } catch (error) {
+            console.error("Error fetching schedules:", error);
+        }
+    };
 
     const [tripItem, setTrips] = useState([]);
     const fetchTrips = async () => {
         try {
             const tripsRef = doc(db, 'trips', tripKey);
             const trips = await getDoc(tripsRef);
-            console.log(trips.data());
+            // console.log(trips.data());
 
             if (trips.exists()) {
                 setTrips(trips.data());
@@ -91,7 +89,7 @@ const TripPlan = ({ route, navigation }) => {
     };
 
     useEffect(() => {
-        // fetchData();
+        fetchPlaces();
         fetchTrips();
     }, []);
 
@@ -185,15 +183,32 @@ const TripPlan = ({ route, navigation }) => {
     }, [trips, currentDates])
 
     // เปลี่ยนเป็น filter ด้วย place แทน
-    // const filteredSchedules = schedules.filter(schedule => {
-    //     const scheduleDate = new Date((schedule.schedule_date).replace(/\//g, '-'));
-    //     return (
-    //         scheduleDate.getDate() === currentDates.getDate() &&
-    //         scheduleDate.getMonth() === currentDates.getMonth() &&
-    //         scheduleDate.getFullYear() === currentDates.getFullYear()
-    //     );
-    // });
-    // console.log(filteredSchedules);
+    const filteredPlaces = places.filter(place => {
+        const formatPlaceDate = place.place_schedule_date.replace(/\//g, '-');
+        const placeDate = new Date(formatPlaceDate);
+        // console.log(placeDate);
+        let currDate = placeDate;
+        if (isNaN(currentDates)) {
+            return (
+                placeDate.getDate() === currDate.getDate() &&
+                placeDate.getMonth() === currDate.getMonth() &&
+                placeDate.getFullYear() === currDate.getFullYear()
+            );
+        } else {
+            return (
+                placeDate.getDate() === currentDates.getDate() &&
+                placeDate.getMonth() === currentDates.getMonth() &&
+                placeDate.getFullYear() === currentDates.getFullYear()
+            );
+        }
+    });
+
+    const placesCount = filteredPlaces.length;
+    // console.log(filteredPlaces);
+    // useEffect(() => {
+    //     console.log(filteredPlaces);
+    //     dispatch(placesItem(filteredPlaces))
+    // }, [])
 
     // Update Trip
     const dateToday = getToday();
@@ -230,7 +245,7 @@ const TripPlan = ({ route, navigation }) => {
             dispatch(tripsReceived(updatedData));
             console.log("Trip update successfully");
 
-            // const diff = parseInt(selectedDateRet.slice(8)) - parseInt(selectedDateDep.slice(8))
+            // const diff = parseInt(selectedDateRet.slice(8)) - parseInt(selectedDateDep.slice(8))  
             // const buttons = calendarBtn(selectedDateDep, diff);
             // setCalendarButtons(buttons);
         } catch (error) {
@@ -292,10 +307,6 @@ const TripPlan = ({ route, navigation }) => {
                     trip_id: tripKey,
                     place_schedule_date: place_schedule_date,
                 });
-                // const addDoc = await getDoc(tripRef);
-                // const addData = addDoc.data();
-                // console.log(addDoc);
-                // dispatch(placesReceived(addData));
             } else {
                 const tripRef = await addDoc(collection(db, "places"), {
                     place_title: title,
@@ -309,10 +320,8 @@ const TripPlan = ({ route, navigation }) => {
                     trip_id: tripKey,
                     place_schedule_date: scheduleDates,
                 });
-                // const addDoc = await getDoc(tripRef);
-                // const addData = addDoc.data();
-                // dispatch(placesReceived(addData));
             }
+            fetchPlaces();
             Alert.alert("Success", "Trip added successfully");
             bottomSheetModelRef.current?.close();
         } catch (e) {
@@ -734,11 +743,11 @@ const TripPlan = ({ route, navigation }) => {
                         </View>
 
                         {/* Trip Plan */}
-                        {/* {filteredSchedules.map((item, index) => {
+                        {filteredPlaces.map((item, index) => {
                             return (
-                                <TripDatePlan item={item} navigation={navigation} />
+                                <TripDatePlan item={item} placesCount={placesCount} navigation={navigation} />
                             )
-                        })} */}
+                        })}
                     </View>
                 </ScrollView>
             </BottomSheetModalProvider>
