@@ -98,6 +98,7 @@ export default function PlaceTrip({ navigation, item }) {
             await deleteDoc(documentRef);
             alert(`Wishlist deleted successfully.`);
             setLike(false);
+            getWishlist();
         } catch (error) {
             console.error("Error deleting wishlist:", error);
         }

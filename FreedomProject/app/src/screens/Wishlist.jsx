@@ -36,7 +36,7 @@ export default function Wishlist({ navigation }) {
 
         try {
             const querySnapshot = await getDocs(query(collection(db, "wishlist"), where("user_id", "==", user.uid)));
-            console.log("Total Wishlist: ", querySnapshot.size);
+            // console.log("Total Wishlist: ", querySnapshot.size);
             const wishlistDoc = [];
             querySnapshot.forEach((doc) => {
                 wishlistDoc.push({ ...doc.data(), key: doc.id });
@@ -54,12 +54,12 @@ export default function Wishlist({ navigation }) {
     useFocusEffect(
         React.useCallback(() => {
             getWishlist();
-        }, [])
+        }, [wishlist])
     );
 
-    useEffect(() => {
-        console.log(wishlist);
-    }, [wishlist]);
+    // useEffect(() => {
+    //     // console.log(wishlist);
+    // }, [wishlist]);
 
     if (!loaded) {
         return null;
@@ -102,7 +102,7 @@ export default function Wishlist({ navigation }) {
                     </View>
                 </View>
             </View>
-        </ScrollView>
+        </ScrollView> 
     );
 }
 
