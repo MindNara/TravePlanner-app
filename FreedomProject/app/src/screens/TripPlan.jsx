@@ -25,7 +25,7 @@ import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
 import { useFocusEffect } from "@react-navigation/native";
 import SelectDropdown from 'react-native-select-dropdown';
-import { placesReceived, placesItem } from '../redux/placesSlice';
+import { placesReceived } from '../redux/placesSlice';
 import { EditTripPlan, UpdateButton } from "../components";
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
 import { placeSelector } from '../redux/placesSlice';
@@ -45,9 +45,6 @@ const TripPlan = ({ route, navigation }) => {
     const trip = useSelector(tripSelector);
     const trips = trip.trips;
     // console.log(trips);
-
-    // const schedule = useSelector(scheduleSelector);
-    // const schedulesItem = schedule.schedules;
 
     const place = useSelector(placeSelector);
     const places = place.places;
@@ -92,6 +89,10 @@ const TripPlan = ({ route, navigation }) => {
         fetchPlaces();
         fetchTrips();
     }, []);
+
+    // useEffect(() => {
+    //     fetchPlaces();
+    // }, []);
 
     const date = new Date();
     const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
@@ -241,6 +242,7 @@ const TripPlan = ({ route, navigation }) => {
             const updatedDoc = await getDoc(tripRef);
             const updatedData = updatedDoc.data();
             dispatch(tripsReceived(updatedData));
+            // navigation.navigate('Content');
             console.log("Trip update successfully");
 
             // const diff = parseInt(selectedDateRet.slice(8)) - parseInt(selectedDateDep.slice(8))  
@@ -741,6 +743,7 @@ const TripPlan = ({ route, navigation }) => {
                         </View>
 
                         <View className="mt-[36px]">
+                            {/* <TripDatePlan navigation={navigation} currentDates={currentDates} tripKey={tripKey} /> */}
                             {/* Trip Plan */}
                             {filteredPlaces.map((item, index) => {
                                 console.log(item)

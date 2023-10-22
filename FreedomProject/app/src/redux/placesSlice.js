@@ -10,13 +10,14 @@ const placesSlice = createSlice({
             state.places = action.payload;
             // console.log(state.places);
         },
-        placesItem(state, action) {
-            state.places = action.payload;
-            // console.log(state.places);
+        deletePlaces(state, action) {
+            const placeIdToDelete = action.payload;
+            state.places = state.places.filter(place => place.id !== placeIdToDelete);
+            console.log("Delete place complate");
         },
     },
 })
 
-export const { placesReceived, placesItem } = placesSlice.actions;
+export const { placesReceived, deletePlaces } = placesSlice.actions;
 export const placeSelector = (store) => store.places;
 export default placesSlice.reducer;

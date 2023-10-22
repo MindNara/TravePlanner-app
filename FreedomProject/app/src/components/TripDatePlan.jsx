@@ -11,15 +11,53 @@ import {
     FlatList
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
-import { TripEventBox, PlaceTrip } from '../components/index';
 import { db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { query, where, doc, getDoc, getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
-import { placesReceived } from '../redux/placesSlice';
 import { useSelector } from "react-redux";
-import { placeSelector } from '../redux/placesSlice';
+import { deletePlaces } from '../redux/placesSlice';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function TripDatePlan({ navigation, item }) {
+
+    const dispatch = useDispatch();
+    const [isMenuPopup, setMenuPopup] = useState(false);
+    console.log(item.key);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setMenuPopup(false);
+        }, [])
+    );
+
+    const deletePlace = async () => {
+        try {
+            const placesRef = doc(db, 'places', item.key);
+            await deleteDoc(placesRef);
+            dispatch(deletePlaces(item.key));
+            console.log('Trip successfully deleted from Firestore');
+            navigation.goBack();
+        } catch (error) {
+            console.error('Error deleting trip:', error);
+        }
+    };
+
+    function menuPopup() {
+        return (
+            <View className="bg-gray-light absolute z-20 right-7 top-12 w-auto h-auto rounded-[5px] px-3 py-1">
+                <Pressable className="p-1 flex flex-row items-center" onPress={() => { menuPopup() }}>
+                    <Image className="mr-2" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/48/create-new.png' }}
+                        style={{ width: 15, height: 15 }} />
+                    <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Edit</Text>
+                </Pressable>
+                <Pressable className="p-1 flex flex-row items-center" onPress={() => { deletePlace() }}>
+                    <Image className="mr-2" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/9A1B29/48/filled-trash.png' }}
+                        style={{ width: 15, height: 15 }} />
+                    <Text className="text-[12px] text-red" style={{ fontFamily: 'promptMedium' }}>Delete</Text>
+                </Pressable>
+            </View>
+        );
+    }
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -57,8 +95,11 @@ export default function TripDatePlan({ navigation, item }) {
                                     </View>
                                     <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptMedium' }}>{item.place_category}</Text>
                                 </View>
-                                <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/F8F8F8/menu-2.png' }}
-                                    style={{ width: 20, height: 20 }} />
+                                <Pressable className="relative" onPress={() => { setMenuPopup(!isMenuPopup) }}>
+                                    <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/F8F8F8/menu-2.png' }}
+                                        style={{ width: 20, height: 20 }} />
+                                </Pressable>
+
                             </View>
                             <View className="flex flex-row justify-between items-center mt-3">
                                 <Text className="text-[16px] text-gray-light" style={{ fontFamily: 'promptSemiBold' }}>{item.place_title}</Text>
@@ -67,6 +108,7 @@ export default function TripDatePlan({ navigation, item }) {
                             <Text className="text-[10px] text-gray-light mt-2 h-8" style={{ fontFamily: 'promptLight' }}>{item.place_description}</Text>
                         </View>
                     </Pressable>
+                    {isMenuPopup && menuPopup()}
                 </View>
             </View>
         </View>
