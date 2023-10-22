@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
     SafeAreaView,
     Text,
@@ -12,9 +13,10 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { useSelector } from "react-redux";
-import { userSelector } from "../redux/usersSlice";
 import { firebase_auth, db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc} from 'firebase/firestore';
+import { useDispatch } from "react-redux";
+import { wishList, wishlistSelector } from '../redux/wishlistSlice';
+import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export default function PlaceTrip({ navigation, item }) {
 
@@ -22,7 +24,12 @@ export default function PlaceTrip({ navigation, item }) {
     // const user = useSelector(userSelector);
     // const user_info = user.user_info;
 
+    // const dispatch = useDispatch();
+    // const allWishlist = useSelector(wishlistSelector);
+    // console.log(allWishlist);
+
     const [like, setLike] = useState(false);
+    const [wishlist, setWishlist] = useState([]);
     // const [docId, setDocId] = useState('');
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -32,15 +39,38 @@ export default function PlaceTrip({ navigation, item }) {
         promptBold: require("../assets/fonts/Prompt-Bold.ttf"),
     });
 
+    const getWishlist = async () => {
+        const user = firebase_auth.currentUser;
+
+        try {
+            const querySnapshot = await getDocs(query(collection(db, "wishlist"), where("user_id", "==", user.uid)));
+            console.log("Total Wishlist: ", querySnapshot.size);
+            const wishlistDoc = [];
+            querySnapshot.forEach((doc) => {
+                wishlistDoc.push({ ...doc.data(), key: doc.id });
+            });
+            // console.log(wishlistDoc)
+            setWishlist(wishlistDoc);
+            
+
+            // วนลูปผ่าน wishlistDoc ที่ได้มา
+            // wishlistDoc.forEach((item_wishlist) => {
+            //     if(item.place_id === item_wishlist.place_id){
+            //         setLike(true);
+            //     }
+                
+            // });
+            const isLiked = wishlistDoc.some(item_wishlist => item.place_id === item_wishlist.place_id);
+            setLike(isLiked);
+        } catch (error) {
+            console.error("Error fetching wishlist:", error);
+        }
+    }
+
     const likePlace = async () => {
         const user = firebase_auth.currentUser;
 
         try {
-            // console.log(item.place_id);
-            // console.log(item.place_name);
-            // console.log(item.category_code);
-            // console.log(item.thumbnail_url);
-            // console.log(item.location.province);
             const wishlistRef = await addDoc(collection(db, "wishlist"), {
                 place_id: item.place_id,
                 place_title: item.place_name,
@@ -51,17 +81,10 @@ export default function PlaceTrip({ navigation, item }) {
                 user_id: user.uid
             });
             alert("Add wishlist success");
-            // setDocId(wishlistRef.id);
-            // console.log(wishlistRef);
             setLike(true);
         } catch (error) {
             console.log(error);
         }
-
-        // const userDocRef = doc(db, 'wishlist');
-
-        // console.log(item);
-        // console.log(user.uid);
 
     }
 
@@ -89,6 +112,16 @@ export default function PlaceTrip({ navigation, item }) {
         console.log(docId);
     }
 
+    useFocusEffect(
+        React.useCallback(() => {
+            getWishlist();
+        }, [])
+    );
+
+    // useEffect(() => {
+    //     getWishlist();
+    // }, [])
+
     if (!loaded) {
         return null;
     }
@@ -96,7 +129,7 @@ export default function PlaceTrip({ navigation, item }) {
     return (
         <View className="mb-4">
             <Pressable onPress={() => {
-                navigation.navigate("PlaceDetail", { item: item });
+                navigation.navigate("PlaceDetail", { item: item, status_like: like });
             }}>
                 <View className="h-[223px] w-[156px] bg-gray-light mr-[15px] rounded-[20px]">
                     {/* Image */}
@@ -106,18 +139,19 @@ export default function PlaceTrip({ navigation, item }) {
                                 source={{ uri: item.thumbnail_url }} />)}
 
                         <View className="bg-gray-dark w-full h-full rounded-[20px] opacity-10 absolute"></View>
-                        {like === false ? (
+                        {like === true ? (
+                            <Pressable onPress={unlikePlace}>
+                            <View className="top-[-150px] left-[110px]">
+                                <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-60"></View>
+                                <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/ios-glyphs/30/9A1B29/like--v1.png' }}
+                                    style={{ width: 20, height: 20 }} />
+                            </View>
+                            </Pressable>
+                            ) : (
                             <Pressable onPress={likePlace}>
                                 <View className="top-[-150px] left-[110px]">
                                     <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-60"></View>
                                     <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/material-outlined/24/9a1b29/like--v1.png' }}
-                                        style={{ width: 20, height: 20 }} />
-                                </View>
-                            </Pressable>) : (
-                            <Pressable onPress={unlikePlace}>
-                                <View className="top-[-150px] left-[110px]">
-                                    <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-60"></View>
-                                    <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/ios-glyphs/30/9A1B29/like--v1.png' }}
                                         style={{ width: 20, height: 20 }} />
                                 </View>
                             </Pressable>)}

@@ -3,6 +3,7 @@ import usersSlice from "./usersSlice";
 import tripsSlice from "./tripsSlice";
 import schedulesSlice from "./schedulesSlice";
 import placesSlice from "./placesSlice";
+import wishlistSlice from "./wishlistSlice";
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         trips: tripsSlice,
         schedules: schedulesSlice,
         places: placesSlice,
+        wishlist: wishlistSlice,
     },
 });
 

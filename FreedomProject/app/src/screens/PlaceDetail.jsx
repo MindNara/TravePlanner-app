@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
     SafeAreaView,
     Text,
@@ -12,17 +13,23 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import MapView from 'react-native-maps';
+import { firebase_auth, db } from '../firebase/firebaseConfig';
+import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 // import { ScrollView } from 'react-native-gesture-handler';
 
 export default function PlaceDetails({ route, navigation }) {
 
     const item = route.params.item;
     console.log(item);
+    // const status_like = route.params.status_like;
+    // console.log(status_like);
 
     const [loading, setLoading] = useState(true);
     const [dataDetail, setDataDetail] = useState([]);
 
     const [showMap, setShowMap] = useState(true);
+    const [like, setLike] = useState(false);
+    const [wishlist, setWishlist] = useState([]);
 
     const apiKey = 'GBlAR1kAdZLNcsEPOzvbb6chWCSSoyX2qORdP5ifIdceDVTo2crn)n0yJHoUqvj4V=2';
 
@@ -52,6 +59,84 @@ export default function PlaceDetails({ route, navigation }) {
         promptBold: require("../assets/fonts/Prompt-Bold.ttf"),
     });
 
+    const getWishlist = async () => {
+        const user = firebase_auth.currentUser;
+
+        try {
+            const querySnapshot = await getDocs(query(collection(db, "wishlist"), where("user_id", "==", user.uid)));
+            console.log("Total Wishlist: ", querySnapshot.size);
+            const wishlistDoc = [];
+            querySnapshot.forEach((doc) => {
+                wishlistDoc.push({ ...doc.data(), key: doc.id });
+            });
+            // console.log(wishlistDoc)
+            setWishlist(wishlistDoc);
+            
+
+            // วนลูปผ่าน wishlistDoc ที่ได้มา
+            // wishlistDoc.forEach((item_wishlist) => {
+            //     if(item.place_id == item_wishlist.place_id){
+            //         setLike(true);
+            //     }
+            // });
+            const isLiked = wishlistDoc.some(item_wishlist => item.place_id === item_wishlist.place_id);
+            setLike(isLiked);
+        } catch (error) {
+            console.error("Error fetching wishlist:", error);
+        }
+    }
+
+    const likePlace = async () => {
+        const user = firebase_auth.currentUser;
+
+        try {
+            const wishlistRef = await addDoc(collection(db, "wishlist"), {
+                place_id: item.place_id,
+                place_title: item.place_name,
+                place_category: item.category_code,
+                place_province: item.location.province,
+                image_place: item.thumbnail_url,
+                status_like: true,
+                user_id: user.uid
+            });
+            alert("Add wishlist success");
+            setLike(true);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const unlikePlace = async () => {
+        const q = query(collection(db, "wishlist"), where("place_id", "==", item.place_id));
+
+        const querySnapshot = await getDocs(q);
+
+        console.log(querySnapshot);
+
+        let docId = null;
+
+        querySnapshot.forEach(document => {
+            docId = document.id;
+        });
+
+        const documentRef = doc(db, 'wishlist', docId);
+        try {
+            await deleteDoc(documentRef);
+            alert(`Wishlist deleted successfully.`);
+            setLike(false);
+        } catch (error) {
+            console.error("Error deleting wishlist:", error);
+        }
+        console.log(docId);
+    }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getWishlist();
+        }, [])
+    );
+
     if (!loaded) {
         return null;
     }
@@ -76,11 +161,21 @@ export default function PlaceDetails({ route, navigation }) {
                                 style={{ width: 22, height: 22 }} />
 
                         </Pressable>
-                        <View>
-                            <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
-                            <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
-                                style={{ width: 20, height: 20 }} />
-                        </View>
+                        {like == true ? (
+                        <Pressable onPress={unlikePlace}>
+                            <View>
+                                <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
+                                <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/ios-glyphs/30/9A1B29/like--v1.png' }}
+                                    style={{ width: 20, height: 20 }} />
+                            </View>
+                        </Pressable>):(
+                        <Pressable onPress={likePlace}>
+                            <View>
+                                <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
+                                <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/material-outlined/24/9a1b29/like--v1.png' }}
+                                    style={{ width: 20, height: 20 }} />
+                            </View>
+                        </Pressable>)}
                     </View>
 
                     {/* content */}
@@ -124,9 +219,9 @@ export default function PlaceDetails({ route, navigation }) {
                                             }}>
                                                 <Text className="text-[14px] text-gray-datk" style={{ fontFamily: 'promptMedium' }}>VIEW MAP</Text>
                                             </Pressable> */}
-                                            {showMap && 
+                                            {showMap &&
                                                 <MapView
-                                                style={{ height: 300, width: '100%', flex: 1, marginTop: 10, borderRadius: 10 }}
+                                                    style={{ height: 300, width: '100%', flex: 1, marginTop: 10, borderRadius: 10 }}
                                                     initialRegion={{
                                                         latitude: dataDetail.result.latitude,
                                                         longitude: dataDetail.result.longitude,
