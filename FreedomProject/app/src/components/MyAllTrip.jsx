@@ -42,6 +42,17 @@ export default function MyAllTrip({ navigation, item }) {
 
     const delTrip = async () => {
         console.log("delete eiei")
+        console.log(item.key);
+        const documentRef = doc(db, 'trips', item.key);
+        try {
+            await deleteDoc(documentRef);
+            alert(`Trip deleted successfully.`);
+            // setLike(false);
+            // getWishlist();
+        } catch (error) {
+            console.error("Error deleting Trip:", error);
+        }
+        // console.log(item.key);
     }
 
     useFocusEffect(

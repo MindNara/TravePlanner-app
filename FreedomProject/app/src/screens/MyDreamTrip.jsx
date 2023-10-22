@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import {
     Button,
@@ -17,7 +17,7 @@ import { MyAllTrip, Header } from '../components/index';
 import { useSelector } from "react-redux";
 import { tripSelector } from '../redux/tripsSlice';
 import { firebase_auth, db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 
 export default function MyDreamTrip({ navigation }) {
 
@@ -35,31 +35,33 @@ export default function MyDreamTrip({ navigation }) {
         promptBold: require("../assets/fonts/Prompt-Bold.ttf"),
     });
 
-    const getMyAllTrip = async () => {
+    const getMyAllTrip = () => {
         const user = firebase_auth.currentUser;
         console.log(user.uid);
-        try {
-            const querySnapshot = await getDocs(query(collection(db, "trips"), where("user_id", "==", user.uid)));
-            // console.log("Total Wishlist: ", querySnapshot.size);
-            const myAllTripDoc = [];
-            querySnapshot.forEach((doc) => {
-                myAllTripDoc.push({ ...doc.data(), key: doc.id });
-            });
-            console.log(myAllTripDoc)
-            setMyAllTrip(myAllTripDoc);
-            // console.log(wishlist)
-            // const isLiked = wishlistDoc.some(item_wishlist => item.place_id === item_wishlist.place_id);
-            // setLike(isLiked);
-        } catch (error) {
-            console.error("Error fetching myAllTrip:", error);
-        }
-    }
 
-    useFocusEffect(
-        React.useCallback(() => {
-            getMyAllTrip();
-        }, [])
-    );
+        const tripQuery = query(collection(db, "trips"), where("user_id", "==", user.uid));
+    
+        const unsubscribe = onSnapshot(tripQuery, (snapshot) => {
+                const myAllTripData = [];
+                snapshot.forEach((doc) => {
+                    myAllTripData.push({ ...doc.data(), key: doc.id });
+                });
+                console.log(myAllTripData);
+                setMyAllTrip(myAllTripData);
+            }, (error) => {
+                console.error("Error fetching myAllTrip:", error);
+            });
+    
+        // คืนค่าฟังก์ชัน unsubscribe เพื่อที่เราจะเรียกเมื่อต้องการหยุดฟังค้นหา
+        return unsubscribe;
+    }
+    
+
+    useEffect(() => {
+        const unsubscribe = getMyAllTrip();
+        return unsubscribe;  // จะเรียกเมื่อ component ถูก unmount
+    }, []);
+    
 
     if (!loaded) {
         return null;
