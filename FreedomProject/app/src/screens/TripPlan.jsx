@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { useFonts } from "@expo-google-fonts/prompt";
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 import TripDatePlan from "../components/TripDatePlan";
 import { useSelector } from "react-redux";
 import { tripSelector, tripsReceived } from '../redux/tripsSlice';
@@ -57,7 +57,7 @@ const TripPlan = ({ route, navigation }) => {
     const fetchPlaces = async () => {
         try {
             const querySnapshot = await getDocs(query(collection(db, "places"), where("trip_id", "==", tripKey)));
-            console.log("Total places: ", querySnapshot.size);
+            // console.log("Total places: ", querySnapshot.size);
             const placesDoc = [];
             querySnapshot.forEach((doc) => {
                 placesDoc.push({ ...doc.data(), key: doc.id });
@@ -182,13 +182,15 @@ const TripPlan = ({ route, navigation }) => {
         setCalendarButtons(buttons);
     }, [trips, currentDates])
 
-    // เปลี่ยนเป็น filter ด้วย place แทน
+    // filter place
     const filteredPlaces = places.filter(place => {
         const formatPlaceDate = place.place_schedule_date.replace(/\//g, '-');
         const placeDate = new Date(formatPlaceDate);
-        // console.log(placeDate);
-        let currDate = placeDate;
-        if (isNaN(currentDates)) {
+
+        let currDate;
+        if (isNaN(currentDates) && trips.trip_start_date !== undefined) {
+            currDate = new Date(trips.trip_start_date.replace(/\//g, '-'));
+            // console.log(currDate);
             return (
                 placeDate.getDate() === currDate.getDate() &&
                 placeDate.getMonth() === currDate.getMonth() &&
@@ -202,13 +204,9 @@ const TripPlan = ({ route, navigation }) => {
             );
         }
     });
-
     const placesCount = filteredPlaces.length;
+    // console.log("Total Place: " + placesCount);
     // console.log(filteredPlaces);
-    // useEffect(() => {
-    //     console.log(filteredPlaces);
-    //     dispatch(placesItem(filteredPlaces))
-    // }, [])
 
     // Update Trip
     const dateToday = getToday();
@@ -742,12 +740,18 @@ const TripPlan = ({ route, navigation }) => {
                             {calendarButtons}
                         </View>
 
-                        {/* Trip Plan */}
-                        {filteredPlaces.map((item, index) => {
-                            return (
-                                <TripDatePlan item={item} placesCount={placesCount} navigation={navigation} />
-                            )
-                        })}
+                        <View className="mt-[36px]">
+                            {/* Trip Plan */}
+                            {filteredPlaces.map((item, index) => {
+                                console.log(item)
+                                return (
+                                    <View className="flex flex-row">
+                                        <TripDatePlan item={item} navigation={navigation} />
+                                    </View>
+                                )
+                            })}
+                        </View>
+
                     </View>
                 </ScrollView>
             </BottomSheetModalProvider>

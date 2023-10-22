@@ -19,42 +19,7 @@ import { placesReceived } from '../redux/placesSlice';
 import { useSelector } from "react-redux";
 import { placeSelector } from '../redux/placesSlice';
 
-export default function TripDatePlan({ navigation, item, placesCount }) {
-
-    const dispatch = useDispatch();
-    const [numOfPlaces, setNumOfPlaces] = useState(placesCount);
-    console.log("Number of places: " + numOfPlaces);
-
-    const generateTimeLine = () => {
-        const timeLine = [];
-        for (let i = 1; i <= numOfPlaces; i++) {
-            timeLine.push(
-                <View className="items-center justify-center mb-2">
-                    <View className="w-[16px] h-[16px] bg-gray-dark rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-                    <View className="w-[1.5px] h-[120px] bg-gray-dark my-1"></View>
-                    <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
-                </View>
-            )
-        }
-        return timeLine;
-    }
-
-    const formatTime = () => {
-        const time = item.place_time;
-        const [hours, minutes] = time.split(':');
-        let period = 'AM';
-        let hour = parseInt(hours);
-
-        if (hour >= 12) {
-            period = 'PM';
-            if (hour > 12) {
-                hour -= 12;
-            }
-        }
-        const formattedTime = `${hour}:${minutes} ${period}`;
-        // console.log(formattedTime);
-        return formattedTime;
-    }
+export default function TripDatePlan({ navigation, item }) {
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -69,21 +34,18 @@ export default function TripDatePlan({ navigation, item, placesCount }) {
     }
 
     return (
-        <View className="bg-white w-full h-full mt-[36px] flex flex-row">
+        <View className="flex flex-row">
             {/* Line */}
             <View className="bg-white w-[42px] h-auto items-center">
-                {generateTimeLine()}
+                <View className="items-center justify-center mb-2">
+                    <View className="w-[16px] h-[16px] bg-gray-dark rounded-xl items-center justify-center border-collapse border-[1px]"></View>
+                    <View className="w-[1.5px] h-[120px] bg-gray-dark my-1"></View>
+                    <View className="w-[16px] h-[16px] rounded-xl items-center justify-center border-collapse border-[1px]"></View>
+                </View>
             </View>
 
             {/* Plan event */}
-            <View className="bg-white w-[295px] h-auto ml-3">
-                {/* Place */}
-                {/* {placesItem.map((item, index) => {
-                    return (
-                        <TripEventBox item={item} navigation={navigation} />
-                    )
-                })} */}
-
+            <View className="w-[290px] h-auto">
                 <View className="h-40 mb-2">
                     <Pressable onPress={() => { navigation.navigate("PlaceDetailForTrip", { item: item }) }}>
                         <View className="bg-gray-dark h-auto rounded-[30px] p-6 mb-3">
@@ -100,7 +62,7 @@ export default function TripDatePlan({ navigation, item, placesCount }) {
                             </View>
                             <View className="flex flex-row justify-between items-center mt-3">
                                 <Text className="text-[16px] text-gray-light" style={{ fontFamily: 'promptSemiBold' }}>{item.place_title}</Text>
-                                <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptRegular' }}>{formatTime()}</Text>
+                                <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptRegular' }}>{item.place_time}</Text>
                             </View>
                             <Text className="text-[10px] text-gray-light mt-2 h-8" style={{ fontFamily: 'promptLight' }}>{item.place_description}</Text>
                         </View>
