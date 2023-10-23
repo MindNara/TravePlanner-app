@@ -8,7 +8,8 @@ import {
     StyleSheet,
     TextInput,
     ScrollView,
-    FlatList
+    FlatList,
+    Pressable
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
@@ -44,6 +45,10 @@ export default function ExploreTrip({ navigation }) {
         promptBold: require("../assets/fonts/Prompt-Bold.ttf"),
     });
 
+    const clearSearch = async () => {
+        setSearchPlace("");
+    }
+
     if (!loaded) {
         return null;
     }
@@ -63,68 +68,72 @@ export default function ExploreTrip({ navigation }) {
                             <View style={[styles.SearchContainer]}>
                                 <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
                                     style={{ width: 18, height: 20 }} className="ml-3 opacity-80" />
-                                <TextInput placeholder='Search location' className="ml-3 w-full text-[14px]" style={[styles.input, { fontFamily: 'promptRegular', fontSize: 12 }]} onChangeText={text => setSearchPlace(text)} value={searchPlace}></TextInput>
+                                {/* ใช้ onEndEditing เพื่อให้มัน set ค่าหลังจากที่กด enter ที่แป้นพิมเท่านั้น ไม่ต้อง set ตลอดเวลา และใช้ defautvalue เพื่อไม่ให้มัน update ค่าทุกครั้งที่เปลี่ยนแปลง ต้องกด enter ก่อน */}
+                                <TextInput placeholder='Search location' className="ml-3 w-full text-[14px]" style={[styles.input, { fontFamily: 'promptRegular', fontSize: 12 }]} onEndEditing={(e) => setSearchPlace(e.nativeEvent.text)} defaultValue={searchPlace}></TextInput> 
                             </View>
-                            <View style={[styles.sortbtn]}>
-                                <Image source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAy0lEQVR4nO3YSw6CMBSF4X8fitHuXAawAXEBdi+ibgJjchMNYSCP2xRyvuROOijcPsgJICIiGxOAGnhZ1Ta2KifgAXS9aoEjK1Lai1+AnVVjY2fvh8eBFZxb+5/5Dw7zx1SNFM6N3FIdrcZ25dPQNdXRWvqytwMreF/bZcc+tRXwtKqsQRERyVJQat5aao4Ooc47NcfcGyn+bMQ9/U5VKjVnKCg1i4j0KZnmpFwimaYQF06mKSrOacT7f243oialXyXTHAUlUxER4esNlJFPhidtdXQAAAAASUVORK5CYII=' }}
-                                    style={{ width: 20, height: 20 }} />
-                            </View>
+                            <Pressable onPress={clearSearch}>
+                                <View style={[styles.sortbtn]}>
+                                    <Image source={{ uri: 'https://img.icons8.com/material-rounded/24/multiply--v1.png' }}
+                                        style={{ width: 20, height: 20 }} />
+                                </View>
+                            </Pressable>
+
                         </View>
                     </View>
                 </View>
                 {searchPlace == "" ? (
-                <View className="h-full mx-[32px] bg-white">
-                    <View className="my-[20px]">
-                        <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Popular Places</Text>
-                        <View className="flex flex-row mt-[20px] justify-between">
+                    <View className="h-full mx-[32px] bg-white">
+                        <View className="my-[2px]">
+                            <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Popular Places</Text>
+                            <View className="flex flex-row mt-[20px] justify-between">
 
-                            {loading ? (<Text>Loading...</Text>) : (
-                                <FlatList
-                                    data={placeItems}
-                                    keyExtractor={item => item.place_id}
-                                    renderItem={({ item }) => (
-                                        <PlaceTrip item={item} navigation={navigation} />
-                                    )}
-                                    horizontal={true}
-                                    showsHorizontalScrollIndicator={false}
-                                />
-                            )}
+                                {loading ? (<Text>Loading...</Text>) : (
+                                    <FlatList
+                                        data={placeItems}
+                                        keyExtractor={item => item.place_id}
+                                        renderItem={({ item }) => (
+                                            <PlaceTrip item={item} navigation={navigation} />
+                                        )}
+                                        horizontal={true}
+                                        showsHorizontalScrollIndicator={false}
+                                    />
+                                )}
 
+                            </View>
                         </View>
-                    </View>
 
-                    <View>
-                        <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
-                        <View className="mt-[20px]">
+                        <View>
+                            <Text className="text-[20px]" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
+                            <View className="mt-[20px]">
 
-                            {loadedTrip ? (<Text>Loading...</Text>) : (
-                                <FlatList scrollEnabled={false}
-                                    data={TripItems}
-                                    keyExtractor={item => item.route_id}
-                                    renderItem={({ item }) => (
-                                        <RecommendedTrip item={item} navigation={navigation} />
-                                    )}
-                                />
-                            )}
-                            
+                                {loadedTrip ? (<Text>Loading...</Text>) : (
+                                    <FlatList scrollEnabled={false}
+                                        data={TripItems}
+                                        keyExtractor={item => item.route_id}
+                                        renderItem={({ item }) => (
+                                            <RecommendedTrip item={item} navigation={navigation} />
+                                        )}
+                                    />
+                                )}
+
+                            </View>
                         </View>
-                    </View>
-                </View>) : (
-                <View className="h-full mx-[32px] bg-white">
-                <View className="my-[20px]">
-                    <View className="flex flex-row flex-wrap justify-between">
-                        {loading || !PlaceAll || PlaceAll.length === 0 ? (
-                            <Text>Loading...</Text>
-                        ) : (
-                            PlaceAll.map((item, index) => (
-                                <View key={item.place_id} className={index % 2 === 0 ? "w-[50%] pr-[8px]" : "w-[50%] pl-[8px]"}>
-                                    <PlaceTrip item={item} navigation={navigation} />
-                                </View>
-                            ))
-                        )}
-                    </View>
-                </View>
-            </View>)}
+                    </View>) : (
+                    <View className="h-full mx-[32px] bg-white">
+                        <View className="my-[20px]">
+                            <View className="flex flex-row flex-wrap justify-between">
+                                {loading || !PlaceAll || PlaceAll.length === 0 ? (
+                                    <Text>Loading...</Text>
+                                ) : (
+                                    PlaceAll.map((item, index) => (
+                                        <View key={item.place_id} className={index % 2 === 0 ? "w-[50%] pr-[8px]" : "w-[50%] pl-[8px]"}>
+                                            <PlaceTrip item={item} navigation={navigation} />
+                                        </View>
+                                    ))
+                                )}
+                            </View>
+                        </View>
+                    </View>)}
 
             </View>
         </ScrollView >

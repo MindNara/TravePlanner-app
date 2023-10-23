@@ -44,7 +44,7 @@ export default function PlaceTrip({ navigation, item }) {
 
         try {
             const querySnapshot = await getDocs(query(collection(db, "wishlist"), where("user_id", "==", user.uid)));
-            console.log("Total Wishlist: ", querySnapshot.size);
+            // console.log("Total Wishlist: ", querySnapshot.size);
             const wishlistDoc = [];
             querySnapshot.forEach((doc) => {
                 wishlistDoc.push({ ...doc.data(), key: doc.id });
@@ -163,22 +163,6 @@ export default function PlaceTrip({ navigation, item }) {
                         <Text className="text-[18px] h-7 w-[130px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
                     </View>
                 </View>
-
-                {/* Old version */}
-                {/* <View className="shadow-xl" style={[styles.boxPopular]}>
-                    <View style={[styles.imgPopular]}>
-                        <Image source={{ uri: item.thumbnail_url }}
-                            style={{ width: 142, height: 160, borderRadius: 20 }} />
-                        <View className="bg-gray-dark w-[142px] h-[160px] rounded-[20px] opacity-10 absolute z-20"></View>
-                        <View style={[styles.btn]} className="absolute bg-white bottom-14 left-14 opacity-60"></View>
-                        <Image className="absolute bottom-[62] left-[62]" source={{ uri: 'https://img.icons8.com/ios-filled/50/9a1b29/like--v1.png' }}
-                            style={{ width: 20, height: 20 }} />
-                    </View>
-                    <View className="top-16 right-1">
-                        <Text className="text-[12px]" style={{ fontFamily: 'promptLight' }}>{item.location.province}</Text>
-                        <Text className="text-[18px] h-7 w-[130px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
-                    </View>
-                </View> */}
             </Pressable>
         </View>
     );
