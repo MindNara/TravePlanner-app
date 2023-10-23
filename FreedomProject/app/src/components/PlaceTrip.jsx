@@ -126,25 +126,25 @@ export default function PlaceTrip({ navigation, item }) {
             }}>
                 <View className="h-[223px] w-[156px] bg-gray-light mr-[15px] rounded-[20px]">
                     {/* Image */}
-                    <View className="relative w-full h-[160]">
+                    <View className="w-full h-[160]">
                         {item.thumbnail_url !== "" && item.thumbnail_url ? (
                             <Image className="w-full h-full rounded-[20px]"
                                 source={{ uri: item.thumbnail_url }} />) : item.image_place !== "" && item.image_place ? (
+                                    <Image className="w-full h-full rounded-[20px]"
+                                        source={{ uri: item.image_place }} />) : (
                             <Image className="w-full h-full rounded-[20px]"
-                                source={{ uri: item.image_place }} />) : (
-                            <Image className="w-full h-full rounded-[20px]"
-                            source={require('../assets/TripImage.png')} />)}
+                                source={require('../assets/TripImage.png')} />)}
 
                         <View className="bg-gray-dark w-full h-full rounded-[20px] opacity-10 absolute"></View>
                         {like === true ? (
                             <Pressable onPress={unlikePlace}>
-                            <View className="top-[-150px] left-[110px]">
-                                <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-60"></View>
-                                <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/ios-glyphs/30/9A1B29/like--v1.png' }}
-                                    style={{ width: 20, height: 20 }} />
-                            </View>
+                                <View className="top-[-150px] left-[110px]">
+                                    <View className="justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-60"></View>
+                                    <Image className="absolute top-[9px] left-2" source={{ uri: 'https://img.icons8.com/ios-glyphs/30/9A1B29/like--v1.png' }}
+                                        style={{ width: 20, height: 20 }} />
+                                </View>
                             </Pressable>
-                            ) : (
+                        ) : (
                             <Pressable onPress={likePlace}>
                                 <View className="top-[-150px] left-[110px]">
                                     <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-60"></View>
@@ -158,8 +158,8 @@ export default function PlaceTrip({ navigation, item }) {
                     {/* Title */}
                     <View className="pt-[10px] pl-[12px]">
                         {item.location?.province !== "" && item.location?.province ? (
-                        <Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>{item.location?.province}</Text>) : item.place_province !== "" && item.place_province ? (
-                        <Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>{item.place_province}</Text>) : (<Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>province</Text>)}
+                            <Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>{item.location?.province}</Text>) : item.place_province !== "" && item.place_province ? (
+                                <Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>{item.place_province}</Text>) : (<Text className="text-[10px]" style={{ fontFamily: 'promptLight' }}>province</Text>)}
                         <Text className="text-[18px] h-7 w-[130px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_name}</Text>
                     </View>
                 </View>

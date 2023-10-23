@@ -303,7 +303,9 @@ const TripPlan = ({ route, navigation }) => {
     useEffect(() => {
         setTitle(wishlistItem.place_name);
         setAddress(wishlistItem.place_province);
-        setCategory(formatCategory(wishlistItem.category_code));
+        if (wishlistItem.category_code !== undefined) {
+            setCategory(formatCategory(wishlistItem.category_code));
+        }
         setIsFav(true);
     }, [wishlistItem]);
 
@@ -459,7 +461,7 @@ const TripPlan = ({ route, navigation }) => {
                                                         <Text multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }}>{formatTime()}</Text>
                                                     </Pressable>
                                                     <View className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 justify-center">
-                                                        <Text className="text-[12px] text-gray-dark opacity-80 px-6" style={{ fontFamily: 'promptMedium' }}>CATEGORY</Text>
+                                                        <Text className="text-[12px] text-gray-dark opacity-80 px-6 relative" style={{ fontFamily: 'promptMedium' }}>CATEGORY</Text>
                                                         {/* <TextInput className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Category">Place</TextInput> */}
                                                         <SelectDropdown
                                                             data={categorys}
@@ -469,7 +471,7 @@ const TripPlan = ({ route, navigation }) => {
                                                             buttonStyle={{ backgroundColor: '#F8F8F8', width: 'auto', height: 26 }}
                                                             buttonTextStyle={{ fontSize: 14, fontFamily: 'promptMedium', textAlign: 'left', paddingLeft: 8 }}
                                                             defaultButtonText={category}
-                                                            dropdownStyle={{ borderRadius: 10 }}
+                                                            dropdownStyle={{ borderRadius: 10, position: 'absolute' }}
                                                             rowStyle={{ height: 40 }}
                                                             rowTextStyle={{ fontSize: 14, fontFamily: 'promptRegular', textAlign: 'left', paddingLeft: 16 }}
                                                         />

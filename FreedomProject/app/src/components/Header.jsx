@@ -137,7 +137,7 @@ export default function Header({ screen, title, subtitle, navigation }) {
 
 
             {/* Profile Model Content */}
-            <View className="relative h-auto">
+            <View className="h-auto">
                 {isProfileModel && (
                     <View className="bg-white h-[70px] w-[120px] px-[20px] justify-center absolute z-20 rounded-[5px] right-0 top-3">
                         <View className="bg-white h-3 w-3 rotate-45 absolute top-[-6] right-5 z-10"></View>
