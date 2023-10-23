@@ -68,7 +68,7 @@ export default function MyDreamTrip({ navigation }) {
     }
 
     return (
-        // <ScrollView className="bg-white">
+        <ScrollView className="bg-white">
             <View className="container mx-auto bg-white">
                 <View className="h-full mx-[32px] pt-14 bg-white">
                     {/* Header */}
@@ -101,7 +101,7 @@ export default function MyDreamTrip({ navigation }) {
                         </View>
                     </View> */}
 
-                    <View className="mt-2">
+                    {/* <View className="mt-2">
                         <View className="flex-row flex-wrap mt-[20px]">
                             <FlatList
                                 data={myAlltrip}
@@ -118,19 +118,26 @@ export default function MyDreamTrip({ navigation }) {
                             <MyAllTrip navigation={navigation} />
                             <MyAllTrip navigation={navigation} />
                             <MyAllTrip navigation={navigation} /> */}
+                        {/* </View>
+                     
+                    </View> */}
+
+                    <View className="mt-10">
+                        <View className="flex-row flex-wrap">
+                            {myAlltrip.map(item => (
+                                <View className="w-[50%]"
+                                    key={item.key}>
+                                    <MyAllTrip
+                                        item={item}
+                                        navigation={navigation}
+                                    />
+                                </View>
+                            ))}
                         </View>
-                        {/* <View className="flex flex-row mt-[20px] justify-between">
-                            <MyAllTrip navigation={navigation} />
-                            <MyAllTrip navigation={navigation} />
-                        </View>
-                        <View className="flex flex-row my-[20px] justify-between">
-                            <MyAllTrip navigation={navigation} />
-                            <MyAllTrip navigation={navigation} />
-                        </View> */}
                     </View>
                 </View>
             </View>
-        // </ScrollView>
+        </ScrollView>
     );
 }
 

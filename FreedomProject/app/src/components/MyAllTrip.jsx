@@ -19,6 +19,9 @@ export default function MyAllTrip({ navigation, item }) {
     console.log(item);
 
     const [isMenuPopup, setMenuPopup] = useState(false);
+    const tripEndDate = item.trip_end_date.slice(8);
+    const tripStartDate = item.trip_start_date.slice(8);
+    const differanceDate = parseInt(tripEndDate) - parseInt(tripStartDate) + 1;
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -43,16 +46,39 @@ export default function MyAllTrip({ navigation, item }) {
     const delTrip = async () => {
         console.log("delete eiei")
         console.log(item.key);
+
         const documentRef = doc(db, 'trips', item.key);
+        // console.log(documentRef.id);
         try {
+            // console.log(documentRef);
+            const placeQuery = query(collection(db, 'places'), where('trip_id', '==', item.key));
+            const placeSnapshot = await getDocs(placeQuery);
+            // console.log(placeSnapshot.doc.data());
+            const myTrip = [];
+            placeSnapshot.forEach((doc) => {
+                myTrip.push({ ...doc.data(), key: doc.id }); // สั่งให้ลบ document นั้น
+            });
+            // console.log(myTrip);
+
+            delPlaceInTrip(myTrip);
             await deleteDoc(documentRef);
             alert(`Trip deleted successfully.`);
-            // setLike(false);
-            // getWishlist();
         } catch (error) {
             console.error("Error deleting Trip:", error);
         }
-        // console.log(item.key);
+    }
+
+    const delPlaceInTrip = async (myTrip) => {
+        console.log(myTrip);
+        myTrip.forEach(async (trip) => {
+            const tripRef = doc(db, 'places', trip.key);
+            try {
+                await deleteDoc(tripRef);
+                console.log(`Document with ID ${trip.key} deleted successfully.`);
+            } catch (error) {
+                console.error("Error deleting document:", trip.key, error);
+            }
+        });
     }
 
     useFocusEffect(
@@ -86,7 +112,13 @@ export default function MyAllTrip({ navigation, item }) {
                         <View className="flex flex-row mt-[3px] items-center">
                             <Image className="mr-[6px]" source={{ uri: 'https://img.icons8.com/metro/96/2E2E2E/tear-off-calendar.png' }}
                                 style={{ width: 10, height: 10 }} />
-                            <Text className="text-[8px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>{item.trip_start_date} - {item.trip_end_date}</Text>
+                            <Text className="text-[8px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>
+                            {differanceDate == 1 ? (
+                                    item.trip_start_date.slice(5)
+                                ) : (
+                                    item.trip_start_date.slice(5) + " - " + item.trip_end_date.slice(5)
+                            )}
+                            </Text>
                         </View>
                     </View>
                 </ImageBackground>

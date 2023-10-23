@@ -76,7 +76,7 @@ export default function Wishlist({ navigation }) {
                         <Header screen={"Wishlist"} title={"My Travel"} subtitle={"Wishlist"} navigation={navigation} />
                     </View>
 
-                    <View className="mt-6">
+                    <View className="mt-10">
                         <View className="flex-row flex-wrap">
                             {wishlist.map(item => (
                                 <View className="w-[50%] p-1 mt-[-16px]"
