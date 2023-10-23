@@ -102,7 +102,7 @@ export default function TripDatePlan({ navigation, item, tripKey }) {
 
                             </View>
                             <View className="flex flex-row justify-between items-center mt-3">
-                                <Text className="text-[16px] text-gray-light" style={{ fontFamily: 'promptSemiBold' }}>{item.place_title}</Text>
+                                <Text className="text-[16px] text-gray-light h-7 w-[180px]" style={{ fontFamily: 'promptSemiBold' }}>{item.place_title}</Text>
                                 <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptRegular' }}>{item.place_time}</Text>
                             </View>
                             <Text className="text-[10px] text-gray-light mt-2 h-8" style={{ fontFamily: 'promptLight' }}>{item.place_description}</Text>

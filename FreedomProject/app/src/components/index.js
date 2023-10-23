@@ -7,6 +7,7 @@ import TripEventBox from "./TripEventBox";
 import MyAllTrip from "./MyAllTrip";
 import TripOnDay from "./TripOnDay";
 import Header from "./Header";
+import WishlistForTrip from "./WishlistForTrip";
 
 export {
     MyTrip,
@@ -16,4 +17,5 @@ export {
     MyAllTrip,
     TripOnDay,
     Header,
+    WishlistForTrip
 };

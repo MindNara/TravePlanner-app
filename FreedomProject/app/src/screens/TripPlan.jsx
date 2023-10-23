@@ -31,6 +31,8 @@ import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datep
 import { placeSelector } from '../redux/placesSlice';
 import { userSelector } from "../redux/usersSlice";
 import { scheduleSelector } from "../redux/schedulesSlice";
+import { WishlistForTrip, PlaceTrip } from "../components/index";
+import { wishlistSlice, wishlistSelector, wishListReceived, wishlistStatus } from '../redux/wishlistSlice';
 
 
 const TripPlan = ({ route, navigation }) => {
@@ -287,8 +289,23 @@ const TripPlan = ({ route, navigation }) => {
     const [openTime, setOpenTime] = useState(false);
     const [time, setTime] = useState(formattedTime);
     const [category, setCategory] = useState('');
-    const categorys = ['Place', 'Restaurant', 'Hotel'];
+    const categorys = ['Place', 'Restaurant', 'Hotel', 'Accomodation', 'Attraction'];
     const [scheduleDates, setScheduleDates] = useState('');
+
+    function formatCategory(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
+    // Add place with Wishlist
+    const wishlists = useSelector(wishlistSelector);
+    const wishlistItem = wishlists.wish_list;
+
+    useEffect(() => {
+        setTitle(wishlistItem.place_name);
+        setAddress(wishlistItem.place_province);
+        setCategory(formatCategory(wishlistItem.category_code));
+        setIsFav(true);
+    }, [wishlistItem]);
 
     // Check AM, PM
     const formatTime = () => {
@@ -317,6 +334,11 @@ const TripPlan = ({ route, navigation }) => {
 
     const addPlaces = async () => {
         let place_schedule_date;
+        const wishList = {
+            place_province: '',
+            place_name: '',
+            category_code: '',
+        }
         try {
             if (scheduleDates === 'NaN/NaN/NaN' && tripItem.trip_start_date !== undefined) {
                 place_schedule_date = tripItem.trip_start_date;
@@ -347,6 +369,7 @@ const TripPlan = ({ route, navigation }) => {
                 });
             }
             fetchPlaces();
+            dispatch(wishListReceived(wishList));
             Alert.alert("Success", "Trip added successfully");
             bottomSheetModelRef.current?.close();
         } catch (e) {
@@ -380,6 +403,9 @@ const TripPlan = ({ route, navigation }) => {
                         setIsOpen(false);
                         setIsFav(true);
                         setOpenTime(false);
+                        setCategory('');
+                        setTitle('');
+                        setAddress('');
                     }}
                 >
                     <View>
@@ -423,7 +449,7 @@ const TripPlan = ({ route, navigation }) => {
                                                 <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center">
                                                     <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TITLE</Text>
                                                     <TextInput className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }} placeholder="Trip Name"
-                                                        onChangeText={text => setTitle(text)}></TextInput>
+                                                        onChangeText={text => setTitle(text)} value={title}></TextInput>
                                                 </View>
 
                                                 {/* Time & Category */}
@@ -442,7 +468,7 @@ const TripPlan = ({ route, navigation }) => {
                                                             }}
                                                             buttonStyle={{ backgroundColor: '#F8F8F8', width: 'auto', height: 26 }}
                                                             buttonTextStyle={{ fontSize: 14, fontFamily: 'promptMedium', textAlign: 'left', paddingLeft: 8 }}
-                                                            defaultButtonText={"Category..."}
+                                                            defaultButtonText={category}
                                                             dropdownStyle={{ borderRadius: 10 }}
                                                             rowStyle={{ height: 40 }}
                                                             rowTextStyle={{ fontSize: 14, fontFamily: 'promptRegular', textAlign: 'left', paddingLeft: 16 }}
@@ -461,7 +487,7 @@ const TripPlan = ({ route, navigation }) => {
                                                 <View className="w-full h-auto border-[0.6px] rounded-[10px] border-gray-dark py-4 px-6 justify-center mt-[15px]">
                                                     <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>ADDRESS</Text>
                                                     <TextInput multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }} placeholder="Address"
-                                                        onChangeText={text => setAddress(text)}></TextInput>
+                                                        onChangeText={text => setAddress(text)} value={address}></TextInput>
                                                 </View>
 
                                                 {/* Btn */}
@@ -507,26 +533,8 @@ const TripPlan = ({ route, navigation }) => {
 
                                 <ScrollView>
                                     <View className="px-[32px]">
-                                        {/* Search bar */}
-                                        <View className="flex flex-row h-[40px] w-full bg-gray-light items-center rounded-[10px]">
-                                            <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
-                                                style={{ width: 20, height: 20 }} className="ml-3 opacity-60" />
-                                            <TextInput className="text-[12px] text-gray-dark ml-3 w-full opacity-80" style={{ fontFamily: 'promptRegular' }} placeholder='Search location'></TextInput>
-                                        </View>
-
-                                        <View className="mt-[20px]">
-                                            <View className="flex flex-row justify-between">
-                                                {/* <PlaceTrip navigation={navigation} />
-                                                <PlaceTrip navigation={navigation} /> */}
-                                            </View>
-                                            <View className="flex flex-row justify-between mt-[20px]">
-                                                {/* <PlaceTrip navigation={navigation} />
-                                                <PlaceTrip navigation={navigation} /> */}
-                                            </View>
-                                            <View className="flex flex-row justify-between mt-[20px]">
-                                                {/* <PlaceTrip navigation={navigation} />
-                                                <PlaceTrip navigation={navigation} /> */}
-                                            </View>
+                                        <View className="mt-[20px] h-auto">
+                                            <WishlistForTrip navigation={navigation} />
                                         </View>
                                     </View>
                                 </ScrollView>
@@ -770,8 +778,8 @@ const TripPlan = ({ route, navigation }) => {
 
                     </View>
                 </ScrollView>
-            </BottomSheetModalProvider>
-        </GestureHandlerRootView>
+            </BottomSheetModalProvider >
+        </GestureHandlerRootView >
     );
 }
 

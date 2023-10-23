@@ -22,7 +22,7 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 export default function PlaceDetailForTrip({ route, navigation }) {
 
     const item = route.params.item;
-    // console.log(tripKey);
+    // console.log(item);
 
     const [placeItem, setPlaceItem] = useState([]);
     const fetchPlaces = () => {
@@ -306,7 +306,7 @@ export default function PlaceDetailForTrip({ route, navigation }) {
                                             <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/2E2E2E/map-marker.png' }}
                                                 style={{ width: 22, height: 22 }} />
                                         </View>
-                                        <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>VIEW LOCATION</Text>
+                                        <Text className="text-[14px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>{item.place_address}</Text>
                                     </View>
                                 </View>
                             </View>
