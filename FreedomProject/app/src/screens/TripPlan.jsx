@@ -19,7 +19,7 @@ import TripDatePlan from "../components/TripDatePlan";
 import { useSelector } from "react-redux";
 import { tripSelector, tripsReceived } from '../redux/tripsSlice';
 import { db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDocs, collection, addDoc, updateDoc } from 'firebase/firestore';
+import { query, where, doc, getDocs, collection, addDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { getDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
@@ -51,48 +51,62 @@ const TripPlan = ({ route, navigation }) => {
     // console.log(placesItem);
 
     // เปลี่ยนเป็นดึง places แล้วเก็บเข้า store แทน
-    const fetchPlaces = async () => {
+    const fetchPlaces = () => {
         try {
-            const querySnapshot = await getDocs(query(collection(db, "places"), where("trip_id", "==", tripKey)));
+            const placesSnapshot = query(collection(db, "places"), where("trip_id", "==", tripKey));
             // console.log("Total places: ", querySnapshot.size);
-            const placesDoc = [];
-            querySnapshot.forEach((doc) => {
-                placesDoc.push({ ...doc.data(), key: doc.id });
-            });
-            dispatch(placesReceived(placesDoc));
-            // console.log(placesDoc);
-        } catch (error) {
-            console.error("Error fetching schedules:", error);
-        }
-    };
 
-    const [tripItem, setTrips] = useState([]);
-    const fetchTrips = async () => {
-        try {
-            const tripsRef = doc(db, 'trips', tripKey);
-            const trips = await getDoc(tripsRef);
-            // console.log(trips.data());
+            const unsubscribePlace = onSnapshot(placesSnapshot, (snapshot) => {
+                const placesDoc = [];
+                snapshot.forEach((doc) => {
+                    placesDoc.push({ ...doc.data(), key: doc.id });
+                });
+                dispatch(placesReceived(placesDoc));
+                // console.log(placesDoc);
+            })
 
-            if (trips.exists()) {
-                setTrips(trips.data());
-                dispatch(tripsReceived(trips.data()));
-            } else {
-                console.log('No trip found with given docId');
-                return null;
-            }
+            return unsubscribePlace;
+
         } catch (error) {
             console.error("Error fetching schedules:", error);
         }
     };
 
     useEffect(() => {
-        fetchPlaces();
-        fetchTrips();
+        const unsubscribePlace = fetchPlaces();
+        return () => {
+            unsubscribePlace;
+        };
     }, []);
 
-    // useEffect(() => {
-    //     fetchPlaces();
-    // }, []);
+    const [tripItem, setTrips] = useState([]);
+    const fetchTrips = () => {
+        try {
+            const tripsRef = doc(db, 'trips', tripKey);
+            // console.log(trips.data());
+
+            const unsubscribeTrip = onSnapshot(tripsRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    setTrips(snapshot.data());
+                    dispatch(tripsReceived(snapshot.data()));
+                } else {
+                    console.log('No trip found with given docId');
+                }
+            });
+
+            return unsubscribeTrip;
+
+        } catch (error) {
+            console.error("Error fetching schedules:", error);
+        }
+    };
+
+    useEffect(() => {
+        const unsubscribeTrip = fetchTrips();
+        return () => {
+            unsubscribeTrip;
+        };
+    }, []);
 
     const date = new Date();
     const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
@@ -670,7 +684,7 @@ const TripPlan = ({ route, navigation }) => {
                                     />
                                 </View>
                                 {/* Fav */}
-                                <View>
+                                {/* <View>
                                     <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
                                     <Image
                                         className="absolute top-[9px] left-2"
@@ -679,7 +693,7 @@ const TripPlan = ({ route, navigation }) => {
                                         }}
                                         style={{ width: 20, height: 20 }}
                                     />
-                                </View>
+                                </View> */}
                                 {/* Menu */}
                                 <Pressable onPress={() => {
                                     bottomSheetEditTrip.current?.present();
@@ -743,10 +757,8 @@ const TripPlan = ({ route, navigation }) => {
                         </View>
 
                         <View className="mt-[36px]">
-                            {/* <TripDatePlan navigation={navigation} currentDates={currentDates} tripKey={tripKey} /> */}
                             {/* Trip Plan */}
                             {filteredPlaces.map((item, index) => {
-                                console.log(item)
                                 return (
                                     <View className="flex flex-row">
                                         <TripDatePlan item={item} navigation={navigation} />

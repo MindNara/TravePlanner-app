@@ -22,7 +22,6 @@ export default function TripDatePlan({ navigation, item }) {
 
     const dispatch = useDispatch();
     const [isMenuPopup, setMenuPopup] = useState(false);
-    console.log(item.key);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -36,7 +35,6 @@ export default function TripDatePlan({ navigation, item }) {
             await deleteDoc(placesRef);
             dispatch(deletePlaces(item.key));
             console.log('Trip successfully deleted from Firestore');
-            navigation.goBack();
         } catch (error) {
             console.error('Error deleting trip:', error);
         }
