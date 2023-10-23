@@ -19,7 +19,7 @@ import TripDatePlan from "../components/TripDatePlan";
 import { useSelector } from "react-redux";
 import { tripSelector, tripsReceived } from '../redux/tripsSlice';
 import { db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDocs, collection, addDoc, updateDoc, onSnapshot } from 'firebase/firestore';
+import { query, where, doc, getDocs, collection, addDoc, updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { getDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
 import { scheduleReceived } from "../redux/schedulesSlice";
@@ -269,6 +269,17 @@ const TripPlan = ({ route, navigation }) => {
         }
     };
 
+    const deleteTrip = async () => {
+        try {
+            const tripsRef = doc(db, 'trips', tripKey);
+            await deleteDoc(tripsRef);
+            console.log('Trip successfully deleted from Firestore');
+            navigation.goBack();
+        } catch (error) {
+            console.error('Error deleting trip:', error);
+        }
+    }
+
     // Add places
     const [title, setTitle] = useState('');
     const [des, setDes] = useState('');
@@ -432,7 +443,7 @@ const TripPlan = ({ route, navigation }) => {
                                                             buttonStyle={{ backgroundColor: '#F8F8F8', width: 'auto', height: 26 }}
                                                             buttonTextStyle={{ fontSize: 14, fontFamily: 'promptMedium', textAlign: 'left', paddingLeft: 8 }}
                                                             defaultButtonText={"Category..."}
-                                                            dropdownStyle={{ width: 140, borderRadius: 10 }}
+                                                            dropdownStyle={{ borderRadius: 10 }}
                                                             rowStyle={{ height: 40 }}
                                                             rowTextStyle={{ fontSize: 14, fontFamily: 'promptRegular', textAlign: 'left', paddingLeft: 16 }}
                                                         />
@@ -540,6 +551,7 @@ const TripPlan = ({ route, navigation }) => {
                     </View>
                 </Pressable>
 
+                {/* Edit Trip */}
                 <BottomSheetModal
                     ref={bottomSheetEditTrip}
                     index={0}
@@ -594,11 +606,11 @@ const TripPlan = ({ route, navigation }) => {
                                     </View >
                                     {/* Btn */}
                                     <View className="flex flex-row justify-between items-center mt-[15px]">
-                                        <Pressable onPress={() => updateTrip()} className="bg-gray-dark h-[36px] w-[140px] rounded-[10px] justify-center items-center">
+                                        <Pressable onPress={() => updateTrip()} className="bg-gray-dark h-[36px] w-[180px] rounded-[10px] justify-center items-center">
                                             <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>UPDATE</Text>
                                         </Pressable>
-                                        <Pressable onPress={() => { bottomSheetEditTrip.current?.close(); }} className="h-[36px] w-[140px] rounded-[10px] justify-center items-center border-[0.6px]">
-                                            <Text className="text-[12px] text-gray-dark tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>CANCEL</Text>
+                                        <Pressable onPress={() => { deleteTrip(); }} className="h-[36px] w-[100px] bg-red rounded-[10px] justify-center items-center">
+                                            <Text className="text-[12px] text-white tracking-[1px]" style={{ fontFamily: 'promptMedium' }}>DELETE</Text>
                                         </Pressable>
                                     </View>
                                 </View>
@@ -683,17 +695,6 @@ const TripPlan = ({ route, navigation }) => {
                                         style={{ width: 20, height: 20 }}
                                     />
                                 </View>
-                                {/* Fav */}
-                                {/* <View>
-                                    <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
-                                    <Image
-                                        className="absolute top-[9px] left-2"
-                                        source={{
-                                            uri: "https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png",
-                                        }}
-                                        style={{ width: 20, height: 20 }}
-                                    />
-                                </View> */}
                                 {/* Menu */}
                                 <Pressable onPress={() => {
                                     bottomSheetEditTrip.current?.present();

@@ -18,7 +18,9 @@ import { useSelector } from "react-redux";
 import { deletePlaces } from '../redux/placesSlice';
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function TripDatePlan({ navigation, item }) {
+export default function TripDatePlan({ navigation, item, tripKey }) {
+
+    // console.log(tripKey);
 
     const dispatch = useDispatch();
     const [isMenuPopup, setMenuPopup] = useState(false);
@@ -34,9 +36,9 @@ export default function TripDatePlan({ navigation, item }) {
             const placesRef = doc(db, 'places', item.key);
             await deleteDoc(placesRef);
             dispatch(deletePlaces(item.key));
-            console.log('Trip successfully deleted from Firestore');
+            console.log('Place successfully deleted from Firestore');
         } catch (error) {
-            console.error('Error deleting trip:', error);
+            console.error('Error deleting place:', error);
         }
     };
 
@@ -83,7 +85,7 @@ export default function TripDatePlan({ navigation, item }) {
             {/* Plan event */}
             <View className="w-[290px] h-auto">
                 <View className="h-40 mb-2">
-                    <Pressable onPress={() => { navigation.navigate("PlaceDetailForTrip", { item: item }) }}>
+                    <Pressable onPress={() => { navigation.navigate("PlaceDetailForTrip", { item: item, tripKey: tripKey }) }}>
                         <View className="bg-gray-dark h-auto rounded-[30px] p-6 mb-3">
                             <View className="flex flex-row items-center justify-between">
                                 <View className="flex flex-row items-center">
