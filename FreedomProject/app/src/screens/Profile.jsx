@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         height: 40,
         width: 40,
-        backgroundColor: "black",
+        backgroundColor: "#B3D7E7",
         justifyContent: "center",
         alignItems: 'center',
         borderRadius: 10
@@ -308,7 +308,9 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 32,
         borderRadius: 10,
-        backgroundColor: 'black',
+        backgroundColor: '#B3D7E7',
+        // borderWidth: 1,  // ความหนาของเส้นขอบ
+        // borderColor: 'gray'  // สีของเส้นขอบ
     },
     button2: {
         alignItems: 'center',

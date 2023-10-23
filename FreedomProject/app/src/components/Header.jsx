@@ -35,8 +35,8 @@ export default function Header({ screen, title, subtitle, navigation }) {
 
                 {/* Title */}
                 <View>
-                    <Text className="text-[24px] text-gray-dark" style={{ fontFamily: 'promptRegular' }}>{title}</Text>
-                    <Text className="text-[28px] mt-[-10px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>{subtitle}</Text>
+                    <Text className="text-[24px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>{title}</Text>
+                    <Text className="text-[28px] mt-[-10px] text-blue-light" style={{ fontFamily: 'promptSemiBold' }}>{subtitle}</Text>
                 </View>
 
                 {/* Noti & Profile */}

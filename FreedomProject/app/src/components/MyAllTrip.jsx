@@ -47,7 +47,7 @@ export default function MyAllTrip({ navigation, item }) {
         console.log("delete eiei")
         console.log(item.key);
 
-        const documentRef = doc(db, 'trips', item.key);
+        const TripRef = doc(db, 'trips', item.key);
         // console.log(documentRef.id);
         try {
             // console.log(documentRef);
@@ -61,7 +61,7 @@ export default function MyAllTrip({ navigation, item }) {
             // console.log(myTrip);
 
             delPlaceInTrip(myTrip);
-            await deleteDoc(documentRef);
+            await deleteDoc(TripRef);
             alert(`Trip deleted successfully.`);
         } catch (error) {
             console.error("Error deleting Trip:", error);

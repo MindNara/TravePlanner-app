@@ -108,54 +108,57 @@ export default function Home({ navigation }) {
                     <View className="relative">
                         <Header screen={"Home"} title={"Hello"} subtitle={userInfo.user_username} navigation={navigation} />
                     </View>
-
-                    {/* My Trip */}
-                    <View className="bg-white h-auto w-full mt-[12px] mb-[20px]">
-                        <View className="flex flex-row justify-between items-center">
-                            <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>My Trips</Text>
-                            <Pressable onPress={() => {
-                                navigation.navigate("MyDreamTrip");
-                            }}>
-                                <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>All Trips</Text>
-                            </Pressable>
+                    <View>
+                        {/* My Trip */}
+                        <View className="bg-white h-auto w-full mt-[-14] mb-[20px]">
+                            <View className="flex flex-row justify-between items-center">
+                                <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>My Trips</Text>
+                                <Pressable onPress={() => {
+                                    navigation.navigate("MyDreamTrip");
+                                }}>
+                                    <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>All Trips</Text>
+                                </Pressable>
+                            </View>
+                            <View className="mt-[20px] flex flex-row justify-between">
+                                {user_id == null ? (<Text>Loading...</Text>) : (
+                                    <FlatList
+                                        data={trips.slice(0, 5)}
+                                        keyExtractor={item => item.key}
+                                        renderItem={({ item }) => {
+                                            return (
+                                                <MyTrip item={item} key={item.key} navigation={navigation} />
+                                            )
+                                        }}
+                                        horizontal={true}
+                                        showsHorizontalScrollIndicator={false}
+                                    />
+                                )}
+                            </View>
                         </View>
-                        <View className="mt-[20px] flex flex-row justify-between">
-                            {user_id == null ? (<Text>Loading...</Text>) : (
-                                <FlatList
-                                    data={trips.slice(0, 5)}
-                                    keyExtractor={item => item.key}
-                                    renderItem={({ item }) => {
+
+                        {/* Recommended Trip */}
+                        <View className="bg-white h-auto w-full mb-5">
+                            <View className="flex flex-row justify-between items-center">
+                                <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
+                                <Pressable onPress={() => {
+                                    navigation.navigate("ExploreTrip");
+                                }}>
+                                    <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>View All</Text>
+                                </Pressable>
+                            </View>
+                            <View className="mt-[20px] flex">
+                                {loadedTrip ? (<Text>Loading...</Text>) : (
+                                    TripItems.map((item, index) => {
                                         return (
-                                            <MyTrip item={item} key={item.key} navigation={navigation} />
+                                            <RecommendedTrip item={item} key={item.route_id} navigation={navigation} />
                                         )
-                                    }}
-                                    horizontal={true}
-                                    showsHorizontalScrollIndicator={false}
-                                />
-                            )}
+                                    })
+                                )}
+                            </View>
                         </View>
+
                     </View>
 
-                    {/* Recommended Trip */}
-                    <View className="bg-white h-auto w-full mb-5">
-                        <View className="flex flex-row justify-between items-center">
-                            <Text className="text-[20px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Recommended Trip</Text>
-                            <Pressable onPress={() => {
-                                navigation.navigate("ExploreTrip");
-                            }}>
-                                <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>View All</Text>
-                            </Pressable>
-                        </View>
-                        <View className="mt-[20px] flex">
-                            {loadedTrip ? (<Text>Loading...</Text>) : (
-                                TripItems.map((item, index) => {
-                                    return (
-                                        <RecommendedTrip item={item} key={item.route_id} navigation={navigation} />
-                                    )
-                                })
-                            )}
-                        </View>
-                    </View>
                 </View>
             </View>
         </ScrollView>
