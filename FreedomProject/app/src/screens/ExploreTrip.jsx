@@ -62,7 +62,23 @@ export default function ExploreTrip({ navigation }) {
                         <Header screen={"ExploreTrip"} title={"Explore Places to"} subtitle={"Visit in Thailand"} navigation={navigation} />
                     </View>
 
-                    <View>
+                    {/* SearchBar */}
+                    <View style={{ flexDirection: 'row', marginTop: 10 }} className="mx-[32px]">
+                        <View style={[styles.SearchContainer]}>
+                            <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
+                                style={{ width: 18, height: 20 }} className="ml-3 opacity-80" />
+                            {/* ใช้ onEndEditing เพื่อให้มัน set ค่าหลังจากที่กด enter ที่แป้นพิมเท่านั้น ไม่ต้อง set ตลอดเวลา และใช้ defautvalue เพื่อไม่ให้มัน update ค่าทุกครั้งที่เปลี่ยนแปลง ต้องกด enter ก่อน */}
+                            <TextInput placeholder='Search location' className="ml-3 w-full text-[14px]" style={[styles.input, { fontFamily: 'promptRegular', fontSize: 12 }]} onEndEditing={(e) => setSearchPlace(e.nativeEvent.text)} defaultValue={searchPlace}></TextInput>
+                        </View>
+                        <Pressable onPress={clearSearch}>
+                            <View style={[styles.sortbtn]}>
+                                <Image source={{ uri: 'https://img.icons8.com/material-rounded/24/multiply--v1.png' }}
+                                    style={{ width: 20, height: 20 }} />
+                            </View>
+                        </Pressable>
+                    </View>
+
+                    <View className="mt-5">
                         {searchPlace == "" ? (
                             <View className="h-full mx-[32px]">
                                 <View className="my-[2px]">

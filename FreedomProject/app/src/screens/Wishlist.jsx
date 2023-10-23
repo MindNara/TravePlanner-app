@@ -51,6 +51,8 @@ export default function Wishlist({ navigation }) {
         return unsubscribe;
     }
 
+    console.log(wishlist.length)
+
     // useFocusEffect(
     //     React.useCallback(() => {
     //         getWishlist();
@@ -70,9 +72,9 @@ export default function Wishlist({ navigation }) {
     return (
         <ScrollView className="bg-white">
             <View className="container mx-auto bg-white">
-                <View className="h-full mx-[32px] pt-14 bg-white">
+                <View className={`mx-[32px] pt-14 bg-white ${wishlist.length > 4 ? 'h-auto' : 'h-[800px]'}`}>
                     {/* Header */}
-                    <View>
+                    <View className="relative">
                         <Header screen={"Wishlist"} title={"My Travel"} subtitle={"Wishlist"} navigation={navigation} />
                     </View>
 
