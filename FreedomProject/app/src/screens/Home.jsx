@@ -32,8 +32,10 @@ export default function Home({ navigation }) {
 
     const { dataTrip, loadedTrip } = TripApi();
     const TripItems = dataTrip.result ? dataTrip.result.filter((item, index) => index < 3) : [];
+    // console.log(TripItems)
 
     const [trips, setTrips] = useState([]);
+    // console.log(trips)
 
     const [userInfo, setUserInfo] = useState([]);
 
@@ -99,7 +101,7 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <ScrollView>
+        <ScrollView className="bg-white">
             <View className="container mx-auto h-full bg-white">
                 <View className="mx-[32px] pt-14 bg-white gap-y-[24px]">
                     {/* Header */}
@@ -121,10 +123,10 @@ export default function Home({ navigation }) {
                             {user_id == null ? (<Text>Loading...</Text>) : (
                                 <FlatList
                                     data={trips.slice(0, 5)}
-                                    keyExtractor={item => item.id}
+                                    keyExtractor={item => item.key}
                                     renderItem={({ item }) => {
                                         return (
-                                            <MyTrip item={item} navigation={navigation} />
+                                            <MyTrip item={item} key={item.key} navigation={navigation} />
                                         )
                                     }}
                                     horizontal={true}
@@ -148,7 +150,7 @@ export default function Home({ navigation }) {
                             {loadedTrip ? (<Text>Loading...</Text>) : (
                                 TripItems.map((item, index) => {
                                     return (
-                                        <RecommendedTrip item={item} navigation={navigation} />
+                                        <RecommendedTrip item={item} key={item.route_id} navigation={navigation} />
                                     )
                                 })
                             )}
