@@ -105,6 +105,7 @@ export default function PlaceDetailForTrip({ route, navigation }) {
                 trip_image: ''
             });
             console.log("Place update successfully");
+            navigation.navigate("TripPlan", { tripKey: item.key });
         } catch (error) {
             console.log("Error adding document: ", error.message);
         } finally {

@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 32,
         borderRadius: 10,
-        backgroundColor: '#B3D7E7',
+        backgroundColor: 'black',
         // borderWidth: 1,  // ความหนาของเส้นขอบ
         // borderColor: 'gray'  // สีของเส้นขอบ
     },
