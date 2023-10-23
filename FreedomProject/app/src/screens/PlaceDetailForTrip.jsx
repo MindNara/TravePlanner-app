@@ -112,6 +112,17 @@ export default function PlaceDetailForTrip({ route, navigation }) {
         }
     }
 
+    const deletePlace = async () => {
+        try {
+            const placeRef = doc(db, 'places', item.key);
+            await deleteDoc(placeRef);
+            console.log('Place successfully deleted from Firestore');
+            navigation.goBack();
+        } catch (error) {
+            console.error('Error deleting place:', error);
+        }
+    }
+
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
         promptRegular: require("../assets/fonts/Prompt-Regular.ttf"),
