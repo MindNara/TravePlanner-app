@@ -34,7 +34,7 @@ export default function ExploreTrip({ navigation }) {
 
     // console.log(searchPlace);
     // console.log(data);
-    console.log(PlaceAll);
+    // console.log(PlaceAll);
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
