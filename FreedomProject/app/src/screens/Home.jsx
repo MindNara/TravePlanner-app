@@ -119,22 +119,24 @@ export default function Home({ navigation }) {
                                     <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>All Trips</Text>
                                 </Pressable>
                             </View>
-                            <View className="mt-[20px] flex flex-row justify-between">
-                                <MyTripDefault navigation={navigation} />
-                                {user_id == null ? (<Text>Loading...</Text>) : (
-                                    <FlatList
-                                        data={trips.slice(0, 5)}
-                                        keyExtractor={item => item.key}
-                                        renderItem={({ item }) => {
-                                            return (
-                                                <MyTrip item={item} key={item.key} navigation={navigation} />
-                                            )
-                                        }}
-                                        horizontal={true}
-                                        showsHorizontalScrollIndicator={false}
-                                    />
-                                )}
-                            </View>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                <View className="mt-[20px] flex flex-row justify-between">
+                                    <MyTripDefault navigation={navigation} />
+                                    {user_id == null ? (<Text>Loading...</Text>) : (
+                                        <FlatList
+                                            data={trips.slice(0, 5)}
+                                            keyExtractor={item => item.key}
+                                            renderItem={({ item }) => {
+                                                return (
+                                                    <MyTrip item={item} key={item.key} navigation={navigation} />
+                                                )
+                                            }}
+                                            horizontal={true}
+                                            showsHorizontalScrollIndicator={false}
+                                        />
+                                    )}
+                                </View>
+                            </ScrollView>
                         </View>
 
                         {/* Recommended Trip */}

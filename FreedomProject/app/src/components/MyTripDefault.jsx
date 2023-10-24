@@ -37,19 +37,15 @@ export default function MyTripDefault({ navigation, item }) {
             <Pressable onPress={() => {
                 navigation.navigate("CreateTrip");
             }}>
-                <ImageBackground className="relative h-[210px] w-[156px] justify-end items-center"
+                <ImageBackground className="relative h-[210px] w-[156px] justify-center items-center"
                     source={require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
-                    <View className="relative bg-white opacity-40 w-[145px] h-[65px] mb-2 py-2 px-3 rounded-[16px] items-center" />
-                    <View className="absolute w-[110px] h-[58px] px-1">
-                        {/* <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>Province</Text> */}
-                        <Text className="text-[16px] my-[-2px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>{ }</Text>
-                        <View className="flex flex-row mt-[3px] items-center">
-                            <Image className="mr-[6px]" source={{ uri: 'https://img.icons8.com/metro/96/2E2E2E/tear-off-calendar.png' }}
-                                style={{ width: 10, height: 10 }} />
-                            <Text className="text-[8px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>
-                            </Text>
-                        </View>
-                    </View>
+                    <View className="bg-gray-dark w-full h-full absolute rounded-[20px] opacity-20"></View>
+                    <ImageBackground source={{ uri: 'https://img.icons8.com/sf-black-filled/128/B3D7E7/filled-circle.png' }}
+                        style={[{ width: 62, height: 60 }, styles.tabBarIconCreate]}>
+                        <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/90/FFFFFF/plus-math.png' }}
+                            style={{ width: 18, height: 18 }} />
+                    </ImageBackground>
+                    <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptRegular' }}>Create Trip</Text>
                 </ImageBackground>
             </Pressable>
         </View>
@@ -58,11 +54,12 @@ export default function MyTripDefault({ navigation, item }) {
 }
 
 const styles = StyleSheet.create({
-    btn: {
-        height: 32,
-        width: 32,
-        justifyContent: "center",
+    tabBarIconCreate: {
+        marginTop: 5,
+        justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 50,
+    },
+    tabBarIcon: {
+        marginBottom: 6,
     },
 });
