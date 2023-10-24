@@ -45,12 +45,18 @@ export default function TripDatePlan({ navigation, item, tripKey }) {
     function menuPopup() {
         return (
             <View className="bg-gray-light absolute z-20 right-7 top-12 w-auto h-auto rounded-[5px] px-3 py-1">
-                <Pressable className="p-1 flex flex-row items-center" onPress={() => { menuPopup() }}>
+                <Pressable className="p-1 flex flex-row items-center" onPress={() => {
+                    menuPopup();
+                    setMenuPopup(!isMenuPopup);
+                }}>
                     <Image className="mr-2" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/48/create-new.png' }}
                         style={{ width: 15, height: 15 }} />
                     <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Edit</Text>
                 </Pressable>
-                <Pressable className="p-1 flex flex-row items-center" onPress={() => { deletePlace() }}>
+                <Pressable className="p-1 flex flex-row items-center" onPress={() => {
+                    deletePlace();
+                    setMenuPopup(!isMenuPopup);
+                }}>
                     <Image className="mr-2" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/9A1B29/48/filled-trash.png' }}
                         style={{ width: 15, height: 15 }} />
                     <Text className="text-[12px] text-red" style={{ fontFamily: 'promptMedium' }}>Delete</Text>
@@ -95,7 +101,9 @@ export default function TripDatePlan({ navigation, item, tripKey }) {
                                     </View>
                                     <Text className="text-[12px] text-gray-light" style={{ fontFamily: 'promptMedium' }}>{item.place_category}</Text>
                                 </View>
-                                <Pressable className="relative" onPress={() => { setMenuPopup(!isMenuPopup) }}>
+                                <Pressable className="relative" onPress={() => {
+                                    setMenuPopup(!isMenuPopup);
+                                }}>
                                     <Image className="" source={{ uri: 'https://img.icons8.com/ios-glyphs/90/F8F8F8/menu-2.png' }}
                                         style={{ width: 20, height: 20 }} />
                                 </Pressable>
