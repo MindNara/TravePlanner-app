@@ -8,6 +8,7 @@ import MyAllTrip from "./MyAllTrip";
 import TripOnDay from "./TripOnDay";
 import Header from "./Header";
 import WishlistForTrip from "./WishlistForTrip";
+import MyTripDefault from "./MyTripDefault";
 
 export {
     MyTrip,
@@ -17,5 +18,6 @@ export {
     MyAllTrip,
     TripOnDay,
     Header,
-    WishlistForTrip
+    WishlistForTrip,
+    MyTripDefault,
 };

@@ -47,7 +47,7 @@ export default function Intro({ navigation }) {
             });
             navigation.navigate("SignIn");
             alert('Sign Up Complete');
-            addTrip(user_id);
+            // addTrip(user_id);
         }
         catch (error) {
             console.log(error);
@@ -58,27 +58,28 @@ export default function Intro({ navigation }) {
         }
     }
 
-    const addTrip = async (userId) => {
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth() + 1;
-        const day = currentDate.getDate();
-        const formattedDate = `${year}/${month}/${day}`;
-        // console.log("User ID of Trip: " + userId);
+    // const addTrip = async (userId) => {
+    //     const currentDate = new Date();
+    //     const year = currentDate.getFullYear();
+    //     const month = currentDate.getMonth() + 1;
+    //     const day = currentDate.getDate();
+    //     const formattedDate = `${year}/${month}/${day}`;
+    //     // console.log("User ID of Trip: " + userId);
 
-        try {
-            const tripRef = await addDoc(collection(db, "trips"), {
-                trip_title: 'Test',
-                trip_description: 'Description',
-                trip_start_date: formattedDate,
-                trip_end_date: formattedDate,
-                trip_image: '',
-                user_id: userId
-            });
-        } catch (e) {
-            alert("Error", "Error adding document: ", e.message);
-        }
-    }
+    //     try {
+    //         const tripRef = await addDoc(collection(db, "trips"), {
+    //             trip_title: 'Let Go Create',
+    //             trip_description: 'Description',
+    //             trip_start_date: formattedDate,
+    //             trip_end_date: formattedDate,
+    //             trip_image: '',
+    //             user_id: userId,
+    //             trip_id: '05152'
+    //         });
+    //     } catch (e) {
+    //         alert("Error", "Error adding document: ", e.message);
+    //     }
+    // }
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),

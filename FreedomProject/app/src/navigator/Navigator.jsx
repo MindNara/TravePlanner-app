@@ -15,18 +15,20 @@ const Stack = createNativeStackNavigator();
 
 export default function Navigator() {
     const user = useSelector(userSelector);
+    const userLoading = user.loading;
+    console.log(userLoading);
     const [status, setStatus] = useState(null);
 
     useEffect(() => {
         onAuthStateChanged(firebase_auth, (user) => {
-            // console.log(user);
+            console.log(user);
             setStatus(user);
         })
     }, [user]);
 
     return (
         <NavigationContainer>
-            {status ? (
+            {status && userLoading === 'login success' ? (
                 <Stack.Navigator screenOptions={{
                     headerShown: false,
                 }}>

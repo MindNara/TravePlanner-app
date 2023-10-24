@@ -11,7 +11,7 @@ import {
     FlatList,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
-import { MyTrip, RecommendedTrip, Header } from '../components/index';
+import { MyTrip, RecommendedTrip, Header, MyTripDefault } from '../components/index';
 import { TripApi } from "../data/PlaceApi";
 import { useSelector } from "react-redux";
 import { userSelector } from "../redux/usersSlice";
@@ -120,6 +120,7 @@ export default function Home({ navigation }) {
                                 </Pressable>
                             </View>
                             <View className="mt-[20px] flex flex-row justify-between">
+                                <MyTripDefault navigation={navigation} />
                                 {user_id == null ? (<Text>Loading...</Text>) : (
                                     <FlatList
                                         data={trips.slice(0, 5)}
