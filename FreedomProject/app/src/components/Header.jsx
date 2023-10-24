@@ -11,6 +11,7 @@ import {
     TextInput,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
+import { firebase_auth } from '../firebase/firebaseConfig';
 
 export default function Header({ screen, title, subtitle, navigation }) {
 
@@ -154,7 +155,7 @@ export default function Header({ screen, title, subtitle, navigation }) {
 
                         {/* Btn Log Out */}
                         <Pressable className="flex flex-row items-center mt-[6px]" onPress={() => {
-                            navigation.navigate("Intro");
+                            firebase_auth.signOut();
                             setProfileModel(false);
                         }}>
                             <Image className="mr-2" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/96/2E2E2E/exit--v1.png' }}

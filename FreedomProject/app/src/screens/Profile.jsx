@@ -200,7 +200,8 @@ export default function Profile({ navigation }) {
                                         </View>
                                         <View className="mt-[16px]">
                                             <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
-                                                navigation.navigate("Intro");
+                                                dispatch(usersLoading());
+                                                firebase_auth.signOut();
                                             }}>
                                                 <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
                                             </Pressable>
@@ -260,7 +261,7 @@ export default function Profile({ navigation }) {
                                         <View className="mt-[16px]">
                                             <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
                                                 dispatch(usersLoading());
-                                                // navigation.navigate("Intro");
+                                                firebase_auth.signOut();
                                             }}>
                                                 <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
                                             </Pressable>
