@@ -102,7 +102,6 @@ export default function PlaceDetailForTrip({ route, navigation }) {
                 place_time: time,
                 place_address: address,
                 place_category: category,
-                place_image: ''
             });
             console.log("Place update successfully");
             navigation.navigate("TripPlan", { tripKey: item.key });
