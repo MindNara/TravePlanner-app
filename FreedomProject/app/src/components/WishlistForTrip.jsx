@@ -97,7 +97,6 @@ export default function WishlistForTrip({ navigation }) {
                             <Text className="text-[12px] text-white" style={{ fontFamily: 'promptMedium' }}>Add Place</Text>
                         </Pressable>
                     </View>
-
                 </View>
             ))}
         </View>

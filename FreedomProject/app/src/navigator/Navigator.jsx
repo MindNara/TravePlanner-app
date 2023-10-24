@@ -19,7 +19,7 @@ export default function Navigator() {
 
     useEffect(() => {
         onAuthStateChanged(firebase_auth, (user) => {
-            console.log(user);
+            // console.log(user);
             setStatus(user);
         })
     }, [user]);
@@ -44,12 +44,6 @@ export default function Navigator() {
                     <Stack.Screen name="Intro" component={Intro} />
                     <Stack.Screen name="SignUp" component={SignUp} />
                     <Stack.Screen name="SignIn" component={SignIn} />
-                    {/* <Stack.Screen name="Content" component={TabBar} />
-                    <Stack.Screen name="PlaceDetail" component={PlaceDetail} />
-                    <Stack.Screen name="TripPlan" component={TripPlan} />
-                    <Stack.Screen name="MyDreamTrip" component={MyDreamTrip} />
-                    <Stack.Screen name="TripDetail" component={TripDetail} />
-                    <Stack.Screen name="PlaceDetailForTrip" component={PlaceDetailForTrip} /> */}
                 </Stack.Navigator>
             )}
         </NavigationContainer>
