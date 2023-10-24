@@ -70,14 +70,14 @@ export default function Profile({ navigation }) {
 
     const UpdateProfile = async () => {
         const user = firebase_auth.currentUser;
-        const userRef = doc(db, 'users', user.uid); 
+        const userRef = doc(db, 'users', user.uid);
         // console.log(user.uid);
         try {
             console.log(user_password);
             console.log(user_info.user_password);
             console.log('eiei');
             // console.log(user_info.user_password);
-            if (user_password === ''){
+            if (user_password === '') {
                 alert('Password is not null')
                 setUser_password(user_info.user_password);
             }
@@ -87,7 +87,7 @@ export default function Profile({ navigation }) {
                 updatePasswordInFirestore(user.uid);
             }
             updateInFirestore(user.uid);
-            
+
             const updatedDoc = await getDoc(userRef);
             const updatedData = updatedDoc.data();
             // console.log(updatedData);
@@ -120,18 +120,18 @@ export default function Profile({ navigation }) {
         const userRef = doc(db, 'users', user_uid); // สมมติว่าคุณมี collection ชื่อ 'users' และ documentId คือ userId
         console.log(user_info);
         try {
-            if (user_fname === ''){
-                alert('Firstname is not null')
-                setUser_fname(user_info.user_fname);
-            }
-            if (user_lname === ''){
-                alert('Lastname is not null')
-                setUser_lname(user_info.user_lname);
-            }
-            if (user_username === ''){
-                alert('Username is not null')
-                setUser_username(user_info.user_username);
-            }
+            // if (user_fname === '') {
+            //     alert('Firstname is not null')
+            //     setUser_fname(user_info.user_fname);
+            // }
+            // if (user_lname === '') {
+            //     alert('Lastname is not null')
+            //     setUser_lname(user_info.user_lname);
+            // }
+            // if (user_username === '') {
+            //     alert('Username is not null')
+            //     setUser_username(user_info.user_username);
+            // }
 
             let fname = user_fname !== '' ? user_fname : user_info.user_fname;
             let lname = user_lname !== '' ? user_lname : user_info.user_lname;
@@ -156,77 +156,81 @@ export default function Profile({ navigation }) {
 
     return (
         <ScrollView className="bg-white">
-        <View className="container mx-auto h-full bg-white " >
-            <View className="w-full h-full bg-blue-light">
-            <View className="bottom-0 mt-40 bg-white w-full h-full rounded-t-[50px]">
-                {isPressed == false ? (
-                    <View>
-                        <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
-                        <View className="ml-[230] mt-2">
-                            <View style={[styles.picbtn]} className="rounded-full">
-                                <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/30/FFFFFF/edit-image.png' }}
-                                    style={{ width: 24, height: 24 }} />
-                            </View>
-                        </View>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <View className="mt-8 ml-6 flex flex-row">
-                                <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }} editable={false}>{user_username}</TextInput>
-                                <Pressable onPress={() => setIsPressed(true)}>
-                                    <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
-                                        style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
-                                </Pressable>
-                            </View>
-                            <View className="mt-8">
-                                <View>
-                                    <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname} editable={false} ></TextInput>
-                                    <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
+            <View className="container mx-auto h-full bg-white " >
+                <View className="w-full h-full bg-blue-light">
+                    <View className="bottom-0 mt-40 bg-white w-full h-full rounded-t-[50px]">
+                        {isPressed == false ? (
+                            <View>
+                                <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
+                                <View className="ml-[230] mt-2">
+                                    <View style={[styles.picbtn]} className="rounded-full">
+                                        <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/30/FFFFFF/edit-image.png' }}
+                                            style={{ width: 24, height: 24 }} />
+                                    </View>
                                 </View>
-                                <View className="mt-6">
-                                    <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} editable={false} ></TextInput>
-                                    <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
-                                </View>
-                                <View className="mt-6">
-                                    <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email} editable={false} ></TextInput>
-                                    <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
-                                </View>
-                                <View className="mt-6">
-                                    <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value="*********" editable={false} ></TextInput>
-                                    <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
-                                </View>
-                                <View className="mt-[30px]">
-                                    <Pressable style={styles.button}>
-                                        <Text className="text-[14px] tracking-[1px]" style={{ color: 'white', fontFamily: 'promptSemiBold' }}>SAVE</Text>
-                                    </Pressable>
-                                </View>
-                                <View className="mt-[16px]">
-                                    <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
-                                        navigation.navigate("Intro");
-                                    }}>
-                                        <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
-                                    </Pressable>
-                                </View>
+                                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                    <View className="mt-8 ml-6 flex flex-row">
+                                        <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }} editable={false}>{user_username}</TextInput>
+                                        <Pressable onPress={() => setIsPressed(true)}>
+                                            <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
+                                                style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
+                                        </Pressable>
+                                    </View>
+                                    <View className="mt-8">
+                                        <View>
+                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname} editable={false} ></TextInput>
+                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
+                                        </View>
+                                        <View className="mt-6">
+                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} editable={false} ></TextInput>
+                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
+                                        </View>
+                                        <View className="mt-6">
+                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email} editable={false} ></TextInput>
+                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
+                                        </View>
+                                        <View className="mt-6">
+                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value="*********" editable={false} ></TextInput>
+                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
+                                        </View>
+                                        <View className="mt-[30px]">
+                                            <Pressable style={styles.button}>
+                                                <Text className="text-[14px] tracking-[1px]" style={{ color: 'white', fontFamily: 'promptSemiBold' }}>SAVE</Text>
+                                            </Pressable>
+                                        </View>
+                                        <View className="mt-[16px]">
+                                            <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
+                                                navigation.navigate("Intro");
+                                            }}>
+                                                <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
+                                            </Pressable>
+                                        </View>
 
-                            </View>
-                        </View>
-                    </View>) : (
-                    <View>
-                        <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
-                        <View className="ml-[230] mt-2">
-                            <View style={[styles.picbtn]} className="rounded-full">
-                                <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/30/FFFFFF/edit-image.png' }}
-                                    style={{ width: 24, height: 24 }} />
-                            </View>
-                        </View>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <View className="mt-8 ml-6 flex flex-row">
-                                <TextInput className="text-[24px]" style={{fontFamily: 'promptSemiBold', color: 'black'}} value={user_username} onChangeText={text => setUser_username(text)} editable={true} ></TextInput>
-                                <Pressable>
-                                    <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
-                                        style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
-                                </Pressable>
-                            </View>
-                            <View className="mt-8">
-                                {user_fname != '' ? (
+                                    </View>
+                                </View>
+                            </View>) : (
+                            <View>
+                                <View className="absolute w-[180px] h-[180px] bg-black rounded-full mt-[-90] ml-[105]" style={{ backgroundColor: "#F8F8F8" }}></View>
+                                <View className="ml-[230] mt-2">
+                                    <View style={[styles.picbtn]} className="rounded-full">
+                                        <Image source={{ uri: 'https://img.icons8.com/ios-glyphs/30/FFFFFF/edit-image.png' }}
+                                            style={{ width: 24, height: 24 }} />
+                                    </View>
+                                </View>
+                                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                    <View className="mt-8 ml-6 flex flex-row">
+                                        <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }} value={user_username} onChangeText={text => setUser_username(text)} editable={true} ></TextInput>
+                                        <Pressable>
+                                            <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
+                                                style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
+                                        </Pressable>
+                                    </View>
+                                    <View className="mt-8">
+                                        <View>
+                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname} onChangeText={text => setUser_fname(text)} editable={true}></TextInput>
+                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
+                                        </View>
+                                        {/* {user_fname != '' ? (
                                     <View>
                                         <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname} onChangeText={text => setUser_fname(text)} editable={true}></TextInput>
                                         <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
@@ -235,40 +239,40 @@ export default function Profile({ navigation }) {
                                         <TextInput className="relative px-6 text-gray-dark" style={[styles.inputCheck]} value={user_fname} onChangeText={text => setUser_fname(text)} editable={true}></TextInput>
                                         <Text className="text-[16px] text-red p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
                                     </View>
-                                )}
-                                <View className="mt-6">
-                                    <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} onChangeText={text => setUser_lname(text)} editable={true}></TextInput>
-                                    <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
-                                </View>
-                                <View className="mt-6">
-                                    <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email} onChangeText={text => setUser_email(text)} editable={false}></TextInput>
-                                    <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
-                                </View>
-                                <View className="mt-6">
-                                    <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_password} onChangeText={text => setUser_password(text)} editable={true}></TextInput>
-                                    <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
-                                </View>
-                                <View className="mt-[30px]">
-                                    <Pressable style={styles.button} onPress={UpdateProfile}>
-                                        <Text className="text-[14px] tracking-[1px]" style={{ color: 'white', fontFamily: 'promptSemiBold' }}>SAVE</Text>
-                                    </Pressable>
-                                </View>
-                                <View className="mt-[16px]">
-                                    <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
-                                        dispatch(usersLoading());
-                                        // navigation.navigate("Intro");
-                                    }}>
-                                        <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
-                                    </Pressable>
-                                </View>
+                                )} */}
+                                        <View className="mt-6">
+                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} onChangeText={text => setUser_lname(text)} editable={true}></TextInput>
+                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
+                                        </View>
+                                        <View className="mt-6">
+                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email} onChangeText={text => setUser_email(text)} editable={false}></TextInput>
+                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
+                                        </View>
+                                        <View className="mt-6">
+                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_password} onChangeText={text => setUser_password(text)} editable={true}></TextInput>
+                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
+                                        </View>
+                                        <View className="mt-[30px]">
+                                            <Pressable style={styles.button} onPress={UpdateProfile}>
+                                                <Text className="text-[14px] tracking-[1px]" style={{ color: 'white', fontFamily: 'promptSemiBold' }}>SAVE</Text>
+                                            </Pressable>
+                                        </View>
+                                        <View className="mt-[16px]">
+                                            <Pressable style={styles.button2} className="border-[2px] border-red" onPress={() => {
+                                                dispatch(usersLoading());
+                                                // navigation.navigate("Intro");
+                                            }}>
+                                                <Text className="text-[14px] tracking-[1px]" style={{ color: '#9A1B29', fontFamily: 'promptSemiBold' }}>LOG OUT</Text>
+                                            </Pressable>
+                                        </View>
 
-                            </View>
-                        </View>
-                    </View>)}
+                                    </View>
+                                </View>
+                            </View>)}
+                    </View>
                 </View>
+                {/* <Text >My Profile</Text> */}
             </View>
-            {/* <Text >My Profile</Text> */}
-        </View>
         </ScrollView>
     );
 }

@@ -60,7 +60,7 @@ export default function PlaceDetailForTrip({ route, navigation }) {
     const [openTime, setOpenTime] = useState(false);
     const [time, setTime] = useState('');
     const [category, setCategory] = useState('');
-    const categorys = ['Place', 'Restaurant', 'Hotel'];
+    const categorys = ['Attraction', 'Restaurant', 'Accommodation', 'Other'];
 
     useEffect(() => {
         if (placeItem.place_title !== undefined && placeItem.place_description !== undefined
@@ -102,7 +102,7 @@ export default function PlaceDetailForTrip({ route, navigation }) {
                 place_time: time,
                 place_address: address,
                 place_category: category,
-                trip_image: ''
+                place_image: ''
             });
             console.log("Place update successfully");
             navigation.navigate("TripPlan", { tripKey: item.key });
@@ -242,12 +242,16 @@ export default function PlaceDetailForTrip({ route, navigation }) {
 
                     {/* Header & Image */}
                     <View className="w-full h-full bg-blue-light">
-                        {item.place_image != '' && (
+                        {placeItem.place_image != '' || item.place_image != '' ? (
                             <View>
-                                <Image className="absolute w-[400px] h-[300px]" source={{ uri: item.place_image }} />
+                                <Image className="absolute w-[400px] h-[300px]" source={{ uri: placeItem.place_image }} />
                                 <View className="w-[400px] h-[300px] bg-black absolute opacity-30"></View>
-                            </View>
-                        )}
+                            </View>) : (
+                            <View>
+                                <Image className="absolute w-[400px] h-[300px]" source={require('../assets/TripImage.png')} />
+                                <View className="w-[400px] h-[300px] bg-black absolute opacity-30"></View>
+                            </View>)
+                        }
                         <View className="mx-[32px] pt-16 flex flex-row justify-between">
                             <Pressable onPress={() => {
                                 navigation.goBack();

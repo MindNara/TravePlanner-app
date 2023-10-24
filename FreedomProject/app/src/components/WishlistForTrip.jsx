@@ -52,11 +52,12 @@ export default function WishlistForTrip({ navigation }) {
     const [status, setStatus] = useState(true);
 
     // console.log(wishlist.length)
-    const addWishlist = (province, title, category) => {
+    const addWishlist = (province, title, category, image) => {
         const wishList = {
             place_province: province,
             place_name: title,
             category_code: category,
+            place_image: image
         }
         // console.log(wishList)
         dispatch(wishListReceived(wishList));
@@ -92,7 +93,7 @@ export default function WishlistForTrip({ navigation }) {
 
                         {/* Btn */}
                         <Pressable className="bg-black py-[6px] rounded-[10px] items-center"
-                            onPress={() => { addWishlist(item.place_province, item.place_name, item.category_code) }}>
+                            onPress={() => { addWishlist(item.place_province, item.place_name, item.category_code, item.image_place) }}>
                             <Text className="text-[12px] text-white" style={{ fontFamily: 'promptMedium' }}>Add Place</Text>
                         </Pressable>
                     </View>

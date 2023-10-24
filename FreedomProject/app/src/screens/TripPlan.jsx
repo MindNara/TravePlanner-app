@@ -289,8 +289,9 @@ const TripPlan = ({ route, navigation }) => {
     const [openTime, setOpenTime] = useState(false);
     const [time, setTime] = useState(formattedTime);
     const [category, setCategory] = useState('');
-    const categorys = ['Place', 'Restaurant', 'Hotel', 'Accomodation', 'Attraction'];
+    const categorys = ['Attraction', 'Restaurant', 'Accommodation', 'Other'];
     const [scheduleDates, setScheduleDates] = useState('');
+    const [image, setImage] = useState('');
 
     function formatCategory(string) {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -303,6 +304,8 @@ const TripPlan = ({ route, navigation }) => {
     useEffect(() => {
         setTitle(wishlistItem.place_name);
         setAddress(wishlistItem.place_province);
+        setImage(wishlistItem.place_image)
+        console.log(wishlistItem.place_image);
         if (wishlistItem.category_code !== undefined) {
             setCategory(formatCategory(wishlistItem.category_code));
         }
@@ -340,6 +343,7 @@ const TripPlan = ({ route, navigation }) => {
             place_province: '',
             place_name: '',
             category_code: '',
+            place_image: '',
         }
         try {
             if (scheduleDates === 'NaN/NaN/NaN' && tripItem.trip_start_date !== undefined) {
@@ -348,7 +352,7 @@ const TripPlan = ({ route, navigation }) => {
                     place_title: title,
                     place_description: des,
                     place_category: category,
-                    trip_image: '',
+                    place_image: image,
                     place_time: time,
                     place_address: address,
                     place_latitude: '',
@@ -361,7 +365,7 @@ const TripPlan = ({ route, navigation }) => {
                     place_title: title,
                     place_description: des,
                     place_category: category,
-                    trip_image: '',
+                    place_image: image,
                     place_time: time,
                     place_address: address,
                     place_latitude: '',
