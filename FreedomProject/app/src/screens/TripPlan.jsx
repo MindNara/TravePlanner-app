@@ -581,8 +581,8 @@ const TripPlan = ({ route, navigation }) => {
                                             {/* <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>(6)</Text> */}
                                         </View>
                                         <View className="flex flex-row items-center">
-                                            <Image source={{ uri: 'https://img.icons8.com/material-rounded/96/2E2E2E/sorting-options.png' }}
-                                                style={{ width: 20, height: 20 }} className="mr-[20px]" />
+                                            {/* <Image source={{ uri: 'https://img.icons8.com/material-rounded/96/2E2E2E/sorting-options.png' }}
+                                                style={{ width: 20, height: 20 }} className="mr-[20px]" /> */}
                                             <Pressable onPress={() => {
                                                 setIsFav(true);
                                                 setOpenTime(false);
