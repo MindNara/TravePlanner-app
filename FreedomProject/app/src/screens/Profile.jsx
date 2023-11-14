@@ -83,7 +83,7 @@ export default function Profile({ navigation }) {
             }
             if (user_password != user_info.user_password && user_password !== '') {
                 await updatePassword(user, user_password)
-                alert('Password updated successfully');
+                // alert('Password updated successfully');
                 updatePasswordInFirestore(user.uid);
             }
             updateInFirestore(user.uid);
@@ -170,28 +170,28 @@ export default function Profile({ navigation }) {
                                 </View>
                                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                                     <View className="mt-8 ml-6 flex flex-row">
-                                        <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: 'black' }} editable={false}>{user_username}</TextInput>
+                                        <TextInput className="text-[24px]" style={{ fontFamily: 'promptSemiBold', color: "rgb(148 163 184)" }} editable={false}>{user_username}</TextInput>
                                         <Pressable onPress={() => setIsPressed(true)}>
                                             <Image source={{ uri: 'https://img.icons8.com/material-sharp/24/1A1A1A/pencil--v1.png' }}
-                                                style={{ width: 24, height: 30 }} className="ml-2 mt-1" />
+                                                style={{ width: 24, height: 30 }} className="mt-1" />
                                         </Pressable>
                                     </View>
                                     <View className="mt-8">
                                         <View>
-                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_fname} editable={false} ></TextInput>
-                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Firstname</Text>
+                                            <TextInput className="relative px-6" style={[styles.input, {color: "rgb(100 116 139)"}]} value={user_fname} editable={false} ></TextInput>
+                                            <Text className="text-[16px] p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular', color: "rgb(100 116 139)" }}>Firstname</Text>
                                         </View>
                                         <View className="mt-6">
-                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_lname} editable={false} ></TextInput>
-                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Lastname</Text>
+                                            <TextInput className="relative px-6" style={[styles.input, {color: "rgb(100 116 139)"}]} value={user_lname} editable={false} ></TextInput>
+                                            <Text className="text-[16px] p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular', color: "rgb(100 116 139)" }}>Lastname</Text>
                                         </View>
                                         <View className="mt-6">
-                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value={user_email} editable={false} ></TextInput>
-                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Email</Text>
+                                            <TextInput className="relative px-6" style={[styles.input, {color: "rgb(100 116 139)"}]} value={user_email} editable={false} ></TextInput>
+                                            <Text className="text-[16px] p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular', color: "rgb(100 116 139)" }}>Email</Text>
                                         </View>
                                         <View className="mt-6">
-                                            <TextInput className="relative px-6 text-gray-dark" style={[styles.input]} value="*********" editable={false} ></TextInput>
-                                            <Text className="text-[16px] text-gray-dark p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular' }}>Password</Text>
+                                            <TextInput className="relative px-6" style={[styles.input, {color: "rgb(100 116 139)"}]} value="*********" editable={false} ></TextInput>
+                                            <Text className="text-[16px] p-1 absolute top-[-15px] left-5 bg-white w-auto h-auto" style={{ fontFamily: 'promptRegular', color: "rgb(100 116 139)" }}>Password</Text>
                                         </View>
                                         <View className="mt-[30px]">
                                             <Pressable style={styles.button}>
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
         width: 320,
         height: 48,
         borderRadius: 10,
-        borderColor: "#2E2E2E"
+        borderColor: "rgb(100 116 139)"
     },
     inputCheck: {
         fontSize: 18,
