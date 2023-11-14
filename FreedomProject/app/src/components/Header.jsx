@@ -12,11 +12,18 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 import { firebase_auth } from '../firebase/firebaseConfig';
+import { useSelector } from "react-redux";
+import { userSelector } from "../redux/usersSlice";
 
 export default function Header({ screen, title, subtitle, navigation }) {
 
     const [isNotiModel, setNotiModel] = useState(false);
     const [isProfileModel, setProfileModel] = useState(false);
+
+    const user = useSelector(userSelector);
+    const user_info = user.user_info;
+
+    console.log(user_info)
 
     const [loaded] = useFonts({
         promptLight: require("../assets/fonts/Prompt-Light.ttf"),
@@ -51,7 +58,11 @@ export default function Header({ screen, title, subtitle, navigation }) {
 
                     {/* Profile */}
                     <Pressable onPress={() => { setProfileModel(true) }}>
-                        <View className="w-[56px] h-[56px] bg-gray-dark rounded-[10px]"></View>
+                        {user_info && user_info.user_image && user_info.user_image !== "" ? (
+                            <Image source={{ uri: user_info.user_image }} className="w-[56px] h-[56px] rounded-[10px]"></Image>
+                        ) : (
+                            <View className="w-[56px] h-[56px] bg-gray-dark rounded-[10px]"></View>
+                        )}
                     </Pressable>
                 </View>
             </View>
