@@ -58,8 +58,9 @@ export default function PlaceDetailForTrip({ route, navigation }) {
     const [des, setDes] = useState('');
     const [address, setAddress] = useState('');
     const [openTime, setOpenTime] = useState(false);
-    const [time, setTime] = useState('');
+    const [time, setTime] = useState();
     const [category, setCategory] = useState('');
+
     const categorys = ['Attraction', 'Restaurant', 'Accommodation', 'Other'];
 
     useEffect(() => {
@@ -77,21 +78,18 @@ export default function PlaceDetailForTrip({ route, navigation }) {
     placeItem.place_address, placeItem.place_time, placeItem.place_category, placeItem]);
 
     // Check AM, PM
-    const formatTime = () => {
+    const formatTime = (time) => {
         const timeParts = time.split(':');
         const hours = parseInt(timeParts[0], 10);
         const minutes = parseInt(timeParts[1], 10);
 
+        const date = new Date();
         date.setHours(hours);
         date.setMinutes(minutes);
 
         const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
         return formattedTime;
     }
-
-    // useEffect(() => {
-    //     formatTime();
-    // }, [selectedDateDep, selectedDateRet])
 
     const updatePlace = async () => {
         const placeRef = doc(db, 'places', item.key);
@@ -158,7 +156,7 @@ export default function PlaceDetailForTrip({ route, navigation }) {
                                             mode="time"
                                             minuteInterval={3}
                                             onTimeChange={selectedTime => {
-                                                setTime(selectedTime);
+                                                setTime(formatTime(selectedTime));
                                                 setOpenTime(false);
                                             }}
                                             className="absolute w-[260px] z-10 left-8 top-10"

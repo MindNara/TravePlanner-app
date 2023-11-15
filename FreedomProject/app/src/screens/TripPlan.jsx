@@ -306,7 +306,7 @@ const TripPlan = ({ route, navigation }) => {
         setTitle(wishlistItem.place_name);
         setAddress(wishlistItem.place_province);
         setImage(wishlistItem.place_image)
-        console.log(wishlistItem.place_image);
+        // console.log(wishlistItem.place_image);
         if (wishlistItem.category_code !== undefined) {
             setCategory(formatCategory(wishlistItem.category_code));
         }
@@ -314,11 +314,12 @@ const TripPlan = ({ route, navigation }) => {
     }, [wishlistItem]);
 
     // Check AM, PM
-    const formatTime = () => {
+    const formatTime = (time) => {
         const timeParts = time.split(':');
         const hours = parseInt(timeParts[0], 10);
         const minutes = parseInt(timeParts[1], 10);
 
+        const date = new Date();
         date.setHours(hours);
         date.setMinutes(minutes);
 
@@ -349,31 +350,32 @@ const TripPlan = ({ route, navigation }) => {
         try {
             if (scheduleDates === 'NaN/NaN/NaN' && tripItem.trip_start_date !== undefined) {
                 place_schedule_date = tripItem.trip_start_date;
-                const tripRef = await addDoc(collection(db, "places"), {
-                    place_title: title,
-                    place_description: des,
-                    place_category: category,
-                    place_image: image,
-                    place_time: time,
-                    place_address: address,
-                    place_latitude: '',
-                    place_longitude: '',
-                    trip_id: tripKey,
-                    place_schedule_date: place_schedule_date,
-                });
+                // const tripRef = await addDoc(collection(db, "places"), {
+                //     place_title: title,
+                //     place_description: des,
+                //     place_category: category,
+                //     place_image: image,
+                //     place_time: time,
+                //     place_address: address,
+                //     place_latitude: '',
+                //     place_longitude: '',
+                //     trip_id: tripKey,
+                //     place_schedule_date: place_schedule_date,
+                // });
             } else {
-                const tripRef = await addDoc(collection(db, "places"), {
-                    place_title: title,
-                    place_description: des,
-                    place_category: category,
-                    place_image: image,
-                    place_time: time,
-                    place_address: address,
-                    place_latitude: '',
-                    place_longitude: '',
-                    trip_id: tripKey,
-                    place_schedule_date: scheduleDates,
-                });
+                console.log(time);
+                // const tripRef = await addDoc(collection(db, "places"), {
+                //     place_title: title,
+                //     place_description: des,
+                //     place_category: category,
+                //     place_image: image,
+                //     place_time: time,
+                //     place_address: address,
+                //     place_latitude: '',
+                //     place_longitude: '',
+                //     trip_id: tripKey,
+                //     place_schedule_date: scheduleDates,
+                // });
             }
             fetchPlaces();
             dispatch(wishListReceived(wishList));
@@ -465,7 +467,7 @@ const TripPlan = ({ route, navigation }) => {
                                                         mode="time"
                                                         minuteInterval={3}
                                                         onTimeChange={selectedTime => {
-                                                            setTime(selectedTime);
+                                                            setTime(formatTime(selectedTime));
                                                             setOpenTime(false);
                                                         }}
                                                         className="absolute w-[260px] z-10 left-8 top-10"
@@ -484,7 +486,7 @@ const TripPlan = ({ route, navigation }) => {
                                                     <View className="flex flex-row justify-between mt-[15px]">
                                                         <Pressable onPress={() => { setOpenTime(true) }} className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 px-6 justify-center">
                                                             <Text className="text-[12px] text-gray-dark opacity-80" style={{ fontFamily: 'promptMedium' }}>TIME</Text>
-                                                            <Text multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }}>{formatTime()}</Text>
+                                                            <Text multiline className="text-[14px] text-gray-dark leading-[18px] mt-2" style={{ fontFamily: 'promptSemiBold' }}>{time}</Text>
                                                         </Pressable>
                                                         <View className="w-[140px] h-auto border-[0.6px] rounded-[10px] border-gray-dark py-3 justify-center">
                                                             <Text className="text-[12px] text-gray-dark opacity-80 px-6 relative" style={{ fontFamily: 'promptMedium' }}>CATEGORY</Text>
