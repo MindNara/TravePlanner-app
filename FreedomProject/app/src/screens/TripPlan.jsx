@@ -18,7 +18,7 @@ import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 import TripDatePlan from "../components/TripDatePlan";
 import { useSelector } from "react-redux";
 import { tripSelector, tripsReceived } from '../redux/tripsSlice';
-import { db } from '../firebase/firebaseConfig';
+import { db, storage } from '../firebase/firebaseConfig';
 import { query, where, doc, getDocs, collection, addDoc, updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { getDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
@@ -34,6 +34,8 @@ import { scheduleSelector } from "../redux/schedulesSlice";
 import { WishlistForTrip, PlaceTrip } from "../components/index";
 import { wishlistSlice, wishlistSelector, wishListReceived, wishlistStatus } from '../redux/wishlistSlice';
 import { PlaceApi, TripApi } from '../data/PlaceApi';
+import * as ImagePicker from 'expo-image-picker';
+import { uploadBytesResumable, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 
 const TripPlan = ({ route, navigation }) => {
@@ -221,10 +223,26 @@ const TripPlan = ({ route, navigation }) => {
                 placeDate.getFullYear() === currentDates.getFullYear()
             );
         }
+
     });
-    const placesCount = filteredPlaces.length;
+    // const placesCount = filteredPlaces.length;
     // console.log("Total Place: " + placesCount);
     // console.log(filteredPlaces);
+
+    const sortedPlaces = [...filteredPlaces]
+        .filter(place => place.place_time)
+        .sort((a, b) => {
+            const formattedTimeA = a.place_time.replace(/\s[APMapm]{2}/, '').replace(/\u202F/g, ' ');
+            const formattedTimeB = b.place_time.replace(/\s[APMapm]{2}/, '').replace(/\u202F/g, ' ');
+
+            const timeA = new Date(`1970-01-01T${formattedTimeA}`);
+            const timeB = new Date(`1970-01-01T${formattedTimeB}`);
+
+            return timeB.getTime() - timeA.getTime();
+        })
+        .map(place => place.place_time);
+
+    // console.log(sortedPlaces);
 
     // Update Trip
     const dateToday = getToday();
@@ -350,32 +368,31 @@ const TripPlan = ({ route, navigation }) => {
         try {
             if (scheduleDates === 'NaN/NaN/NaN' && tripItem.trip_start_date !== undefined) {
                 place_schedule_date = tripItem.trip_start_date;
-                // const tripRef = await addDoc(collection(db, "places"), {
-                //     place_title: title,
-                //     place_description: des,
-                //     place_category: category,
-                //     place_image: image,
-                //     place_time: time,
-                //     place_address: address,
-                //     place_latitude: '',
-                //     place_longitude: '',
-                //     trip_id: tripKey,
-                //     place_schedule_date: place_schedule_date,
-                // });
+                const tripRef = await addDoc(collection(db, "places"), {
+                    place_title: title,
+                    place_description: des,
+                    place_category: category,
+                    place_image: image,
+                    place_time: time,
+                    place_address: address,
+                    place_latitude: '',
+                    place_longitude: '',
+                    trip_id: tripKey,
+                    place_schedule_date: place_schedule_date,
+                });
             } else {
-                console.log(time);
-                // const tripRef = await addDoc(collection(db, "places"), {
-                //     place_title: title,
-                //     place_description: des,
-                //     place_category: category,
-                //     place_image: image,
-                //     place_time: time,
-                //     place_address: address,
-                //     place_latitude: '',
-                //     place_longitude: '',
-                //     trip_id: tripKey,
-                //     place_schedule_date: scheduleDates,
-                // });
+                const tripRef = await addDoc(collection(db, "places"), {
+                    place_title: title,
+                    place_description: des,
+                    place_category: category,
+                    place_image: image,
+                    place_time: time,
+                    place_address: address,
+                    place_latitude: '',
+                    place_longitude: '',
+                    trip_id: tripKey,
+                    place_schedule_date: scheduleDates,
+                });
             }
             fetchPlaces();
             dispatch(wishListReceived(wishList));
@@ -401,6 +418,52 @@ const TripPlan = ({ route, navigation }) => {
         // console.log(wishList)
         dispatch(wishListReceived(wishList));
         dispatch(wishlistStatus());
+    }
+
+    // Add Image trip
+    const [imageTrip, setImageTrip] = useState('');
+    const [isImageError, setIsImageError] = useState(false);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log("upImage")
+        // console.log(result.assets)
+        if (result.assets == null) {
+            setIsImageError(true)
+        }
+
+        const source = { uri: result.assets[0].uri };
+
+        setImageTrip(source);
+        console.log(imageTrip);
+        UpdateImageTrip();
+    }
+
+    const UpdateImageTrip = async () => {
+        const tripRef = doc(db, 'trips', tripKey);
+
+        const blob = await fetch(imageTrip.uri).then((response) => response.blob());
+        const filename = Date.now() + '.jpg';
+        const imageRef = ref(storage, filename);
+
+        await uploadBytes(imageRef, blob);
+        const downloadURL = await getDownloadURL(imageRef);
+
+        try {
+            await updateDoc(tripRef, {
+                trip_image: downloadURL
+            });
+            alert("Update Trip Image Success");
+            console.log("Data updated in Firestore!");
+        } catch (error) {
+            console.error("Error updating data in Firestore: ", error);
+        }
     }
 
     const [loaded] = useFonts({
@@ -445,8 +508,6 @@ const TripPlan = ({ route, navigation }) => {
                                     <View className="flex flex-row h-[40px] w-[280px] bg-gray-light items-center rounded-[10px]">
                                         <Image source={{ uri: 'https://img.icons8.com/fluency-systems-filled/48/search.png' }}
                                             style={{ width: 20, height: 20 }} className="ml-3 opacity-60" />
-                                        {/* <TextInput className="text-[12px] text-gray-dark ml-3 w-full opacity-80" style={{ fontFamily: 'promptRegular' }} placeholder='Search location'
-                                            onChangeText={(text) => serSearch(text)} value={search}></TextInput> */}
                                         <TextInput className="text-[12px] text-gray-dark ml-3 w-full opacity-80" style={{ fontFamily: 'promptRegular' }} placeholder='Search location'
                                             onEndEditing={(e) => setSearchPlace(e.nativeEvent.text)} defaultValue={searchPlace}></TextInput>
                                     </View>
@@ -583,8 +644,6 @@ const TripPlan = ({ route, navigation }) => {
                                             {/* <Text className="text-[16px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>(6)</Text> */}
                                         </View>
                                         <View className="flex flex-row items-center">
-                                            {/* <Image source={{ uri: 'https://img.icons8.com/material-rounded/96/2E2E2E/sorting-options.png' }}
-                                                style={{ width: 20, height: 20 }} className="mr-[20px]" /> */}
                                             <Pressable onPress={() => {
                                                 setIsFav(true);
                                                 setOpenTime(false);
@@ -739,7 +798,10 @@ const TripPlan = ({ route, navigation }) => {
                     )}
 
                     {/* Header & Image */}
-                    <View className="w-full h-auto pb-[40px] bg-blue-light rounded-b-[50px]">
+                    <View className="w-full h-[250px] pb-[40px] bg-blue-light rounded-b-[50px] relative">
+                        {trips.trip_image !== '' && (
+                            <Image source={{ uri: trips.trip_image }} className="w-full h-[250px] rounded-b-[50px] absolute" />
+                        )}
                         <View className="mx-[32px] pt-16 flex flex-row justify-between">
                             {/* Home */}
                             <Pressable
@@ -751,23 +813,23 @@ const TripPlan = ({ route, navigation }) => {
                                 <Image
                                     className="absolute top-[7px] left-[8px]"
                                     source={{
-                                        uri: "https://img.icons8.com/fluency-systems-regular/48/2E2E2E/home--v1.png",
+                                        uri: `https://img.icons8.com/fluency-systems-regular/48/${trips.trip_image !== '' ? 'F8F8F8' : '2E2E2E'}/home--v1.png`,
                                     }}
                                     style={{ width: 20, height: 20 }}
                                 />
                             </Pressable>
                             <View className="flex flex-row gap-x-[15px]">
                                 {/* Image */}
-                                <View>
+                                <Pressable onPress={pickImage}>
                                     <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
                                     <Image
                                         className="absolute top-[9px] left-2"
                                         source={{
-                                            uri: "https://img.icons8.com/fluency-systems-regular/96/2E2E2E/image--v1.png",
+                                            uri: `https://img.icons8.com/fluency-systems-regular/96/${trips.trip_image !== '' ? 'F8F8F8' : '2E2E2E'}/image--v1.png`,
                                         }}
                                         style={{ width: 20, height: 20 }}
                                     />
-                                </View>
+                                </Pressable>
                                 {/* Menu */}
                                 <Pressable onPress={() => {
                                     bottomSheetEditTrip.current?.present();
@@ -777,7 +839,7 @@ const TripPlan = ({ route, navigation }) => {
                                     <Image
                                         className="absolute top-[8px] left-2"
                                         source={{
-                                            uri: "https://img.icons8.com/ios-glyphs/90/2E2E2E/menu-2.png",
+                                            uri: `https://img.icons8.com/ios-glyphs/90/${trips.trip_image !== '' ? 'F8F8F8' : '2E2E2E'}/menu-2.png`,
                                         }}
                                         style={{ width: 20, height: 20 }}
                                     />
@@ -791,12 +853,12 @@ const TripPlan = ({ route, navigation }) => {
                                 <Image
                                     className="mr-3"
                                     source={{
-                                        uri: "https://img.icons8.com/metro/26/2E2E2E/tear-off-calendar.png",
+                                        uri: `https://img.icons8.com/metro/26/${trips.trip_image !== '' ? 'F8F8F8' : '2E2E2E'}/tear-off-calendar.png`,
                                     }}
                                     style={{ width: 18, height: 18 }}
                                 />
                                 <Text
-                                    className="text-[14px] text-gray-dark opacity-80"
+                                    className={`text-[14px] ${trips.trip_image !== '' ? 'text-white' : 'text-gray-dark'}`}
                                     style={{ fontFamily: "promptSemiBold" }}
                                 >
                                     {trips.trip_start_date !== undefined && trips.trip_end_date !== undefined ? (
@@ -809,13 +871,13 @@ const TripPlan = ({ route, navigation }) => {
                                 </Text>
                             </View>
                             <Text
-                                className="text-[32px] text-gray-dark"
+                                className={`text-[32px] ${trips.trip_image !== '' ? 'text-white' : 'text-gray-dark'}`}
                                 style={{ fontFamily: "promptSemiBold" }}
                             >
                                 {trips.trip_title}
                             </Text>
                             <Text
-                                className="text-[14px] text-gray-dark leading-4 mt-2"
+                                className={`text-[14px] ${trips.trip_image !== '' ? 'text-white' : 'text-gray-dark'} leading-4 mt-2`}
                                 style={{ fontFamily: "promptLight" }}
                             >
                                 {trips.trip_description}

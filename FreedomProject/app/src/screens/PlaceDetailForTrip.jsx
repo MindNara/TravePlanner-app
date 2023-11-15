@@ -12,12 +12,14 @@ import {
 import { useFonts } from '@expo-google-fonts/prompt';
 import { GestureHandlerRootView, TextInput } from 'react-native-gesture-handler';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { db } from '../firebase/firebaseConfig';
+import { db, storage } from '../firebase/firebaseConfig';
 import { query, where, doc, getDoc, collection, addDoc, updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
 import SelectDropdown from 'react-native-select-dropdown';
 import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
+import * as ImagePicker from 'expo-image-picker';
+import { uploadBytesResumable, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 export default function PlaceDetailForTrip({ route, navigation }) {
 
@@ -118,6 +120,52 @@ export default function PlaceDetailForTrip({ route, navigation }) {
             navigation.goBack();
         } catch (error) {
             console.error('Error deleting place:', error);
+        }
+    }
+
+    // Add Trip Image
+    const [imageTrip, setImageTrip] = useState('');
+    const [isImageError, setIsImageError] = useState(false);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log("upImage")
+        // console.log(result.assets)
+        if (result.assets == null) {
+            setIsImageError(true)
+        }
+
+        const source = { uri: result.assets[0].uri };
+
+        setImageTrip(source);
+        console.log(imageTrip);
+        UpdateImageTrip();
+    }
+
+    const UpdateImageTrip = async () => {
+        const placeRef = doc(db, 'places', item.key);
+
+        const blob = await fetch(imageTrip.uri).then((response) => response.blob());
+        const filename = Date.now() + '.jpg';
+        const imageRef = ref(storage, filename);
+
+        await uploadBytes(imageRef, blob);
+        const downloadURL = await getDownloadURL(imageRef);
+
+        try {
+            await updateDoc(placeRef, {
+                place_image: downloadURL
+            });
+            alert("Update Trip Image Success");
+            console.log("Data updated in Firestore!");
+        } catch (error) {
+            console.error("Error updating data in Firestore: ", error);
         }
     }
 
@@ -260,7 +308,7 @@ export default function PlaceDetailForTrip({ route, navigation }) {
                             </Pressable>
                             <View className="flex flex-row gap-x-[15px]">
                                 {/* Image */}
-                                <View>
+                                <Pressable onPress={pickImage}>
                                     <View className="relative justify-center items-center h-[36px] w-[36px] bg-white rounded-3xl opacity-50"></View>
                                     <Image
                                         className="absolute top-[9px] left-2"
@@ -269,7 +317,7 @@ export default function PlaceDetailForTrip({ route, navigation }) {
                                         }}
                                         style={{ width: 20, height: 20 }}
                                     />
-                                </View>
+                                </Pressable>
                                 {/* Menu */}
                                 <Pressable onPress={() => {
                                     setIsOpen(true);

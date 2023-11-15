@@ -126,17 +126,6 @@ export default function Home({ navigation }) {
                                         trips.map((item, index) => (
                                             <MyTrip item={item} key={item.key} navigation={navigation} />
                                         ))
-                                        // <FlatList
-                                        //     data={trips.slice(0, 5)}
-                                        //     keyExtractor={item => item.key}
-                                        //     renderItem={({ item }) => {
-                                        //         return (
-                                        //             <MyTrip item={item} key={item.key} navigation={navigation} />
-                                        //         )
-                                        //     }}
-                                        //     horizontal={true}
-                                        //     showsHorizontalScrollIndicator={false}
-                                        // />
                                     )}
                                 </View>
                             </ScrollView>

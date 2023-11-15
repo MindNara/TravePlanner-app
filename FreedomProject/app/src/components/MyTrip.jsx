@@ -38,13 +38,9 @@ export default function MyTrip({ navigation, item }) {
                 navigation.navigate("TripPlan", { tripKey: item.key });
             }}>
                 <ImageBackground className="relative h-[210px] w-[156px] justify-end items-center"
-                    source={require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
-                    {/* <View style={[styles.btn]} className="absolute bg-white top-[10] left-[110] opacity-50"></View>
-                    <Image className="absolute top-[17] left-[116]" source={{ uri: 'https://img.icons8.com/material-outlined/24/9a1b29/like--v1.png' }}
-                        style={{ width: 20, height: 20 }} /> */}
+                    source={item.trip_image ? { uri: item.trip_image } : require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
                     <View className="relative bg-white opacity-40 w-[145px] h-[65px] mb-2 py-2 px-3 rounded-[16px] items-center" />
                     <View className="absolute w-[110px] h-[58px] px-1">
-                        {/* <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>Province</Text> */}
                         <Text className="text-[16px] my-[-2px] text-gray-dark" style={{ fontFamily: 'promptSemiBold' }}>{item.trip_title}</Text>
                         <View className="flex flex-row mt-[3px] items-center">
                             <Image className="mr-[6px]" source={{ uri: 'https://img.icons8.com/metro/96/2E2E2E/tear-off-calendar.png' }}
