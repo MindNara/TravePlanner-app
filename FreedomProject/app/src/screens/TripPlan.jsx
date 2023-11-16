@@ -813,7 +813,7 @@ const TripPlan = ({ route, navigation }) => {
                                 <Image
                                     className="absolute top-[7px] left-[8px]"
                                     source={{
-                                        uri: `https://img.icons8.com/fluency-systems-regular/48/${trips.trip_image !== '' ? 'F8F8F8' : '2E2E2E'}/home--v1.png`,
+                                        uri: `https://img.icons8.com/fluency-systems-regular/48/${trips.trip_image !== '' ? '2E2E2E' : '2E2E2E'}/home--v1.png`,
                                     }}
                                     style={{ width: 20, height: 20 }}
                                 />
@@ -825,7 +825,7 @@ const TripPlan = ({ route, navigation }) => {
                                     <Image
                                         className="absolute top-[9px] left-2"
                                         source={{
-                                            uri: `https://img.icons8.com/fluency-systems-regular/96/${trips.trip_image !== '' ? 'F8F8F8' : '2E2E2E'}/image--v1.png`,
+                                            uri: `https://img.icons8.com/fluency-systems-regular/96/${trips.trip_image !== '' ? '2E2E2E' : '2E2E2E'}/image--v1.png`,
                                         }}
                                         style={{ width: 20, height: 20 }}
                                     />
@@ -839,7 +839,7 @@ const TripPlan = ({ route, navigation }) => {
                                     <Image
                                         className="absolute top-[8px] left-2"
                                         source={{
-                                            uri: `https://img.icons8.com/ios-glyphs/90/${trips.trip_image !== '' ? 'F8F8F8' : '2E2E2E'}/menu-2.png`,
+                                            uri: `https://img.icons8.com/ios-glyphs/90/${trips.trip_image !== '' ? '2E2E2E' : '2E2E2E'}/menu-2.png`,
                                         }}
                                         style={{ width: 20, height: 20 }}
                                     />
@@ -853,12 +853,12 @@ const TripPlan = ({ route, navigation }) => {
                                 <Image
                                     className="mr-3"
                                     source={{
-                                        uri: `https://img.icons8.com/metro/26/${trips.trip_image !== '' ? 'F8F8F8' : '2E2E2E'}/tear-off-calendar.png`,
+                                        uri: `https://img.icons8.com/metro/26/${trips.trip_image !== '' ? '2E2E2E' : '2E2E2E'}/tear-off-calendar.png`,
                                     }}
                                     style={{ width: 18, height: 18 }}
                                 />
                                 <Text
-                                    className={`text-[14px] ${trips.trip_image !== '' ? 'text-white' : 'text-gray-dark'}`}
+                                    className={`text-[14px] ${trips.trip_image !== '' ? 'text-gray-dark' : 'text-gray-dark'}`}
                                     style={{ fontFamily: "promptSemiBold" }}
                                 >
                                     {trips.trip_start_date !== undefined && trips.trip_end_date !== undefined ? (
@@ -871,13 +871,13 @@ const TripPlan = ({ route, navigation }) => {
                                 </Text>
                             </View>
                             <Text
-                                className={`text-[32px] ${trips.trip_image !== '' ? 'text-white' : 'text-gray-dark'}`}
+                                className={`text-[32px] ${trips.trip_image !== '' ? 'text-gray-dark' : 'text-gray-dark'}`}
                                 style={{ fontFamily: "promptSemiBold" }}
                             >
                                 {trips.trip_title}
                             </Text>
                             <Text
-                                className={`text-[14px] ${trips.trip_image !== '' ? 'text-white' : 'text-gray-dark'} leading-4 mt-2`}
+                                className={`text-[14px] ${trips.trip_image !== '' ? 'text-gray-dark' : 'text-gray-dark'} leading-4 mt-2`}
                                 style={{ fontFamily: "promptLight" }}
                             >
                                 {trips.trip_description}

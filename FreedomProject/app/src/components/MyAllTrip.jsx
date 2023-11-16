@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import {
     SafeAreaView,
@@ -97,14 +97,14 @@ export default function MyAllTrip({ navigation, item }) {
                 navigation.navigate("TripPlan", { tripKey: item.key });
             }}>
                 <ImageBackground className="relative h-[210px] w-[156px] justify-end items-center"
-                    source={require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
+                    source={item.trip_image !== '' ? { uri: item.trip_image } : require('../assets/TripImage.png')} imageStyle={{ borderRadius: 20 }}>
                     {/* <Image className="absolute top-5 left-4" source={{ uri: 'https://img.icons8.com/material-outlined/96/2E2E2E/filled-like.png' }}
                         style={{ width: 20, height: 20 }} /> */}
                     <Pressable onPress={() => { setMenuPopup(!isMenuPopup) }}>
                         <Image className="relative top-[-90px] left-[60px]" source={{ uri: 'https://img.icons8.com/external-regular-kawalan-studio/24/external-kebab-menu-user-interface-regular-kawalan-studio.png' }}
-                        style={{ width: 24, height: 24 }} />
+                            style={{ width: 24, height: 24 }} />
                     </Pressable>
-                    
+
                     <View className="relative bg-white opacity-40 w-[145px] h-[76px] mb-2 py-2 px-3 rounded-[20px] items-center" />
                     <View className="absolute w-[110px] h-[70px] px-1">
                         {/* <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptLight' }}>Province</Text> */}
@@ -113,11 +113,11 @@ export default function MyAllTrip({ navigation, item }) {
                             <Image className="mr-[6px]" source={{ uri: 'https://img.icons8.com/metro/96/2E2E2E/tear-off-calendar.png' }}
                                 style={{ width: 10, height: 10 }} />
                             <Text className="text-[8px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>
-                            {differanceDate == 1 ? (
+                                {differanceDate == 1 ? (
                                     item.trip_start_date.slice(5)
                                 ) : (
                                     item.trip_start_date.slice(5) + " - " + item.trip_end_date.slice(5)
-                            )}
+                                )}
                             </Text>
                         </View>
                     </View>

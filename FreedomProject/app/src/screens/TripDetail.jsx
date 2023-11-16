@@ -75,7 +75,7 @@ export default function TripDetail({ route, navigation }) {
                     </View>
 
                     {/* Content */}
-                    <View className="bg-white bottom-0 mt-28 w-full h-full rounded-t-[50px]">
+                    <View className="bg-white bottom-0 mt-10 w-full h-full rounded-t-[50px]">
 
                         <View className="mx-[20px] pt-12">
                             <View className="flex flex-row items-center">
