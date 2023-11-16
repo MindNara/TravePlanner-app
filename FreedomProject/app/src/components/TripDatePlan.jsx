@@ -45,14 +45,14 @@ export default function TripDatePlan({ navigation, item, tripKey }) {
     function menuPopup() {
         return (
             <View className="bg-gray-light absolute z-20 right-7 top-12 w-auto h-auto rounded-[5px] px-3 py-1">
-                <Pressable className="p-1 flex flex-row items-center" onPress={() => {
+                {/* <Pressable className="p-1 flex flex-row items-center" onPress={() => {
                     menuPopup();
                     setMenuPopup(!isMenuPopup);
                 }}>
                     <Image className="mr-2" source={{ uri: 'https://img.icons8.com/fluency-systems-regular/48/create-new.png' }}
                         style={{ width: 15, height: 15 }} />
                     <Text className="text-[12px] text-gray-dark" style={{ fontFamily: 'promptMedium' }}>Edit</Text>
-                </Pressable>
+                </Pressable> */}
                 <Pressable className="p-1 flex flex-row items-center" onPress={() => {
                     deletePlace();
                     setMenuPopup(!isMenuPopup);

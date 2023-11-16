@@ -229,19 +229,25 @@ const TripPlan = ({ route, navigation }) => {
     // console.log("Total Place: " + placesCount);
     // console.log(filteredPlaces);
 
-    const sortedPlaces = [...filteredPlaces]
-        .filter(place => place.place_time)
-        .sort((a, b) => {
-            const formattedTimeA = a.place_time.replace(/\s[APMapm]{2}/, '').replace(/\u202F/g, ' ');
-            const formattedTimeB = b.place_time.replace(/\s[APMapm]{2}/, '').replace(/\u202F/g, ' ');
+    const convertTo24HourFormat = (time) => {
+        let [hours, minutes] = time.split(':');
+        hours = parseInt(hours);
+        minutes = parseInt(minutes);
 
-            const timeA = new Date(`1970-01-01T${formattedTimeA}`);
-            const timeB = new Date(`1970-01-01T${formattedTimeB}`);
+        if (time.includes('PM') && hours !== 12) {
+            hours += 12;
+        } else if (time.includes('AM') && hours === 12) {
+            hours = 0;
+        }
 
-            return timeB.getTime() - timeA.getTime();
-        })
-        .map(place => place.place_time);
+        return hours * 60 + minutes;
+    };
 
+    const sortedPlaces = filteredPlaces.slice().sort((a, b) => {
+        const timeA = convertTo24HourFormat(a.place_time);
+        const timeB = convertTo24HourFormat(b.place_time);
+        return timeA - timeB;
+    });
     // console.log(sortedPlaces);
 
     // Update Trip
@@ -894,7 +900,7 @@ const TripPlan = ({ route, navigation }) => {
 
                         <View className="mt-[36px]">
                             {/* Trip Plan */}
-                            {filteredPlaces.map((item, index) => {
+                            {sortedPlaces.map((item, index) => {
                                 return (
                                     <View className="flex flex-row">
                                         <TripDatePlan item={item} navigation={navigation} />
