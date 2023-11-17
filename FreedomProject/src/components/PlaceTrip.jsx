@@ -12,10 +12,7 @@ import {
     FlatList,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
-import { useSelector } from "react-redux";
 import { firebase_auth, db } from '../firebase/firebaseConfig';
-import { useDispatch } from "react-redux";
-import { wishList, wishlistSelector } from '../redux/wishlistSlice';
 import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export default function PlaceTrip({ navigation, item }) {

@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
 
-import { PlaceTrip, RecommendedTrip, Header, MyAllTrip } from '../components/index';
+import { PlaceTrip, RecommendedTrip, Header } from '../components/index';
 import { PlaceApi, TripApi } from '../data/PlaceApi';
 
 export default function ExploreTrip({ navigation }) {

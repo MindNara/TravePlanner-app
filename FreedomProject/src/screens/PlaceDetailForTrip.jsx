@@ -13,13 +13,11 @@ import { useFonts } from '@expo-google-fonts/prompt';
 import { GestureHandlerRootView, TextInput } from 'react-native-gesture-handler';
 import { BottomSheetModal, BottomSheetModalProvider, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { db, storage } from '../firebase/firebaseConfig';
-import { query, where, doc, getDoc, collection, addDoc, updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
-import { useDispatch } from "react-redux";
+import { doc, updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 import SelectDropdown from 'react-native-select-dropdown';
-import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
+import DatePicker from 'react-native-modern-datepicker';
 import * as ImagePicker from 'expo-image-picker';
-import { uploadBytesResumable, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export default function PlaceDetailForTrip({ route, navigation }) {
 

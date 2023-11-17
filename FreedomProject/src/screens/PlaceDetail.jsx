@@ -15,7 +15,6 @@ import { useFonts } from '@expo-google-fonts/prompt';
 import MapView from 'react-native-maps';
 import { firebase_auth, db } from '../firebase/firebaseConfig';
 import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-// import { ScrollView } from 'react-native-gesture-handler';
 
 export default function PlaceDetails({ route, navigation }) {
 

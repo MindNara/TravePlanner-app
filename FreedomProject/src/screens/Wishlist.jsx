@@ -12,7 +12,7 @@ import {
     FlatList
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
-import { PlaceTrip, RecommendedTrip, Header } from '../components/index';
+import { PlaceTrip, Header } from '../components/index';
 import { firebase_auth, db } from '../firebase/firebaseConfig';
 import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 

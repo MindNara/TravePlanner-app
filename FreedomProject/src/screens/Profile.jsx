@@ -15,10 +15,10 @@ import { useFonts } from '@expo-google-fonts/prompt';
 import { useSelector } from "react-redux";
 import { userSelector } from "../redux/usersSlice";
 import { firebase_auth, db, config, storage, firebase } from '../firebase/firebaseConfig';
-import { updatePassword, updateProfile } from 'firebase/auth';
+import { updatePassword } from 'firebase/auth';
 import { useDispatch } from "react-redux";
 import { usersLoading, usersInfo } from "../redux/usersSlice";
-import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc } from 'firebase/firestore';
+import { query, where, doc, getDoc, updateDoc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
 import { uploadBytesResumable, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 

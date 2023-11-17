@@ -10,12 +10,12 @@ import {
     Alert
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
-import DatePicker, { getToday, getFormatedDate } from 'react-native-modern-datepicker';
+import DatePicker, { getToday } from 'react-native-modern-datepicker';
 import { db, collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from '../firebase/firebaseConfig';
 import { useSelector } from "react-redux";
 import { userSelector } from "../redux/usersSlice";
 import { useDispatch } from "react-redux";
-import { tripsReceived, tripSelector } from '../redux/tripsSlice';
+import { tripSelector } from '../redux/tripsSlice';
 
 const CreateTrip = ({ navigation }) => {
 

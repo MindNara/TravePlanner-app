@@ -14,7 +14,6 @@ import { useFonts } from '@expo-google-fonts/prompt';
 import { db } from '../firebase/firebaseConfig';
 import { query, where, doc, getDoc, getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { deletePlaces } from '../redux/placesSlice';
 import { useFocusEffect } from '@react-navigation/native';
 

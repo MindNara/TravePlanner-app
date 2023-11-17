@@ -13,11 +13,11 @@ import {
     FlatList
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/prompt';
-import { MyAllTrip, Header } from '../components/index';
+import { MyAllTrip } from '../components/index';
 import { useSelector } from "react-redux";
 import { tripSelector } from '../redux/tripsSlice';
 import { firebase_auth, db } from '../firebase/firebaseConfig';
-import { query, where, doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import { query, where, collection, onSnapshot } from 'firebase/firestore';
 
 export default function MyDreamTrip({ navigation }) {
 
