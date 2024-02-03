@@ -5,7 +5,7 @@
 
 Once you've created a project, start a development server:
 ``` bash
-> npm i
+> npm i # install dependencies
 
 > npx expo start
 ```
