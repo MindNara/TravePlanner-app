@@ -8,6 +8,7 @@
 ![enter image description here](https://media.discordapp.net/attachments/867056877895286806/1209395903744708628/explore.png?ex=65e6c4b4&is=65d44fb4&hm=18510c67f2b4c00c29aadb90acf8f0e5acb6cb10f27315c50815022ec551fe79&=&format=webp&quality=lossless&width=218&height=472)
 ![enter image description here](https://media.discordapp.net/attachments/867056877895286806/1209395920865857576/PlaceDetail.png?ex=65e6c4b9&is=65d44fb9&hm=1da79673dc6cbb04ea25e86e4f06880ed02d89613a287aebba450e3a27c06632&=&format=webp&quality=lossless&width=218&height=472)
 ![enter image description here](https://media.discordapp.net/attachments/867056877895286806/1209395904642023444/wishlist.png?ex=65e6c4b5&is=65d44fb5&hm=cb6a9ba0b0ef653a45508ddf821e9b59694829cc57317569040dcd70e0f94c7a&=&format=webp&quality=lossless&width=218&height=472)
+![enter image description here](https://media.discordapp.net/attachments/867056877895286806/1209396928777818132/IMG_5253.png?ex=65e6c5a9&is=65d450a9&hm=1a8a7c89e579bdcd84a47ef0e283af437111f60dc56477f77acec147781d212e&=&format=webp&quality=lossless&width=218&height=472)
 
 
 ## How to use
