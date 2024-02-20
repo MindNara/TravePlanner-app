@@ -4,7 +4,11 @@
 
 เทคโนโลยีที่ใช้พัฒนา: React Native, Redux, Tailwind CSS, and Firebase
 
-![enter image description here](https://media.discordapp.net/attachments/1204364762515767306/1204387123231199262/page.png?ex=65d48bea&is=65c216ea&hm=6301f77ad0cd98ee39c1e6f69ba6b52017e4541fdaf9128f56bc638fdec56fa6&=&format=webp&quality=lossless&width=433&height=558)
+![enter image description here](https://media.discordapp.net/attachments/867056877895286806/1209395904184975420/home.png?ex=65e6c4b5&is=65d44fb5&hm=aa053f5e6e778c263409a7b3397289442482f7e283781a0ad30d2730914a5fe7&=&format=webp&quality=lossless&width=218&height=472)
+![enter image description here](https://media.discordapp.net/attachments/867056877895286806/1209395903744708628/explore.png?ex=65e6c4b4&is=65d44fb4&hm=18510c67f2b4c00c29aadb90acf8f0e5acb6cb10f27315c50815022ec551fe79&=&format=webp&quality=lossless&width=218&height=472)
+![enter image description here](https://media.discordapp.net/attachments/867056877895286806/1209395920865857576/PlaceDetail.png?ex=65e6c4b9&is=65d44fb9&hm=1da79673dc6cbb04ea25e86e4f06880ed02d89613a287aebba450e3a27c06632&=&format=webp&quality=lossless&width=218&height=472)
+![enter image description here](https://media.discordapp.net/attachments/867056877895286806/1209395904642023444/wishlist.png?ex=65e6c4b5&is=65d44fb5&hm=cb6a9ba0b0ef653a45508ddf821e9b59694829cc57317569040dcd70e0f94c7a&=&format=webp&quality=lossless&width=218&height=472)
+
 
 ## How to use
 
